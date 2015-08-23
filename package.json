@@ -1,0 +1,37 @@
+{
+  "name": "fixparser",
+  "version": "1.0.0",
+  "description": "FIX5.0SP2 parser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/logotype/fixparser.git"
+  },
+  "devDependencies": {
+    "babel": "latest",
+    "chai": "latest",
+    "del": "latest",
+    "gulp": "latest",
+    "gulp-babel": "latest",
+    "gulp-cli": "latest",
+    "gulp-eslint": "latest",
+    "gulp-jshint": "latest",
+    "gulp-load-plugins": "latest",
+    "gulp-mocha": "latest",
+    "gulp-uglify": "latest",
+    "mocha": "latest"
+  },
+  "keywords": [
+    "fix",
+    "parser",
+    "protocol",
+    "financial",
+    "information",
+    "exchange"
+  ],
+  "author": "Victor Norgren",
+  "license": "MIT"
+}
