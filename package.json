@@ -1,28 +1,28 @@
 {
   "name": "fixparser",
   "version": "1.0.0",
-  "description": "FIX5.0SP2 parser.",
+  "description": "FIX 5.0SP2 Parser",
   "main": "index.js",
-  "scripts": {
-    "test": "gulp test"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/logotype/fixparser.git"
   },
   "devDependencies": {
     "babel": "latest",
-    "chai": "latest",
+    "babelify": "^6.2.0",
+    "browserify": "^11.0.1",
+    "chai": "^3.2.0",
     "del": "latest",
     "gulp": "latest",
     "gulp-babel": "latest",
     "gulp-cli": "latest",
-    "gulp-eslint": "latest",
+    "gulp-eslint": "^1.0.0",
     "gulp-jshint": "latest",
     "gulp-load-plugins": "latest",
     "gulp-mocha": "latest",
     "gulp-uglify": "latest",
-    "mocha": "latest"
+    "mocha": "latest",
+    "vinyl-source-stream": "^1.1.0"
   },
   "keywords": [
     "fix",
@@ -32,6 +32,11 @@
     "information",
     "exchange"
   ],
+  "scripts": {
+    "test": "gulp test",
+    "es5": "node examples/example_es5.js",
+    "es6": "babel-node examples/example_es6.js"
+  },
   "author": "Victor Norgren",
   "license": "MIT"
 }

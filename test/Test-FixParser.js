@@ -1,7 +1,17 @@
 var assert = require('chai').assert,
+    testMessages = require('./test-messages.js'),
     FIXParser = require('./../src/FIXParser').FIXParser;
 
 describe('FIXParser', () => {
+    describe('#parse: constructor validation', () => {
+        it('should throw an error when having no arguments', () => {
+            assert.throws(() => {
+                let fixParser = new FIXParser();
+                fixParser.parse();
+            }, Error, 'No message specified!');
+        });
+    });
+
     describe('#parse: SDBK Price Correction of Previous Execution', () => {
         let fixParser = new FIXParser(),
             parsed = fixParser.parse('8=FIX.4.2^A 9=439^A 35=8^A 128=LZJ^A 34=549^A 49=CCG^A 56=LEH_LZJ02^A 52=20100302- 22:36:15^A 55=IOC^A 37=NF 0039/03022010^A 11=NF 0039/03022010^A 17=NF 0039/03022010 001001002^A 20=2^A 39=2^A 150=2^A 54=1^A 38=100^A 40=1^A 59=0^A 31=49.3700^A 32=100^A 14=0^A 6=0^A 151=0^A 60=20100302-22:36:16^A 58=Trade correction^A 19=NF 0039/03022010 001001001^A 1=ABC123ZYX^A 30=N^A 207=N^A 47=A^A 9430=NX^A 9483=000010^A 9578=1^A 9425=5^A 9579=0000100002^A 9704=0000100001^A 382=1^A 375=TOD^A 337=0000^A 437=100^A 438=1736^A 29=1^A 63=0^A 9440=001001002^A 10=203^A'),
@@ -351,7 +361,6 @@ describe('FIXParser', () => {
             index++;
             done();
         });
-
     });
 
     describe('#parse: New order', () => {
@@ -538,24 +547,28 @@ describe('FIXParser', () => {
 
     });
 
-
-    describe('#parse: Random', () => {
-        let fixParser = new FIXParser(),
-        parsed = fixParser.parse('8=FIX.4.19=6135=A34=149=EXEC52=20121105-23:24:0656=BANZAI98=0108=3010=0038=FIX.4.19=6135=A34=149=BANZAI52=20121105-23:24:0656=EXEC98=0108=3010=0038=FIX.4.19=4935=034=249=BANZAI52=20121105-23:24:3756=EXEC10=2288=FIX.4.19=4935=034=249=EXEC52=20121105-23:24:3756=BANZAI10=2288=FIX.4.19=10335=D34=349=BANZAI52=20121105-23:24:4256=EXEC11=135215788257721=138=1000040=154=155=MSFT59=010=0628=FIX.4.19=13935=834=349=EXEC52=20121105-23:24:4256=BANZAI6=011=135215788257714=017=120=031=032=037=138=1000039=054=155=MSFT150=2151=010=0598=FIX.4.19=15335=834=449=EXEC52=20121105-23:24:4256=BANZAI6=12.311=135215788257714=1000017=220=031=12.332=1000037=238=1000039=254=155=MSFT150=2151=010=2308=FIX.4.19=10335=D34=449=BANZAI52=20121105-23:24:5556=EXEC11=135215789503221=138=1000040=154=155=ORCL59=010=0478=FIX.4.19=13935=834=549=EXEC52=20121105-23:24:5556=BANZAI6=011=135215789503214=017=320=031=032=037=338=1000039=054=155=ORCL150=2151=010=0498=FIX.4.19=15335=834=649=EXEC52=20121105-23:24:5556=BANZAI6=12.311=135215789503214=1000017=420=031=12.332=1000037=438=1000039=254=155=ORCL150=2151=010=2208=FIX.4.19=10835=D34=549=BANZAI52=20121105-23:25:1256=EXEC11=135215791235721=138=1000040=244=1054=155=SPY59=010=0038=FIX.4.19=13835=834=749=EXEC52=20121105-23:25:1256=BANZAI6=011=135215791235714=017=520=031=032=037=538=1000039=054=155=SPY150=2151=010=2528=FIX.4.19=10435=F34=649=BANZAI52=20121105-23:25:1656=EXEC11=135215791643738=1000041=135215791235754=155=SPY10=1988=FIX.4.19=8235=334=849=EXEC52=20121105-23:25:1656=BANZAI45=658=Unsupported message type10=0008=FIX.4.19=10435=F34=749=BANZAI52=20121105-23:25:2556=EXEC11=135215792530938=1000041=135215791235754=155=SPY10=1978=FIX.4.19=8235=334=949=EXEC52=20121105-23:25:2556=BANZAI45=758=Unsupported message type10=002'),
-        index = 0;
-
-        after((done) => {
-            fixParser = null;
-            parsed = null;
+    for(var message of testMessages) {
+        describe('#parse: ' + message.description, () => {
+            let fixParser = new FIXParser(),
+            parsed = fixParser.parse(message.fix),
             index = 0;
-            done();
-        });
 
-        it('should have parsed the FIX message', (done) => {
-            assert.ok(parsed);
-            assert.isNotNull(parsed);
-            done();
-        });
+            after((done) => {
+                fixParser = null;
+                parsed = null;
+                index = 0;
+                done();
+            });
 
-    });
+            it('should have parsed the FIX message', (done) => {
+                assert.ok(parsed);
+                assert.strictEqual(parsed[0].field, 'BeginString');
+                assert.strictEqual(parsed[1].field, 'BodyLength');
+                assert.strictEqual(parsed[2].field, 'MsgType');
+                assert.isNotNull(parsed);
+                done();
+            });
+
+        });
+    }
 });

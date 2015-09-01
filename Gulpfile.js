@@ -6,9 +6,13 @@
  * Released under the MIT license
  */
 var gulp = require('gulp'),
+    $ = require('gulp-load-plugins')(),
     eslint = require('gulp-eslint'),
     del = require('del'),
-    $ = require('gulp-load-plugins')();
+    fs = require("fs"),
+    browserify = require("browserify"),
+    babelify = require("babelify"),
+    source = require('vinyl-source-stream');
 
 gulp.task('eslint', function () {
     return gulp.src(['./src/**/*.js'])
@@ -18,18 +22,22 @@ gulp.task('eslint', function () {
 });
 
 gulp.task('clean', ['eslint'], function(done) {
-    del(['build/**'], done);
+    del(['build/**']).then(function () {
+        done();
+    });
+
 });
 
-gulp.task('compile', ['clean'], function() {
-    del(['build/**']);
-    return gulp.src(['./src/**/*.js'])
-        .pipe($.babel({compact:false}))
-        .pipe($.uglify())
+gulp.task('transpile', ['clean'], function() {
+    return browserify("./src/FIXParser.js", { debug: true })
+        .transform(babelify)
+        .bundle()
+        .on("error", function (err) { console.log("Error : " + err.message); })
+        .pipe(source('FIXParser.js'))
         .pipe(gulp.dest('./build'));
 });
 
-gulp.task('test', ['compile'], function () {
+gulp.task('test', ['transpile'], function () {
     return gulp.src('./test/**/*.js', {read: false})
         .pipe($.mocha({
             recursive: true,
@@ -38,4 +46,4 @@ gulp.task('test', ['compile'], function () {
         }));
 });
 
-gulp.task('default', ['eslint', 'compile', 'test']);
+gulp.task('default', ['eslint', 'transpile', 'test']);

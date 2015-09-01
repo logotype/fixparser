@@ -5,18 +5,21 @@
  * Copyright 2015 Victor Norgren
  * Released under the MIT license
  */
-import {Tags} from './Tags';
 export class Parser {
 
-    constructor() {
+    constructor(tags) {
         this.message = [];
-        this.tags = new Tags();
+        this.tags = tags;
     }
 
     parse(message) {
 
         var startOfHeader, tag, value, array, arrayLength, lastByte, i = 0,
         equalsOperator, item;
+
+        if(message === undefined) {
+            throw new Error('No message specified!');
+        }
 
         this.message = [];
 
@@ -48,6 +51,7 @@ export class Parser {
 
             let tagData = this.tags.getTagData(tag);
             let messageType;
+            let execType;
 
             if(tagData) {
                 item.field = tagData.field;
@@ -61,6 +65,13 @@ export class Parser {
                 messageType = this.tags.getMessageType(value);
                 if(messageType) {
                     item.messageType = messageType.description;
+                }
+            }
+
+            if(tag === 150) {
+                execType = this.tags.getExecType(value);
+                if(execType) {
+                    item.execType = execType.description;
                 }
             }
 

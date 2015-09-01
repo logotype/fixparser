@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {font-family: Helvetica;font-size: 12px;-webkit-font-smoothing: antialiased;}
+        #output {padding: 5px;margin: 20px;}
+        input {width: 600px;}
+        .item {border-radius: 5px;border: 1px solid #666666;background-color: #e5e5e5;padding: 5px;margin: 0 0 5px 0; word-wrap:break-word;}
+        .item pre {margin: 0px;padding: 0px;}
+        .item h3 {margin: 0;padding: 0;font-weight: lighter;}
+        .example {width: 600px;height: 50px;border: 0px;font-family: Courier, monospace;}
+        .error {background-color: #ffa3bb;}
+        .green {background-color: #a7ffa3;}
+        .yellow {background-color: #fcc62a;}
+        .heartbeat {background-color: #2ac9fc;}
+        .messagetype {background-color: #c9fc2a;}
+        .unsupported {background-color: #333333; color: #ffffff}
+        a {color: #000000;text-decoration: underline;}
+    </style>
+</head>
+<body>
+<h1>FIX 5.0SP2 Parser</h1>
+SDBK Price Correction of Previous Execution:<br>
+<textarea class="example">8=FIX.4.2^A 9=439^A 35=8^A 128=LZJ^A 34=549^A 49=CCG^A 56=LEH_LZJ02^A 52=20100302- 22:36:15^A 55=IOC^A 37=NF 0039/03022010^A 11=NF 0039/03022010^A 17=NF 0039/03022010 001001002^A 20=2^A 39=2^A 150=2^A 54=1^A 38=100^A 40=1^A 59=0^A 31=49.3700^A 32=100^A 14=0^A 6=0^A 151=0^A 60=20100302-22:36:16^A 58=Trade correction^A 19=NF 0039/03022010 001001001^A 1=ABC123ZYX^A 30=N^A 207=N^A 47=A^A 9430=NX^A 9483=000010^A 9578=1^A 9425=5^A 9579=0000100002^A 9704=0000100001^A 382=1^A 375=TOD^A 337=0000^A 437=100^A 438=1736^A 29=1^A 63=0^A 9440=001001002^A 10=203^A</textarea>
+<br>
+New order:<br>
+<textarea class="example">8=FIX.4.2|9=190|35=E|49=INST|56=BROK|52=20050908-15:51:22|34=200|66=14|394=1|68=2|73=2|11=order- 1|67=1|55=IBM|54=2|38=2000|40=1|11=order-2|67=2|55=AOL|54=2|38=1000|40=1|</textarea>
+<br>
+Large message:<br>
+<textarea class="example">8=FIX.4.19=6135=A34=149=EXEC52=20121105-23:24:0656=BANZAI98=0108=3010=0038=FIX.4.19=6135=A34=149=BANZAI52=20121105-23:24:0656=EXEC98=0108=3010=0038=FIX.4.19=4935=034=249=BANZAI52=20121105-23:24:3756=EXEC10=2288=FIX.4.19=4935=034=249=EXEC52=20121105-23:24:3756=BANZAI10=2288=FIX.4.19=10335=D34=349=BANZAI52=20121105-23:24:4256=EXEC11=135215788257721=138=1000040=154=155=MSFT59=010=0628=FIX.4.19=13935=834=349=EXEC52=20121105-23:24:4256=BANZAI6=011=135215788257714=017=120=031=032=037=138=1000039=054=155=MSFT150=2151=010=0598=FIX.4.19=15335=834=449=EXEC52=20121105-23:24:4256=BANZAI6=12.311=135215788257714=1000017=220=031=12.332=1000037=238=1000039=254=155=MSFT150=2151=010=2308=FIX.4.19=10335=D34=449=BANZAI52=20121105-23:24:5556=EXEC11=135215789503221=138=1000040=154=155=ORCL59=010=0478=FIX.4.19=13935=834=549=EXEC52=20121105-23:24:5556=BANZAI6=011=135215789503214=017=320=031=032=037=338=1000039=054=155=ORCL150=2151=010=0498=FIX.4.19=15335=834=649=EXEC52=20121105-23:24:5556=BANZAI6=12.311=135215789503214=1000017=420=031=12.332=1000037=438=1000039=254=155=ORCL150=2151=010=2208=FIX.4.19=10835=D34=549=BANZAI52=20121105-23:25:1256=EXEC11=135215791235721=138=1000040=244=1054=155=SPY59=010=0038=FIX.4.19=13835=834=749=EXEC52=20121105-23:25:1256=BANZAI6=011=135215791235714=017=520=031=032=037=538=1000039=054=155=SPY150=2151=010=2528=FIX.4.19=10435=F34=649=BANZAI52=20121105-23:25:1656=EXEC11=135215791643738=1000041=135215791235754=155=SPY10=1988=FIX.4.19=8235=334=849=EXEC52=20121105-23:25:1656=BANZAI45=658=Unsupported message type10=0008=FIX.4.19=10435=F34=749=BANZAI52=20121105-23:25:2556=EXEC11=135215792530938=1000041=135215791235754=155=SPY10=1978=FIX.4.19=8235=334=949=EXEC52=20121105-23:25:2556=BANZAI45=758=Unsupported message type10=002</textarea>
+<br>
+Secure login:<br>
+<textarea class="example">8=FIX.4.19=69035=A49=INVMGR56=BRKR98=590=62591=-----BEGIN PGP MESSAGE----- Version: 2.7.1  hIwDDrony+hQ+FEBA/9qd5Vcdw2w2DSKx3+XbqOhWz9xZ07RYRyhKDG/qE5EQbYu 6srrDowCzscPb9+krWcxH4xL3B/1DEwL3QpQsxCSGY1JnbjDCTyJ21nuZ6NHY6YA AAECr4mTIlZgM5hmSmrlunDoeOQWwPkca9OCWh0n3VXfGkA7e99DCq0P3MZ48Jlr GNF141hwWLIpN2RfqYvfzPD0w7I54wf3z/sYefGj+a0QTt1JOLEFxzsPykIyMPEI kGfdjuzOL8/94plkeeWSJHx7K6IemVRsT6HwLJtFaW/JIJr+hxYr1Z8BBjyXoQCz argut9niFOcnSqwvZolAYqjMPrkWuaeJn+bJ4kCEuLGdrQJDHvlzOS6r3By80IUc 2L4W7yJL7Am82wTWD4s5ANBQz8FCwLtLMivUTvqsg/Zp8v7vSQ1FfEIsg30XXtBL 6QBYtnYnAAAwCEOrv6DavDTfhWl72D6VfiOLrHIHtEQf3iwb5JFHGRaMpX88VlSU W7qy163o78rIEL3WEak4pwmnf28P =v9gz -----END PGP MESSAGE----- 93=1689=................10=161</textarea>
+<br>
+<a href="http://www.nyse.com/pdfs/NYSE_CCG_FIX_Sample_Messagesv4.2.pdf">Click here for more sample messages (NySE)</a>
+<br>
+<br>
+<form action="" method="post">
+    <input id="message" type="text" placeholder="Paste FIX message here">
+    <button id="parseButton">Parse</button>
+</form>
+<div id="output"></div>
+Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.se</a><br>
+<a href="https://github.com/logotype/fixparser">GitHub repository</a>
+<script src="./../build/FIXParser.js"></script>
+<script>
+    var fixParser = new FIXParser();
+    var FIX = {
+        renderItem: function (data, item) {
+            "use strict";
+
+            var returnString = "",
+                tag = data.tag,
+                value = data.value,
+                specification = fixParser.tags.getTagData(tag);
+
+            // Set start-end colors
+            if(tag === 8 || tag === 10) {
+                item.className = "item green";
+            }
+
+            if(tag === 11 || tag === 37) {
+                item.className = "item yellow";
+            }
+
+            if(tag === 108) {
+                item.className = "item heartbeat";
+            }
+
+            // Raw command
+            returnString += "<pre>" + tag + "=" + value + "</pre>";
+
+            if(data.messageType) {
+                item.className = "item messagetype";
+            }
+
+            if(specification) {
+                // Header
+                var messageType = data.messageType ? " = " + data.messageType : "";
+                var execType = data.execType ? " = " + data.execType : "";
+                returnString += "<h3><strong>" + specification.field + "(" + value + ") &lt;" + specification.datatype + "&gt; " + messageType + execType + "</strong></h3><br>";
+
+                // Description
+                returnString += "<strong>Description: </strong>" + specification.description + "<br>";
+
+                // FIXML
+                returnString += "<strong>Node: </strong> " + specification.xml + "<br>";
+            } else {
+                item.className = "item unsupported";
+                returnString += "<pre>Unsupported and/or custom tag</pre>";
+            }
+
+            return returnString;
+        },
+        parseButtonHandler: function (event) {
+            "use strict";
+
+            var i, input, output, parsedMessage, item;
+
+            output = document.getElementById("output");
+            output.innerHTML = "";
+
+            event.preventDefault();
+
+            input = document.getElementById("message");
+            parsedMessage = fixParser.parse(input.value);
+
+            for(i = 0; i < parsedMessage.length; i++) {
+                item = document.createElement("div");
+                item.className = "item";
+                output.appendChild(item);
+
+                item.innerHTML = FIX.renderItem(parsedMessage[i], item);
+            }
+
+        },
+        init: function () {
+            "use strict";
+            var parseButton = document.getElementById("parseButton");
+            parseButton.addEventListener("click", FIX.parseButtonHandler, false);
+        }
+    };
+
+    window.addEventListener("load", FIX.init);
+</script>
+</body>
+</html>
