@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "iojs"
+addons:
+  code_climate:
+    repo_token: a5f704812498d453bfe412f94e6774361b5a84af281e654b24d72c7e18e16796
+script:
+  - gulp test
+after_script:
+  - ./node_modules/codeclimate-test-reporter/./bin/codeclimate.js < coverage/lcov.info

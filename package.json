@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "index.js",
   "repository": {
@@ -12,6 +12,7 @@
     "babelify": "^6.2.0",
     "browserify": "^11.0.1",
     "chai": "^3.2.0",
+    "codeclimate-test-reporter": "latest",
     "del": "latest",
     "gulp": "latest",
     "gulp-babel": "latest",
@@ -30,7 +31,8 @@
     "protocol",
     "financial",
     "information",
-    "exchange"
+    "exchange",
+    "es6"
   ],
   "scripts": {
     "test": "gulp test",
