@@ -9,7 +9,6 @@ var gulp = require('gulp'),
     $ = require('gulp-load-plugins')(),
     eslint = require('gulp-eslint'),
     del = require('del'),
-    fs = require("fs"),
     browserify = require("browserify"),
     babelify = require("babelify"),
     source = require('vinyl-source-stream');
