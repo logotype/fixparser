@@ -54,7 +54,7 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             var returnString = "",
                 tag = data.tag,
                 value = data.value,
-                specification = fixParser.tags.getTagData(tag);
+                specification = fixParser.parser.fields.find(tag);
 
             // Set start-end colors
             if(tag === 8 || tag === 10) {
@@ -77,6 +77,7 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             }
 
             if(specification) {
+                console.log(specification);
                 // Header
                 var messageType = data.messageType ? " = " + data.messageType : "";
                 var execType = data.execType ? " = " + data.execType : "";

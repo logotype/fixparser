@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "FIX 5.0SP2 Parser",
   "main": "index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "gulp-jshint": "latest",
     "gulp-load-plugins": "latest",
     "gulp-mocha": "latest",
-    "gulp-uglify": "latest",
+    "gulp-uglify": "^1.4.0",
     "mocha": "latest",
     "vinyl-source-stream": "^1.1.0"
   },
@@ -37,7 +37,8 @@
   "scripts": {
     "test": "gulp test",
     "es5": "node examples/example_es5.js",
-    "es6": "babel-node examples/example_es6.js"
+    "es6": "babel-node examples/example_es6.js",
+    "perf": "./node_modules/gulp-cli/bin/gulp.js --silent;./node_modules/gulp-cli/bin/gulp.js perf --silent;iojs ./perfbuild/Perf-FIXParser.js"
   },
   "author": "Victor Norgren",
   "license": "MIT"
