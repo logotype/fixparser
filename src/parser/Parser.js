@@ -33,8 +33,9 @@ export class Parser {
         // Strip whitespaces
         this.processedData = this.processedData.replace(/ /g, '');
 
-        // Weird SOH (NySE only?? should be 1 byte!)
+        // Replace multiple-byte SOH to single-byte (e.g. NySE)
         this.processedData = this.processedData.replace(/\^A/g, '|');
+        this.rawData = this.rawData.replace(/\^A /g, '|');
 
         startOfHeader = this.processedData.charAt(9);
         array = this.processedData.split(startOfHeader);
@@ -59,8 +60,12 @@ export class Parser {
             this.fields.process(item, tag, value);
             this.enums.process(item, tag, value);
 
+            if(tag === 9) {
+                item.validBodyLength = this.validateBodyLength(value);
+            }
+
             if(tag === 10) {
-                item.valid = this.validateChecksum(value);
+                item.validChecksum = this.validateChecksum(value);
             }
 
             item.tag = tag;
@@ -74,6 +79,14 @@ export class Parser {
     pad(value, size) {
         let paddedString = '00' + value;
         return paddedString.substr(paddedString.length - size);
+    }
+
+    validateBodyLength(value) {
+        var startLength = this.rawData.indexOf('35=') !== -1 ? this.rawData.indexOf('35=') : 0,
+            endLength = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
+            bodyLength = endLength - startLength;
+
+        return value === String(bodyLength);
     }
 
     validateChecksum(value) {
