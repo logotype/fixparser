@@ -563,9 +563,9 @@ describe('FIXParser', () => {
 
             it('should have parsed the FIX message', (done) => {
                 assert.ok(parsed);
-                assert.strictEqual(parsed[0].field, 'BeginString');
-                assert.strictEqual(parsed[1].field, 'BodyLength');
-                assert.strictEqual(parsed[2].field, 'MsgType');
+                assert.strictEqual(parsed[0].name, 'BeginString');
+                assert.strictEqual(parsed[1].name, 'BodyLength');
+                assert.strictEqual(parsed[2].name, 'MsgType');
                 assert.isNotNull(parsed);
                 done();
             });
