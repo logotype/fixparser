@@ -26,18 +26,17 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "keywords": [
-    "fix",
-    "parser",
-    "protocol",
-    "financial",
-    "information",
-    "exchange",
-    "es6"
+    "es6",
+    "fix protocol",
+    "fix parser",
+    "FIX5.0SP2",
+    "FIX"
   ],
   "scripts": {
     "test": "gulp test",
     "es5": "node examples/example_es5.js",
     "es6": "babel-node examples/example_es6.js",
+    "checksum": "babel-node examples/example_checksum.js",
     "perf": "./node_modules/gulp-cli/bin/gulp.js --silent;./node_modules/gulp-cli/bin/gulp.js perf --silent;iojs ./perfbuild/Perf-FIXParser.js"
   },
   "author": "Victor Norgren",
