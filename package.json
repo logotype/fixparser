@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "FIX 5.0SP2 Parser",
   "main": "index.js",
   "repository": {

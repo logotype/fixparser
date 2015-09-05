@@ -53,8 +53,7 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 
             var returnString = "",
                 tag = data.tag,
-                value = data.value,
-                specification = fixParser.parser.fields.find(tag);
+                value = data.value;
 
             // Set start-end colors
             if(tag === 8 || tag === 10) {
@@ -76,18 +75,26 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
                 item.className = "item messagetype";
             }
 
-            if(specification) {
-                console.log(specification);
+            if(data.type) {
+
                 // Header
-                var messageType = data.messageType ? " = " + data.messageType : "";
-                var execType = data.execType ? " = " + data.execType : "";
-                returnString += "<h3><strong>" + specification.field + "(" + value + ") &lt;" + specification.datatype + "&gt; " + messageType + execType + "</strong></h3><br>";
+                var enumType = data.enum ? " = " + data.enum.Description : "";
+                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + "</strong></h3><br>";
 
-                // Description
-                returnString += "<strong>Description: </strong>" + specification.description + "<br>";
+                returnString += "<strong>Description: </strong>" + data.description + "<br>";
 
-                // FIXML
-                returnString += "<strong>Node: </strong> " + specification.xml + "<br>";
+                returnString += "<strong>Type: </strong> &lt;" + data.type.Name + "&gt; " + data.type.Description + "<br>";
+
+                if(data.enum) {
+                    returnString += "<blockquote>";
+                    returnString += "<h3><strong>" + data.enum.Description + "(" + value + ") &lt;Sort " + data.enum.Sort + ", Group '" + data.enum.Group + "'&gt;</strong></h3><br>";
+
+                    if(data.enum.Elaboration) {
+                        returnString += "<strong>Elaboration: </strong>" + data.enum.Elaboration + "<br>";
+                    }
+                    returnString += "</blockquote>";
+                }
+
             } else {
                 item.className = "item unsupported";
                 returnString += "<pre>Unsupported and/or custom tag</pre>";
