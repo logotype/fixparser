@@ -6,9 +6,7 @@
  * Released under the MIT license
  */
 import {Fields} from './../fields/Fields';
-import {MessageTypes} from './../messagetypes/MessageTypes';
-import {ExecTypes} from './../exectypes/ExecTypes';
-import {DataTypes} from './../datatypes/Datatypes';
+import {Enums} from './../enums/Enums';
 
 export class Parser {
 
@@ -17,9 +15,7 @@ export class Parser {
         this.processedData = '';
         this.message = [];
         this.fields = new Fields();
-        this.messageTypes = new MessageTypes();
-        this.execTypes = new ExecTypes();
-        this.dataTypes = new DataTypes();
+        this.enums = new Enums();
     }
 
     parse(data) {
@@ -61,9 +57,7 @@ export class Parser {
             value = array[i].substring(equalsOperator + 1);
 
             this.fields.process(item, tag, value);
-            this.messageTypes.process(item, tag, value);
-            this.execTypes.process(item, tag, value);
-            this.dataTypes.process(item, tag, value);
+            this.enums.process(item, tag, value);
 
             if(tag === 10) {
                 item.valid = this.validateChecksum(value);
@@ -89,13 +83,12 @@ export class Parser {
         for(let i = 0; i < length; i++) {
             integerValues += this.rawData.charCodeAt(i);
         }
-        // TODO: add leading zeroes if needeed
 
-        if(value === this.pad(integerValues % 256, 3)) {
+        /*if(value === this.pad(integerValues % 256, 3)) {
             console.log('>>>>>>>>>> VALID! ' + value);
         } else {
             console.log(value + ', actually: ' + this.pad(integerValues % 256, 3));
-        }
+        }*/
 
         return value === this.pad(integerValues % 256, 3);
     }

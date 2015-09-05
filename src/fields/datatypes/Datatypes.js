@@ -1,4 +1,4 @@
-import {SpecDatatypes} from './../spec/SpecDatatypes';
+import {SpecDatatypes} from './../../spec/SpecDatatypes';
 
 export class DataTypes {
     constructor() {
@@ -10,14 +10,14 @@ export class DataTypes {
         return this.dataTypes.find(spec => spec.Name === dataType);
     }
 
-    process(item, tag, value) {
+    process(item, type, value) {
 
-        let dataType = this.find(item.type);
+        let dataType = this.find(type);
         if(dataType) {
-            item.typeDetail = dataType;
+            item.type = dataType;
         }
 
-        switch(item.type) {
+        switch(type) {
             case 'int':
             case 'Length':
             case 'TagNum':
