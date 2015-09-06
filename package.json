@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "FIX 5.0SP2 Parser",
   "main": "index.js",
   "repository": {
@@ -26,11 +26,12 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "keywords": [
-    "es6",
-    "fix protocol",
-    "fix parser",
+    "FIX Protocol",
+    "FIX Parser",
     "FIX5.0SP2",
-    "FIX"
+    "Financial Information eXchange",
+    "FIX",
+    "ES6"
   ],
   "scripts": {
     "test": "gulp test",

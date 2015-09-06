@@ -48,7 +48,7 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 <script>
     var fixParser = new FIXParser();
     var FIX = {
-        renderItem: function (data, item) {
+        renderItem: function (metaData, data, item) {
             "use strict";
 
             var returnString = "",
@@ -79,7 +79,15 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 
                 // Header
                 var enumType = data.enum ? " = " + data.enum.Description : "";
-                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + "</strong></h3><br>";
+                var validChecksum;
+
+                if(tag === 10) {
+                    validChecksum = metaData.validChecksum ? " VALID" : " INVALID";
+                } else {
+                    validChecksum = "";
+                }
+
+                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + validChecksum + "</strong></h3><br>";
 
                 returnString += "<strong>Description: </strong>" + data.description + "<br>";
 
@@ -115,12 +123,12 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             input = document.getElementById("message");
             parsedMessage = fixParser.parse(input.value);
 
-            for(i = 0; i < parsedMessage.length; i++) {
+            for(i = 0; i < parsedMessage.data.length; i++) {
                 item = document.createElement("div");
                 item.className = "item";
                 output.appendChild(item);
 
-                item.innerHTML = FIX.renderItem(parsedMessage[i], item);
+                item.innerHTML = FIX.renderItem(parsedMessage, parsedMessage.data[i], item);
             }
 
         },

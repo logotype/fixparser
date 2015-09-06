@@ -13,7 +13,7 @@ export class Parser {
     constructor() {
         this.rawData = '';
         this.processedData = '';
-        this.message = [];
+        this.message = {};
         this.fields = new Fields();
         this.enums = new Enums();
     }
@@ -26,16 +26,7 @@ export class Parser {
             throw new Error('No message specified!');
         }
 
-        this.rawData = data;
-        this.processedData = data;
-        this.message = [];
-
-        // Strip whitespaces
-        this.processedData = this.processedData.replace(/ /g, '');
-
-        // Replace multiple-byte SOH to single-byte (e.g. NySE)
-        this.processedData = this.processedData.replace(/\^A/g, '|');
-        this.rawData = this.rawData.replace(/\^A /g, '|');
+        this.preProcess(data);
 
         startOfHeader = this.processedData.charAt(9);
         array = this.processedData.split(startOfHeader);
@@ -57,23 +48,45 @@ export class Parser {
             tag = parseInt(array[i].substring(0, equalsOperator));
             value = array[i].substring(equalsOperator + 1);
 
-            this.fields.process(item, tag, value);
+            this.fields.process(this.message, item, tag, value);
             this.enums.process(item, tag, value);
 
             if(tag === 9) {
-                item.validBodyLength = this.validateBodyLength(value);
+                this.message.validBodyLength = this.validateBodyLength(value);
             }
 
             if(tag === 10) {
-                item.validChecksum = this.validateChecksum(value);
+                this.message.validChecksum = this.validateChecksum(value);
             }
 
             item.tag = tag;
 
-            this.message[i] = item;
+            this.message.data[i] = item;
         }
 
         return this.message;
+    }
+
+    replaceMultiByteSOH(data) {
+        // Replace multiple-byte SOH to single-byte (e.g. NySE)
+        return data.replace(/\^A /g, '|').replace(/\^A/g, '|');
+    }
+
+    preProcess(data) {
+        this.rawData = data;
+        this.processedData = data;
+        this.message = {};
+        this.message.data = [];
+        this.processedData = this.replaceMultiByteSOH(this.processedData);
+        this.rawData = this.replaceMultiByteSOH(this.rawData);
+    }
+
+    validateBodyLength(value) {
+        let startLength = this.rawData.indexOf('35=') !== -1 ? this.rawData.indexOf('35=') : 0,
+            endLength = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
+            bodyLength = endLength - startLength;
+
+        return value === String(bodyLength);
     }
 
     pad(value, size) {
@@ -81,27 +94,23 @@ export class Parser {
         return paddedString.substr(paddedString.length - size);
     }
 
-    validateBodyLength(value) {
-        var startLength = this.rawData.indexOf('35=') !== -1 ? this.rawData.indexOf('35=') : 0,
-            endLength = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
-            bodyLength = endLength - startLength;
-
-        return value === String(bodyLength);
-    }
-
     validateChecksum(value) {
-        var integerValues = 0,
-            length = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length;
+        let regexp = /([0-9]+)=([^|;\001]*)/g,
+            length = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
+            data = this.rawData.substr(0, length),
+            byteOffset = 0,
+            integerValues = 0,
+            result;
 
-        for(let i = 0; i < length; i++) {
-            integerValues += this.rawData.charCodeAt(i);
+        while((result = regexp.exec(data)) !== null) {
+            let pair = result[0];
+            for(let i = 0; i < pair.length; i++) {
+                integerValues += pair.charCodeAt(i);
+            }
+            byteOffset += 1;
         }
 
-        /*if(value === this.pad(integerValues % 256, 3)) {
-            console.log('>>>>>>>>>> VALID! ' + value);
-        } else {
-            console.log(value + ', actually: ' + this.pad(integerValues % 256, 3));
-        }*/
+        integerValues += byteOffset;
 
         return value === this.pad(integerValues % 256, 3);
     }

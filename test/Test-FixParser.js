@@ -31,335 +31,335 @@ describe('FIXParser', () => {
         });
 
         it('should have BeginString value FIX.4.2', (done) => {
-            assert.strictEqual(parsed[index].tag, 8);
-            assert.strictEqual(parsed[index].value, 'FIX.4.2');
+            assert.strictEqual(parsed.data[index].tag, 8);
+            assert.strictEqual(parsed.data[index].value, 'FIX.4.2');
             index++;
             done();
         });
 
         it('should have BodyLength value 440 (validated)', (done) => {
-            assert.strictEqual(parsed[index].tag, 9);
-            assert.strictEqual(parsed[index].value, 440);
-            assert.strictEqual(parsed[index].validBodyLength, true);
-            assert.isNumber(parsed[index].value);
-            isInt = parsed[index].value % 1 === 0;
-            assert(isInt, 'not an integer:' + parsed[index].value);
+            assert.strictEqual(parsed.data[index].tag, 9);
+            assert.strictEqual(parsed.data[index].value, 440);
+            assert.strictEqual(parsed.validBodyLength, true);
+            assert.isNumber(parsed.data[index].value);
+            isInt = parsed.data[index].value % 1 === 0;
+            assert(isInt, 'not an integer:' + parsed.data[index].value);
             index++;
             done();
         });
 
         it('should have MsgType value 8', (done) => {
-            assert.strictEqual(parsed[index].tag, 35);
-            assert.strictEqual(parsed[index].value, '8');
+            assert.strictEqual(parsed.data[index].tag, 35);
+            assert.strictEqual(parsed.data[index].value, '8');
             index++;
             done();
         });
 
         it('should have DeliverToCompID value LZJ', (done) => {
-            assert.strictEqual(parsed[index].tag, 128);
-            assert.strictEqual(parsed[index].value, 'LZJ');
+            assert.strictEqual(parsed.data[index].tag, 128);
+            assert.strictEqual(parsed.data[index].value, 'LZJ');
             index++;
             done();
         });
 
         it('should have MsgSeqNum value LZJ', (done) => {
-            assert.strictEqual(parsed[index].tag, 34);
-            assert.strictEqual(parsed[index].value, 549);
-            assert.isNumber(parsed[index].value);
-            isInt = parsed[index].value % 1 === 0;
-            assert(isInt, 'not an integer:' + parsed[index].value);
+            assert.strictEqual(parsed.data[index].tag, 34);
+            assert.strictEqual(parsed.data[index].value, 549);
+            assert.isNumber(parsed.data[index].value);
+            isInt = parsed.data[index].value % 1 === 0;
+            assert(isInt, 'not an integer:' + parsed.data[index].value);
             index++;
             done();
         });
 
         it('should have SenderCompID value CCG', (done) => {
-            assert.strictEqual(parsed[index].tag, 49);
-            assert.strictEqual(parsed[index].value, 'CCG');
+            assert.strictEqual(parsed.data[index].tag, 49);
+            assert.strictEqual(parsed.data[index].value, 'CCG');
             index++;
             done();
         });
 
         it('should have TargetCompID value LEH_LZJ02', (done) => {
-            assert.strictEqual(parsed[index].tag, 56);
-            assert.strictEqual(parsed[index].value, 'LEH_LZJ02');
+            assert.strictEqual(parsed.data[index].tag, 56);
+            assert.strictEqual(parsed.data[index].value, 'LEH_LZJ02');
             index++;
             done();
         });
 
-        it('should have SendingTime value 20100302-22:36:15', (done) => {
-            assert.strictEqual(parsed[index].tag, 52);
-            assert.strictEqual(parsed[index].value, '20100302-22:36:15');
+        it('should have SendingTime value 20100302- 22:36:15', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 52);
+            assert.strictEqual(parsed.data[index].value, '20100302- 22:36:15');
             index++;
             done();
         });
 
         it('should have Symbol value IOC', (done) => {
-            assert.strictEqual(parsed[index].tag, 55);
-            assert.strictEqual(parsed[index].value, 'IOC');
+            assert.strictEqual(parsed.data[index].tag, 55);
+            assert.strictEqual(parsed.data[index].value, 'IOC');
             index++;
             done();
         });
 
-        it('should have OrderID value NF0039/03022010', (done) => {
-            assert.strictEqual(parsed[index].tag, 37);
-            assert.strictEqual(parsed[index].value, 'NF0039/03022010');
+        it('should have OrderID value NF 0039/03022010', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 37);
+            assert.strictEqual(parsed.data[index].value, 'NF 0039/03022010');
             index++;
             done();
         });
 
-        it('should have ClOrdID value NF0039/03022010', (done) => {
-            assert.strictEqual(parsed[index].tag, 11);
-            assert.strictEqual(parsed[index].value, 'NF0039/03022010');
+        it('should have ClOrdID value NF 0039/03022010', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 11);
+            assert.strictEqual(parsed.data[index].value, 'NF 0039/03022010');
             index++;
             done();
         });
 
-        it('should have ExecID value NF0039/03022010001001002', (done) => {
-            assert.strictEqual(parsed[index].tag, 17);
-            assert.strictEqual(parsed[index].value, 'NF0039/03022010001001002');
+        it('should have ExecID value NF 0039/03022010 001001002', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 17);
+            assert.strictEqual(parsed.data[index].value, 'NF 0039/03022010 001001002');
             index++;
             done();
         });
 
         it('should have ExecTransType value 2 (Correct)', (done) => {
-            assert.strictEqual(parsed[index].tag, 20);
-            assert.strictEqual(parsed[index].value, '2');
+            assert.strictEqual(parsed.data[index].tag, 20);
+            assert.strictEqual(parsed.data[index].value, '2');
             index++;
             done();
         });
 
         it('should have OrdStatus value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 39);
-            assert.strictEqual(parsed[index].value, '2');
+            assert.strictEqual(parsed.data[index].tag, 39);
+            assert.strictEqual(parsed.data[index].value, '2');
             index++;
             done();
         });
 
         it('should have ExecType value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 150);
-            assert.strictEqual(parsed[index].value, '2');
+            assert.strictEqual(parsed.data[index].tag, 150);
+            assert.strictEqual(parsed.data[index].value, '2');
             index++;
             done();
         });
 
         it('should have Side value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 54);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 54);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
         it('should have OrderQty value 100', (done) => {
-            assert.strictEqual(parsed[index].tag, 38);
-            assert.strictEqual(parsed[index].value, 100);
-            assert.strictEqual(parsed[index].value, 100);
+            assert.strictEqual(parsed.data[index].tag, 38);
+            assert.strictEqual(parsed.data[index].value, 100);
+            assert.strictEqual(parsed.data[index].value, 100);
             index++;
             done();
         });
 
         it('should have OrdType value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 40);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 40);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
         it('should have TimeInForce value 0', (done) => {
-            assert.strictEqual(parsed[index].tag, 59);
-            assert.strictEqual(parsed[index].value, '0');
+            assert.strictEqual(parsed.data[index].tag, 59);
+            assert.strictEqual(parsed.data[index].value, '0');
             index++;
             done();
         });
 
         it('should have LastPx value 49.3700', (done) => {
-            assert.strictEqual(parsed[index].tag, 31);
-            assert.strictEqual(parsed[index].value, 49.3700);
+            assert.strictEqual(parsed.data[index].tag, 31);
+            assert.strictEqual(parsed.data[index].value, 49.3700);
             index++;
             done();
         });
 
         it('should have LastQty value 100', (done) => {
-            assert.strictEqual(parsed[index].tag, 32);
-            assert.strictEqual(parsed[index].value, 100);
+            assert.strictEqual(parsed.data[index].tag, 32);
+            assert.strictEqual(parsed.data[index].value, 100);
             index++;
             done();
         });
 
         it('should have CumQty value 0', (done) => {
-            assert.strictEqual(parsed[index].tag, 14);
-            assert.strictEqual(parsed[index].value, 0);
+            assert.strictEqual(parsed.data[index].tag, 14);
+            assert.strictEqual(parsed.data[index].value, 0);
             index++;
             done();
         });
 
         it('should have AvgPx value 0', (done) => {
-            assert.strictEqual(parsed[index].tag, 6);
-            assert.strictEqual(parsed[index].value, 0.0);
+            assert.strictEqual(parsed.data[index].tag, 6);
+            assert.strictEqual(parsed.data[index].value, 0.0);
             index++;
             done();
         });
 
         it('should have LeavesQty value 0', (done) => {
-            assert.strictEqual(parsed[index].tag, 151);
-            assert.strictEqual(parsed[index].value, 0);
+            assert.strictEqual(parsed.data[index].tag, 151);
+            assert.strictEqual(parsed.data[index].value, 0);
             index++;
             done();
         });
 
         it('should have TransactTime value 20100302-22:36:16', (done) => {
-            assert.strictEqual(parsed[index].tag, 60);
-            assert.strictEqual(parsed[index].value, '20100302-22:36:16');
+            assert.strictEqual(parsed.data[index].tag, 60);
+            assert.strictEqual(parsed.data[index].value, '20100302-22:36:16');
             index++;
             done();
         });
 
-        it('should have Text value Tradecorrection', (done) => {
-            assert.strictEqual(parsed[index].tag, 58);
-            assert.strictEqual(parsed[index].value, 'Tradecorrection');
+        it('should have Text value Trade correction', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 58);
+            assert.strictEqual(parsed.data[index].value, 'Trade correction');
             index++;
             done();
         });
 
-        it('should have ExecRefID value NF0039/03022010001001001', (done) => {
-            assert.strictEqual(parsed[index].tag, 19);
-            assert.strictEqual(parsed[index].value, 'NF0039/03022010001001001');
+        it('should have ExecRefID value NF 0039/03022010 001001001', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 19);
+            assert.strictEqual(parsed.data[index].value, 'NF 0039/03022010 001001001');
             index++;
             done();
         });
 
         it('should have Account value ABC123ZYX', (done) => {
-            assert.strictEqual(parsed[index].tag, 1);
-            assert.strictEqual(parsed[index].value, 'ABC123ZYX');
+            assert.strictEqual(parsed.data[index].tag, 1);
+            assert.strictEqual(parsed.data[index].value, 'ABC123ZYX');
             index++;
             done();
         });
 
         it('should have LastMkt value N', (done) => {
-            assert.strictEqual(parsed[index].tag, 30);
-            assert.strictEqual(parsed[index].value, 'N');
+            assert.strictEqual(parsed.data[index].tag, 30);
+            assert.strictEqual(parsed.data[index].value, 'N');
             index++;
             done();
         });
 
         it('should have SecurityExchange value N', (done) => {
-            assert.strictEqual(parsed[index].tag, 207);
-            assert.strictEqual(parsed[index].value, 'N');
+            assert.strictEqual(parsed.data[index].tag, 207);
+            assert.strictEqual(parsed.data[index].value, 'N');
             index++;
             done();
         });
 
         it('should have Rule80A value A', (done) => {
-            assert.strictEqual(parsed[index].tag, 47);
-            assert.strictEqual(parsed[index].value, 'A');
+            assert.strictEqual(parsed.data[index].tag, 47);
+            assert.strictEqual(parsed.data[index].value, 'A');
             index++;
             done();
         });
 
         it('NySE extensions: should have NYSEDirect value NX', (done) => {
-            assert.strictEqual(parsed[index].tag, 9430);
-            assert.strictEqual(parsed[index].value, 'NX');
+            assert.strictEqual(parsed.data[index].tag, 9430);
+            assert.strictEqual(parsed.data[index].value, 'NX');
             index++;
             done();
         });
 
         it('NySE extensions: should have DBExecID value 000010', (done) => {
-            assert.strictEqual(parsed[index].tag, 9483);
-            assert.strictEqual(parsed[index].value, '000010');
+            assert.strictEqual(parsed.data[index].tag, 9483);
+            assert.strictEqual(parsed.data[index].value, '000010');
             index++;
             done();
         });
 
         it('NySE extensions: should have BillingIndicator value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 9578);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 9578);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
         it('NySE extensions: should have StatusResp value 5', (done) => {
-            assert.strictEqual(parsed[index].tag, 9425);
-            assert.strictEqual(parsed[index].value, '5');
+            assert.strictEqual(parsed.data[index].tag, 9425);
+            assert.strictEqual(parsed.data[index].value, '5');
             index++;
             done();
         });
 
         it('NySE extensions: should have ExpERCReferenceNumber value 0000100002', (done) => {
-            assert.strictEqual(parsed[index].tag, 9579);
-            assert.strictEqual(parsed[index].value, '0000100002');
+            assert.strictEqual(parsed.data[index].tag, 9579);
+            assert.strictEqual(parsed.data[index].value, '0000100002');
             index++;
             done();
         });
 
         it('NySE extensions: should have PrevExpERCReferenceNumber value 0000100001', (done) => {
-            assert.strictEqual(parsed[index].tag, 9704);
-            assert.strictEqual(parsed[index].value, '0000100001');
+            assert.strictEqual(parsed.data[index].tag, 9704);
+            assert.strictEqual(parsed.data[index].value, '0000100001');
             index++;
             done();
         });
 
         it('should have NoContraBrokers value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 382);
-            assert.strictEqual(parsed[index].value, 1);
-            assert.isNumber(parsed[index].value);
-            isInt = parsed[index].value % 1 === 0;
-            assert(isInt, 'not an integer:' + parsed[index].value);
+            assert.strictEqual(parsed.data[index].tag, 382);
+            assert.strictEqual(parsed.data[index].value, 1);
+            assert.isNumber(parsed.data[index].value);
+            isInt = parsed.data[index].value % 1 === 0;
+            assert(isInt, 'not an integer:' + parsed.data[index].value);
             index++;
             done();
         });
 
         it('should have ContraBroker value TOD', (done) => {
-            assert.strictEqual(parsed[index].tag, 375);
-            assert.strictEqual(parsed[index].value, 'TOD');
+            assert.strictEqual(parsed.data[index].tag, 375);
+            assert.strictEqual(parsed.data[index].value, 'TOD');
             index++;
             done();
         });
 
         it('should have ContraTrader value 0000', (done) => {
-            assert.strictEqual(parsed[index].tag, 337);
-            assert.strictEqual(parsed[index].value, '0000');
+            assert.strictEqual(parsed.data[index].tag, 337);
+            assert.strictEqual(parsed.data[index].value, '0000');
             index++;
             done();
         });
 
         it('should have ContraTradeQty value 100', (done) => {
-            assert.strictEqual(parsed[index].tag, 437);
-            assert.strictEqual(parsed[index].value, 100);
+            assert.strictEqual(parsed.data[index].tag, 437);
+            assert.strictEqual(parsed.data[index].value, 100);
             index++;
             done();
         });
 
         it('should have ContraTradeTime value 1736', (done) => {
-            assert.strictEqual(parsed[index].tag, 438);
-            assert.strictEqual(parsed[index].value, '1736');
+            assert.strictEqual(parsed.data[index].tag, 438);
+            assert.strictEqual(parsed.data[index].value, '1736');
             index++;
             done();
         });
 
         it('should have LastCapacity value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 29);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 29);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
         it('should have SettlType value 0', (done) => {
-            assert.strictEqual(parsed[index].tag, 63);
-            assert.strictEqual(parsed[index].value, '0');
+            assert.strictEqual(parsed.data[index].tag, 63);
+            assert.strictEqual(parsed.data[index].value, '0');
             index++;
             done();
         });
 
         it('NySE extensions: should have ERCReferenceNumber value 001001002', (done) => {
-            assert.strictEqual(parsed[index].tag, 9440);
-            assert.strictEqual(parsed[index].value, '001001002');
+            assert.strictEqual(parsed.data[index].tag, 9440);
+            assert.strictEqual(parsed.data[index].value, '001001002');
             index++;
             done();
         });
 
         it('should have CheckSum value 235', (done) => {
-            assert.strictEqual(parsed[index].tag, 10);
-            assert.strictEqual(parsed[index].value, '235');
-            //assert.strictEqual(parsed[index].valid, true);
+            assert.strictEqual(parsed.data[index].tag, 10);
+            assert.strictEqual(parsed.data[index].value, '235');
+            assert.strictEqual(parsed.validChecksum, false);
             index++;
             done();
         });
@@ -384,173 +384,173 @@ describe('FIXParser', () => {
         });
 
         it('should have BeginString value FIX.4.2', (done) => {
-            assert.strictEqual(parsed[index].tag, 8);
-            assert.strictEqual(parsed[index].value, 'FIX.4.2');
+            assert.strictEqual(parsed.data[index].tag, 8);
+            assert.strictEqual(parsed.data[index].value, 'FIX.4.2');
             index++;
             done();
         });
 
         it('should have BodyLength value 154 (validated)', (done) => {
-            assert.strictEqual(parsed[index].tag, 9);
-            assert.strictEqual(parsed[index].value, 154);
-            assert.strictEqual(parsed[index].validBodyLength, true);
-            assert.isNumber(parsed[index].value);
-            isInt = parsed[index].value % 1 === 0;
-            assert(isInt, 'not an integer:' + parsed[index].value);
+            assert.strictEqual(parsed.data[index].tag, 9);
+            assert.strictEqual(parsed.data[index].value, 154);
+            assert.strictEqual(parsed.validBodyLength, true);
+            assert.isNumber(parsed.data[index].value);
+            isInt = parsed.data[index].value % 1 === 0;
+            assert(isInt, 'not an integer:' + parsed.data[index].value);
             index++;
             done();
         });
 
         it('should have MsgType value E', (done) => {
-            assert.strictEqual(parsed[index].tag, 35);
-            assert.strictEqual(parsed[index].value, 'E');
+            assert.strictEqual(parsed.data[index].tag, 35);
+            assert.strictEqual(parsed.data[index].value, 'E');
             index++;
             done();
         });
 
         it('should have SenderCompID value INST', (done) => {
-            assert.strictEqual(parsed[index].tag, 49);
-            assert.strictEqual(parsed[index].value, 'INST');
+            assert.strictEqual(parsed.data[index].tag, 49);
+            assert.strictEqual(parsed.data[index].value, 'INST');
             index++;
             done();
         });
 
         it('should have MsgSeqNum value BROK', (done) => {
-            assert.strictEqual(parsed[index].tag, 56);
-            assert.strictEqual(parsed[index].value, 'BROK');
+            assert.strictEqual(parsed.data[index].tag, 56);
+            assert.strictEqual(parsed.data[index].value, 'BROK');
             index++;
             done();
         });
 
         it('should have SendingTime value 20050908-15:51:22', (done) => {
-            assert.strictEqual(parsed[index].tag, 52);
-            assert.strictEqual(parsed[index].value, '20050908-15:51:22');
+            assert.strictEqual(parsed.data[index].tag, 52);
+            assert.strictEqual(parsed.data[index].value, '20050908-15:51:22');
             index++;
             done();
         });
 
         it('should have MsgSeqNum value 200', (done) => {
-            assert.strictEqual(parsed[index].tag, 34);
-            assert.strictEqual(parsed[index].value, 200);
+            assert.strictEqual(parsed.data[index].tag, 34);
+            assert.strictEqual(parsed.data[index].value, 200);
             index++;
             done();
         });
 
         it('should have ListID value 14', (done) => {
-            assert.strictEqual(parsed[index].tag, 66);
-            assert.strictEqual(parsed[index].value, '14');
+            assert.strictEqual(parsed.data[index].tag, 66);
+            assert.strictEqual(parsed.data[index].value, '14');
             index++;
             done();
         });
 
         it('should have BidType value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 394);
-            assert.strictEqual(parsed[index].value, 1);
+            assert.strictEqual(parsed.data[index].tag, 394);
+            assert.strictEqual(parsed.data[index].value, 1);
             index++;
             done();
         });
 
         it('should have TotNoOrders value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 68);
-            assert.strictEqual(parsed[index].value, 2);
+            assert.strictEqual(parsed.data[index].tag, 68);
+            assert.strictEqual(parsed.data[index].value, 2);
             index++;
             done();
         });
 
         it('should have NoOrders value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 73);
-            assert.strictEqual(parsed[index].value, 2);
+            assert.strictEqual(parsed.data[index].tag, 73);
+            assert.strictEqual(parsed.data[index].value, 2);
             index++;
             done();
         });
 
-        it('should have ClOrdID value order-1', (done) => {
-            assert.strictEqual(parsed[index].tag, 11);
-            assert.strictEqual(parsed[index].value, 'order-1');
+        it('should have ClOrdID value order- 1', (done) => {
+            assert.strictEqual(parsed.data[index].tag, 11);
+            assert.strictEqual(parsed.data[index].value, 'order- 1');
             index++;
             done();
         });
 
         it('should have ListSeqNo value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 67);
-            assert.strictEqual(parsed[index].value, 1);
+            assert.strictEqual(parsed.data[index].tag, 67);
+            assert.strictEqual(parsed.data[index].value, 1);
             index++;
             done();
         });
 
         it('should have Symbol value IBM', (done) => {
-            assert.strictEqual(parsed[index].tag, 55);
-            assert.strictEqual(parsed[index].value, 'IBM');
+            assert.strictEqual(parsed.data[index].tag, 55);
+            assert.strictEqual(parsed.data[index].value, 'IBM');
             index++;
             done();
         });
 
         it('should have Side value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 54);
-            assert.strictEqual(parsed[index].value, '2');
+            assert.strictEqual(parsed.data[index].tag, 54);
+            assert.strictEqual(parsed.data[index].value, '2');
             index++;
             done();
         });
 
         it('should have OrderQty value 2000', (done) => {
-            assert.strictEqual(parsed[index].tag, 38);
-            assert.strictEqual(parsed[index].value, 2000);
+            assert.strictEqual(parsed.data[index].tag, 38);
+            assert.strictEqual(parsed.data[index].value, 2000);
             index++;
             done();
         });
 
         it('should have OrdType value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 40);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 40);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
         it('should have ClOrdID value order-2', (done) => {
-            assert.strictEqual(parsed[index].tag, 11);
-            assert.strictEqual(parsed[index].value, 'order-2');
+            assert.strictEqual(parsed.data[index].tag, 11);
+            assert.strictEqual(parsed.data[index].value, 'order-2');
             index++;
             done();
         });
 
         it('should have ListSeqNo value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 67);
-            assert.strictEqual(parsed[index].value, 2);
+            assert.strictEqual(parsed.data[index].tag, 67);
+            assert.strictEqual(parsed.data[index].value, 2);
             index++;
             done();
         });
 
         it('should have Symbol value AOL', (done) => {
-            assert.strictEqual(parsed[index].tag, 55);
-            assert.strictEqual(parsed[index].value, 'AOL');
+            assert.strictEqual(parsed.data[index].tag, 55);
+            assert.strictEqual(parsed.data[index].value, 'AOL');
             index++;
             done();
         });
 
         it('should have Side value 2', (done) => {
-            assert.strictEqual(parsed[index].tag, 54);
-            assert.strictEqual(parsed[index].value, '2');
+            assert.strictEqual(parsed.data[index].tag, 54);
+            assert.strictEqual(parsed.data[index].value, '2');
             index++;
             done();
         });
 
         it('should have OrderQty value 1000', (done) => {
-            assert.strictEqual(parsed[index].tag, 38);
-            assert.strictEqual(parsed[index].value, 1000);
+            assert.strictEqual(parsed.data[index].tag, 38);
+            assert.strictEqual(parsed.data[index].value, 1000);
             index++;
             done();
         });
 
         it('should have OrdType value 1', (done) => {
-            assert.strictEqual(parsed[index].tag, 40);
-            assert.strictEqual(parsed[index].value, '1');
+            assert.strictEqual(parsed.data[index].tag, 40);
+            assert.strictEqual(parsed.data[index].value, '1');
             index++;
             done();
         });
 
     });
 
-    for(var message of testMessages) {
+    function processTest(message) {
         describe('#parse: ' + message.description, () => {
             let fixParser = new FIXParser(),
             parsed = fixParser.parse(message.fix),
@@ -565,17 +565,33 @@ describe('FIXParser', () => {
 
             it('should have parsed the FIX message', (done) => {
                 assert.ok(parsed);
-                assert.strictEqual(parsed[0].name, 'BeginString');
-                assert.strictEqual(parsed[1].name, 'BodyLength');
-                assert.strictEqual(parsed[2].name, 'MsgType');
+                assert.strictEqual(parsed.data[0].name, 'BeginString');
+                assert.strictEqual(parsed.data[1].name, 'BodyLength');
+                assert.strictEqual(parsed.data[2].name, 'MsgType');
                 assert.isNotNull(parsed);
                 done();
             });
 
+            it('should have MsgType ' + message.description, (done) => {
+                assert.strictEqual(parsed.description, message.description);
+                done();
+            });
+
             it('should have validated BodyLength', (done) => {
-                assert.strictEqual(parsed[1].validBodyLength, true);
+                assert.strictEqual(parsed.validBodyLength, true);
+                done();
+            });
+
+            it('should have valid CheckSum: ' + message.validChecksum, (done) => {
+                assert.strictEqual(parsed.validChecksum, message.validChecksum);
                 done();
             });
         });
     }
+
+    for(var message of testMessages) {
+        processTest(message);
+    }
+
+
 });
