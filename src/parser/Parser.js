@@ -7,15 +7,43 @@
  */
 import {Fields} from './../fields/Fields';
 import {Enums} from './../enums/Enums';
+import {Message} from './../message/Message';
 
 export class Parser {
 
     constructor() {
-        this.rawData = '';
+        this.SOH = '|';
+        this.EQ = '=';
         this.processedData = '';
-        this.message = {};
+        this.message = new Message();
         this.fields = new Fields();
         this.enums = new Enums();
+    }
+
+    // Replace multiple-byte SOH to single-byte (e.g. NySE)
+    replaceMultiByteSOH(data) {
+        let separator = '_FIXPARSER_SEPARATOR_',
+            multiByteSeparator = '_MULTIBYTE_SEPARATOR_';
+        return data
+                    .replace(/[^\x00-\x7F]/g, separator)
+                    .replace(/\u0001/g, separator)
+                    .replace(/\001/g, separator)
+                    .replace(/\^A /g, separator)
+                    .replace(/\^A/g, separator)
+                    .replace(/\^/g, separator)
+                    .replace(/\|/g, separator)
+                    .replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, multiByteSeparator)
+                    .replace(/_MULTIBYTE_SEPARATOR__MULTIBYTE_SEPARATOR_/g, this.SOH)
+                    .replace(/_MULTIBYTE_SEPARATOR_/g, '')
+                    .replace(/_FIXPARSER_SEPARATOR_/g, this.SOH);
+    }
+
+    preProcess(data) {
+        this.processedData = data;
+        this.message = new Message();
+        this.message.string = data;
+        this.processedData = this.replaceMultiByteSOH(this.processedData);
+        this.message.string = this.replaceMultiByteSOH(this.message.string);
     }
 
     parse(data) {
@@ -38,7 +66,7 @@ export class Parser {
 
             item = {};
 
-            equalsOperator = array[i].indexOf('=');
+            equalsOperator = array[i].indexOf(this.EQ);
 
             if (equalsOperator === -1) {
                 item.error = 'Error: ' + array[i];
@@ -52,11 +80,11 @@ export class Parser {
             this.enums.process(item, tag, value);
 
             if(tag === 9) {
-                this.message.validBodyLength = this.validateBodyLength(value);
+                this.message.validateBodyLength(value);
             }
 
             if(tag === 10) {
-                this.message.validChecksum = this.validateChecksum(value);
+                this.message.validateChecksum(value);
             }
 
             item.tag = tag;
@@ -65,53 +93,5 @@ export class Parser {
         }
 
         return this.message;
-    }
-
-    replaceMultiByteSOH(data) {
-        // Replace multiple-byte SOH to single-byte (e.g. NySE)
-        return data.replace(/\^A /g, '|').replace(/\^A/g, '|');
-    }
-
-    preProcess(data) {
-        this.rawData = data;
-        this.processedData = data;
-        this.message = {};
-        this.message.data = [];
-        this.processedData = this.replaceMultiByteSOH(this.processedData);
-        this.rawData = this.replaceMultiByteSOH(this.rawData);
-    }
-
-    validateBodyLength(value) {
-        let startLength = this.rawData.indexOf('35=') !== -1 ? this.rawData.indexOf('35=') : 0,
-            endLength = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
-            bodyLength = endLength - startLength;
-
-        return value === String(bodyLength);
-    }
-
-    pad(value, size) {
-        let paddedString = '00' + value;
-        return paddedString.substr(paddedString.length - size);
-    }
-
-    validateChecksum(value) {
-        let regexp = /([0-9]+)=([^|;\001]*)/g,
-            length = this.rawData.indexOf('10=') !== -1 ? this.rawData.indexOf('10=') : this.rawData.length,
-            data = this.rawData.substr(0, length),
-            byteOffset = 0,
-            integerValues = 0,
-            result;
-
-        while((result = regexp.exec(data)) !== null) {
-            let pair = result[0];
-            for(let i = 0; i < pair.length; i++) {
-                integerValues += pair.charCodeAt(i);
-            }
-            byteOffset += 1;
-        }
-
-        integerValues += byteOffset;
-
-        return value === this.pad(integerValues % 256, 3);
     }
 }

@@ -79,15 +79,15 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 
                 // Header
                 var enumType = data.enum ? " = " + data.enum.Description : "";
-                var validChecksum;
+                var checksumValid;
 
                 if(tag === 10) {
-                    validChecksum = metaData.validChecksum ? " VALID" : " INVALID";
+                    checksumValid = metaData.checksumValid ? " VALID" : " INVALID";
                 } else {
-                    validChecksum = "";
+                    checksumValid = "";
                 }
 
-                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + validChecksum + "</strong></h3><br>";
+                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + checksumValid + "</strong></h3><br>";
 
                 returnString += "<strong>Description: </strong>" + data.description + "<br>";
 
@@ -127,7 +127,6 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
                 item = document.createElement("div");
                 item.className = "item";
                 output.appendChild(item);
-
                 item.innerHTML = FIX.renderItem(parsedMessage, parsedMessage.data[i], item);
             }
 

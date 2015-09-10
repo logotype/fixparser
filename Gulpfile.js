@@ -32,6 +32,7 @@ gulp.task('transpile', ['clean'], function() {
         .bundle()
         .on("error", function (err) { console.log("Error : " + err.message); })
         .pipe(source('FIXParser.js'))
+        .pipe($.streamify($.uglify()))
         .pipe(gulp.dest('./build'));
 });
 

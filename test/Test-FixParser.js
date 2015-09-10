@@ -40,7 +40,7 @@ describe('FIXParser', () => {
         it('should have BodyLength value 440 (validated)', (done) => {
             assert.strictEqual(parsed.data[index].tag, 9);
             assert.strictEqual(parsed.data[index].value, 440);
-            assert.strictEqual(parsed.validBodyLength, true);
+            assert.strictEqual(parsed.bodyLengthValid, true);
             assert.isNumber(parsed.data[index].value);
             isInt = parsed.data[index].value % 1 === 0;
             assert(isInt, 'not an integer:' + parsed.data[index].value);
@@ -356,10 +356,10 @@ describe('FIXParser', () => {
             done();
         });
 
-        it('should have CheckSum value 235', (done) => {
+        it('should have invalid CheckSum value 235', (done) => {
             assert.strictEqual(parsed.data[index].tag, 10);
             assert.strictEqual(parsed.data[index].value, '235');
-            assert.strictEqual(parsed.validChecksum, false);
+            assert.strictEqual(parsed.checksumValid, false);
             index++;
             done();
         });
@@ -393,7 +393,7 @@ describe('FIXParser', () => {
         it('should have BodyLength value 154 (validated)', (done) => {
             assert.strictEqual(parsed.data[index].tag, 9);
             assert.strictEqual(parsed.data[index].value, 154);
-            assert.strictEqual(parsed.validBodyLength, true);
+            assert.strictEqual(parsed.bodyLengthValid, true);
             assert.isNumber(parsed.data[index].value);
             isInt = parsed.data[index].value % 1 === 0;
             assert(isInt, 'not an integer:' + parsed.data[index].value);
@@ -577,13 +577,13 @@ describe('FIXParser', () => {
                 done();
             });
 
-            it('should have validated BodyLength', (done) => {
-                assert.strictEqual(parsed.validBodyLength, true);
+            it('should have valid BodyLength: ' + message.bodyLengthValid, (done) => {
+                    assert.strictEqual(parsed.bodyLengthValid, message.bodyLengthValid, '[actual: ' + parsed.bodyLengthValue + ', expected: ' + parsed.bodyLengthExpected + ']');
                 done();
             });
 
-            it('should have valid CheckSum: ' + message.validChecksum, (done) => {
-                assert.strictEqual(parsed.validChecksum, message.validChecksum);
+            it('should have valid CheckSum: ' + message.checksumValid, (done) => {
+                    assert.strictEqual(parsed.checksumValid, message.checksumValid, '[actual: ' + parsed.checksumValue + ', expected: ' + parsed.checksumExpected + ']');
                 done();
             });
         });

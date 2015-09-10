@@ -19,10 +19,6 @@ export class FIXParser extends EventEmitter {
     parse(message) {
         return this.parser.parse(message);
     }
-
-    calculateChecksum(message) {
-        return this.parser.calculateChecksum(message);
-    }
 }
 
 export default FIXParser;
