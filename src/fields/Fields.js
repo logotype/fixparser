@@ -21,10 +21,7 @@ export class Fields {
         if(data) {
 
             if(tag === 35) {
-                let messageData = this.messages.find(value);
-                if(messageData) {
-                    message.description = messageData.Name;
-                }
+                this.messages.process(message, item, tag, value);
             }
 
             item.name = data.Name;

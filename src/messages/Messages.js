@@ -10,9 +10,10 @@ export class Messages {
         return this.messages.find(item => item.MsgType === String(value));
     }
 
-    process(item, tag, value) {
-        let messageType = this.find(tag, value);
+    process(message, item, tag, value) {
+        let messageType = this.find(value);
         if(messageType) {
+            message.description = messageType.Name;
             item.message = messageType;
         }
     }

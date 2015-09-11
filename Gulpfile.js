@@ -28,7 +28,9 @@ gulp.task('clean', ['eslint'], function(done) {
 
 gulp.task('transpile', ['clean'], function() {
     return browserify("./src/FIXParser.js", { debug: true })
-        .transform(babelify)
+        .transform(babelify.configure({
+            stage: 0
+        }))
         .bundle()
         .on("error", function (err) { console.log("Error : " + err.message); })
         .pipe(source('FIXParser.js'))
@@ -38,7 +40,9 @@ gulp.task('transpile', ['clean'], function() {
 
 gulp.task('perf', function () {
     return gulp.src(['./perf/**/*.js'])
-        .pipe($.babel())
+        .pipe($.babel({
+            stage: 0
+        }))
         .pipe($.uglify())
         .pipe(gulp.dest('./perfbuild'));
 });
@@ -47,7 +51,9 @@ gulp.task('test', ['transpile'], function () {
     return gulp.src('./test/**/*.js', {read: false})
         .pipe($.mocha({
             recursive: true,
-            compilers: require('babel/register'),
+            compilers: require('babel/register')({
+                stage: 0
+            }),
             reporter: 'spec'
         }));
 });

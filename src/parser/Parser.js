@@ -68,11 +68,6 @@ export class Parser {
 
             equalsOperator = array[i].indexOf(this.EQ);
 
-            if (equalsOperator === -1) {
-                item.error = 'Error: ' + array[i];
-                continue;
-            }
-
             tag = parseInt(array[i].substring(0, equalsOperator));
             value = array[i].substring(equalsOperator + 1);
 
