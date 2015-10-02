@@ -32,7 +32,7 @@ export class Parser {
                     .replace(/\^A/g, separator)
                     .replace(/\^/g, separator)
                     .replace(/\|/g, separator)
-                    .replace(/[^A-Za-z 0-9 \.,\?""!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|\}\{\[\]`~]*/g, multiByteSeparator)
+                    .replace(/[^A-Za-z 0-9\.,\?"!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|}\{\[\]`~]*/g, multiByteSeparator)
                     .replace(/_MULTIBYTE_SEPARATOR__MULTIBYTE_SEPARATOR_/g, this.SOH)
                     .replace(/_MULTIBYTE_SEPARATOR_/g, '')
                     .replace(/_FIXPARSER_SEPARATOR_/g, this.SOH);

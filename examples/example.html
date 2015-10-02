@@ -78,7 +78,7 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             if(data.type) {
 
                 // Header
-                var enumType = data.enum ? " = " + data.enum.Description : "";
+                var enumType = data.enumeration ? " = " + data.enumeration.Description : "";
                 var checksumValid;
 
                 if(tag === 10) {
@@ -93,12 +93,12 @@ Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 
                 returnString += "<strong>Type: </strong> &lt;" + data.type.Name + "&gt; " + data.type.Description + "<br>";
 
-                if(data.enum) {
+                if(data.enumeration) {
                     returnString += "<blockquote>";
-                    returnString += "<h3><strong>" + data.enum.Description + "(" + value + ") &lt;Sort " + data.enum.Sort + ", Group '" + data.enum.Group + "'&gt;</strong></h3><br>";
+                    returnString += "<h3><strong>" + data.enumeration.Description + "(" + value + ") &lt;Sort " + data.enumeration.Sort + ", Group '" + data.enumeration.Group + "'&gt;</strong></h3><br>";
 
-                    if(data.enum.Elaboration) {
-                        returnString += "<strong>Elaboration: </strong>" + data.enum.Elaboration + "<br>";
+                    if(data.enumeration.Elaboration) {
+                        returnString += "<strong>Elaboration: </strong>" + data.enumeration.Elaboration + "<br>";
                     }
                     returnString += "</blockquote>";
                 }

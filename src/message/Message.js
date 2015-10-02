@@ -1,11 +1,5 @@
-/*
- * fixparser
- * https://github.com/logotype/fixparser.git
- *
- * Copyright 2015 Victor Norgren
- * Released under the MIT license
- */
 export class Message {
+
     constructor() {
         this.data = [];
         this.string = '';
@@ -24,7 +18,7 @@ export class Message {
         return this.bodyLengthValid;
     }
 
-    pad(value, size) {
+    static pad(value, size) {
         let paddedString = '00' + value;
         return paddedString.substr(paddedString.length - size);
     }
@@ -48,8 +42,8 @@ export class Message {
         integerValues += byteOffset;
 
         this.checksumValue = value;
-        this.checksumExpected = this.pad(integerValues % 256, 3);
-        this.checksumValid = value === this.pad(integerValues % 256, 3);
+        this.checksumExpected = Message.pad(integerValues % 256, 3);
+        this.checksumValid = value === Message.pad(integerValues % 256, 3);
         return this.checksumValid;
     }
 }

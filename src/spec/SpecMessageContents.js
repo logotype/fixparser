@@ -1,8 +1,7 @@
 export class SpecMessageContents {
 
     constructor() {
-        // Disabled due to gulp-eslint Maximum call stack size exceeded
-        /*this.messageContents = [
+        this.messageContents = [
             {
                 'ComponentID': '1',
                 'TagText': 'StandardHeader',
@@ -44761,6 +44760,6 @@ export class SpecMessageContents {
                 'Added': 'FIX.5.0SP1',
                 'AddedEP': '95'
             }
-        ]*/
+        ];
     }
 }

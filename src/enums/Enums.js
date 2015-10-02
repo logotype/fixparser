@@ -13,7 +13,7 @@ export class Enums {
     process(item, tag, value) {
         let enumType = this.find(tag, value);
         if(enumType) {
-            item.enum = enumType;
+            item.enumeration = enumType;
         }
     }
 }
