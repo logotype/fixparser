@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     del = require('del'),
     browserify = require("browserify"),
     babelify = require("babelify"),
-    source = require('vinyl-source-stream');
+    source = require('vinyl-source-stream'),
+    wait = require('gulp-wait');
 
 gulp.task('eslint', function () {
     return gulp.src(['./src/**/*.js'])
@@ -38,6 +39,7 @@ gulp.task('transpile', ['clean'], function() {
 
 gulp.task('perf', function () {
     return gulp.src(['./perf/**/*.js'])
+        .pipe(wait(1500))
         .pipe($.babel())
         .pipe($.uglify())
         .pipe(gulp.dest('./perfbuild'));
@@ -45,6 +47,7 @@ gulp.task('perf', function () {
 
 gulp.task('test', ['transpile'], function () {
     return gulp.src('./test/**/*.js', {read: false})
+        .pipe(wait(1500))
         .pipe($.mocha({
             recursive: true,
             compilers: require('babel/register'),
