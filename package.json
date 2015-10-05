@@ -36,7 +36,7 @@
     "ES6"
   ],
   "scripts": {
-    "test": "gulp test",
+    "test": "./node_modules/.bin/mocha --compilers js:babel/register",
     "es5": "node examples/example_es5.js",
     "es6": "babel-node examples/example_es6.js",
     "checksum": "babel-node examples/example_checksum.js",

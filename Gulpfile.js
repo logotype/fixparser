@@ -52,4 +52,4 @@ gulp.task('test', ['transpile'], function () {
         }));
 });
 
-gulp.task('default', ['eslint', 'transpile', 'test']);
+gulp.task('default', ['eslint', 'transpile']);
