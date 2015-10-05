@@ -1,9 +1,8 @@
-import {SpecCategories} from './../../spec/SpecCategories';
+import {categories} from './../../spec/SpecCategories';
 
 export class Categories {
     constructor() {
-        this.specCategories = new SpecCategories();
-        this.categories = this.specCategories.categories;
+        this.categories = categories;
     }
 
     find(category) {

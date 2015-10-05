@@ -1,9 +1,8 @@
-import {SpecDatatypes} from './../../spec/SpecDatatypes';
+import {datatypes} from './../../spec/SpecDatatypes';
 
 export class DataTypes {
     constructor() {
-        this.specDatatypes = new SpecDatatypes();
-        this.dataTypes = this.specDatatypes.datatypes;
+        this.dataTypes = datatypes;
     }
 
     find(dataType) {

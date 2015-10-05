@@ -1,9 +1,8 @@
-import {SpecComponents} from './../spec/SpecComponents';
+import {components} from './../../spec/SpecCategories';
 
 export class Components {
     constructor() {
-        this.specComponents = new SpecComponents();
-        this.components = this.specComponents.components;
+        this.components = components;
     }
 
     find(componentName) {

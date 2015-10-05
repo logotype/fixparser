@@ -1,9 +1,8 @@
-import {SpecEnums} from './../spec/SpecEnums';
+import {enums} from './../spec/SpecEnums';
 
 export class Enums {
     constructor() {
-        this.specEnums = new SpecEnums();
-        this.enums = this.specEnums.enums;
+        this.enums = enums;
     }
 
     find(tag, value) {

@@ -1,14 +1,13 @@
-import {SpecFields} from './../spec/SpecFields';
+import {fields} from './../spec/SpecFields';
 import {Messages} from './../messages/Messages';
 import {Categories} from './categories/Categories';
 import {DataTypes} from './datatypes/Datatypes';
 
 export class Fields {
     constructor() {
-        this.specFields = new SpecFields();
         this.messages = new Messages();
         this.categories = new Categories();
-        this.fields = this.specFields.fields;
+        this.fields = fields;
         this.dataTypes = new DataTypes();
     }
 
