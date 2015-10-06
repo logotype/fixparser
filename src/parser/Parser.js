@@ -12,7 +12,6 @@ import {Message} from './../message/Message';
 export class Parser {
 
     constructor() {
-        this.SOH = '|';
         this.EQ = '=';
         this.processedData = '';
         this.message = new Message();
@@ -21,29 +20,20 @@ export class Parser {
     }
 
     // Replace multiple-byte SOH to single-byte (e.g. NySE)
-    replaceMultiByteSOH(data) {
-        let separator = '_FIXPARSER_SEPARATOR_',
-            multiByteSeparator = '_MULTIBYTE_SEPARATOR_';
+    static replaceStartOfHeader(data) {
+        let SOH = '\x01';
         return data
-                    .replace(/[^\x00-\x7F]/g, separator)
-                    .replace(/\u0001/g, separator)
-                    .replace(/\001/g, separator)
-                    .replace(/\^A /g, separator)
-                    .replace(/\^A/g, separator)
-                    .replace(/\^/g, separator)
-                    .replace(/\|/g, separator)
-                    .replace(/[^A-Za-z 0-9\.,\?"!@#\$%\^&\*\(\)-_=\+;:<>\/\\\|}\{\[\]`~]*/g, multiByteSeparator)
-                    .replace(/_MULTIBYTE_SEPARATOR__MULTIBYTE_SEPARATOR_/g, this.SOH)
-                    .replace(/_MULTIBYTE_SEPARATOR_/g, '')
-                    .replace(/_FIXPARSER_SEPARATOR_/g, this.SOH);
+                    .replace(/\^A /g, SOH)
+                    .replace(/\^A/g, SOH)
+                    .replace(/\^/g, SOH)
+                    .replace(/\|/g, SOH);
     }
 
     preProcess(data) {
         this.processedData = data;
-        this.message = new Message();
-        this.message.string = data;
-        this.processedData = this.replaceMultiByteSOH(this.processedData);
-        this.message.string = this.replaceMultiByteSOH(this.message.string);
+        this.message.reset();
+        this.processedData = Parser.replaceStartOfHeader(this.processedData);
+        this.message.string = this.processedData;
     }
 
     parse(data) {

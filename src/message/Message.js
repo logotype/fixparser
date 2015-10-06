@@ -1,10 +1,29 @@
 export class Message {
 
     constructor() {
+
+        this.regexp = /([0-9]+)=([^|]*)/g;
+
         this.data = [];
         this.string = '';
         this.bodyLengthValid = false;
         this.checksumValid = false;
+
+        this.checksumValue = null;
+        this.checksumExpected = null;
+        this.bodyLengthValue = null;
+        this.bodyLengthExpected = null;
+    }
+
+    reset() {
+        this.data = [];
+        this.string = '';
+        this.bodyLengthValid = false;
+        this.checksumValid = false;
+        this.checksumValue = null;
+        this.checksumExpected = null;
+        this.bodyLengthValue = null;
+        this.bodyLengthExpected = null;
     }
 
     validateBodyLength(value) {
@@ -24,19 +43,17 @@ export class Message {
     }
 
     validateChecksum(value) {
-        let regexp = /([0-9]+)=([^|]*)/g,
-            length = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
+        let length = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
             data = this.string.substr(0, length),
             byteOffset = 0,
             integerValues = 0,
             result;
 
-        while((result = regexp.exec(data)) !== null) {
+        while((result = this.regexp.exec(data)) !== null) {
             let pair = result[0];
             for(let i = 0; i < pair.length; i++) {
                 integerValues += pair.charCodeAt(i);
             }
-            byteOffset += 1;
         }
 
         integerValues += byteOffset;
