@@ -47,7 +47,7 @@ let Table = require('cli-table'),
         return numberWithCommas(rate.toFixed()) + ' msg/s';
     },
     rateDisplayTime = function(rate, unit) {
-        return ((1/rate)*unit.unit).toFixed(3) + ' ' + unit.title;
+        return ((1/rate)*unit.unit).toFixed(4) + ' ' + unit.title;
     },
     runOnceFixed = function() {
         i = 0;

@@ -5,14 +5,22 @@ import {DataTypes} from './datatypes/Datatypes';
 
 export class Fields {
     constructor() {
+        this.fields = fields;
+        this.cacheMap = new Map();
+        this.fields.map(item => {
+            this.cacheMap.set(item.Tag, item);
+        });
         this.messages = new Messages();
         this.categories = new Categories();
-        this.fields = fields;
         this.dataTypes = new DataTypes();
     }
 
     find(tag) {
-        return this.fields.find(spec => spec.Tag === String(tag));
+        let returnValue = null;
+        if(this.cacheMap.has(String(tag))) {
+            returnValue = this.cacheMap.get(String(tag));
+        }
+        return returnValue;
     }
 
     process(message, item, tag, value) {

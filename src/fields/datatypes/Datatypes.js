@@ -3,10 +3,18 @@ import {datatypes} from './../../spec/SpecDatatypes';
 export class DataTypes {
     constructor() {
         this.dataTypes = datatypes;
+        this.cacheMap = new Map();
+        this.dataTypes.map(item => {
+            this.cacheMap.set(item.Name, item);
+        });
     }
 
     find(dataType) {
-        return this.dataTypes.find(spec => spec.Name === dataType);
+        let returnValue = null;
+        if(this.cacheMap.has(String(dataType))) {
+            returnValue = this.cacheMap.get(String(dataType));
+        }
+        return returnValue;
     }
 
     process(item, type, value) {

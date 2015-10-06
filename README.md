@@ -32,16 +32,16 @@ Performance
 ```bash
 ┌────────────────────────────────┬──────────────┬──────────────┬──────────────┐
 │ FIX Messages                   │ Messages/sec │ Microseconds │ Milliseconds │
-│ 25,000 iterations (same msg)   │ 31,017 msg/s │ 32.240 μs    │ 0.032 ms     │
-│ 25,000 iterations (same msg)   │ 32,637 msg/s │ 30.640 μs    │ 0.031 ms     │
-│ 25,000 iterations (random msg) │ 8,909 msg/s  │ 112.240 μs   │ 0.112 ms     │
-│ 25,000 iterations (same msg)   │ 31,486 msg/s │ 31.760 μs    │ 0.032 ms     │
-│ 25,000 iterations (random msg) │ 8,980 msg/s  │ 111.360 μs   │ 0.111 ms     │
-│ 25,000 iterations (same msg)   │ 31,646 msg/s │ 31.600 μs    │ 0.032 ms     │
-│ 25,000 iterations (random msg) │ 9,003 msg/s  │ 111.080 μs   │ 0.111 ms     │
-│ 25,000 iterations (same msg)   │ 31,566 msg/s │ 31.680 μs    │ 0.032 ms     │
-│ 25,000 iterations (same msg)   │ 31,807 msg/s │ 31.440 μs    │ 0.031 ms     │
-│ 25,000 iterations (same msg)   │ 31,526 msg/s │ 31.720 μs    │ 0.032 ms     │
+│ 25,000 iterations (same msg)   │ 66,138 msg/s │ 15.1200 μs   │ 0.0151 ms    │
+│ 25,000 iterations (same msg)   │ 71,839 msg/s │ 13.9200 μs   │ 0.0139 ms    │
+│ 25,000 iterations (random msg) │ 44,883 msg/s │ 22.2800 μs   │ 0.0223 ms    │
+│ 25,000 iterations (same msg)   │ 67,935 msg/s │ 14.7200 μs   │ 0.0147 ms    │
+│ 25,000 iterations (random msg) │ 45,788 msg/s │ 21.8400 μs   │ 0.0218 ms    │
+│ 25,000 iterations (same msg)   │ 70,028 msg/s │ 14.2800 μs   │ 0.0143 ms    │
+│ 25,000 iterations (random msg) │ 47,170 msg/s │ 21.2000 μs   │ 0.0212 ms    │
+│ 25,000 iterations (same msg)   │ 68,493 msg/s │ 14.6000 μs   │ 0.0146 ms    │
+│ 25,000 iterations (same msg)   │ 68,681 msg/s │ 14.5600 μs   │ 0.0146 ms    │
+│ 25,000 iterations (same msg)   │ 69,832 msg/s │ 14.3200 μs   │ 0.0143 ms    │
 └────────────────────────────────┴──────────────┴──────────────┴──────────────┘
 ```
 This performance was achieved on a 2013 MacBook Air, run with `npm run perf`.

@@ -3,16 +3,16 @@ import {enums} from './../spec/SpecEnums';
 export class Enums {
     constructor() {
         this.enums = enums;
-        this.enumsMap = new Map();
-        this.enums.map((enumObj) => {
-            this.enumsMap.set( enumObj.Tag + '|' + enumObj.Value , enumObj);
+        this.cacheMap = new Map();
+        this.enums.map(item => {
+            this.cacheMap.set( item.Tag + '|' + item.Value , item);
         });
     }
 
     find(tag, value) {
         let returnValue = null;
-        if(this.enumsMap.has(tag + '|' + value)) {
-            returnValue = this.enumsMap.get(tag + '|' + value);
+        if(this.cacheMap.has(String(tag) + '|' + value)) {
+            returnValue = this.cacheMap.get(String(tag) + '|' + value);
         }
         return returnValue;
     }
