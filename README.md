@@ -27,6 +27,18 @@ Features
 + Clean, lightweight and documented code
 + Supports both browser and node.js/iojs
 
+Performance
+-----------
+```bash
+┌───────────────────┬─────────────┬──────────────┬──────────────┐
+│ Performance test  │ msg/sec     │ Microseconds │ Milliseconds │
+│ FIX rate (fixed)  │ 18832 msg/s │ 53.100 μs    │ 0.053 ms     │
+│ FIX rate (fixed)  │ 23148 msg/s │ 43.200 μs    │ 0.043 ms     │
+│ FIX rate (random) │ 6698 msg/s  │ 149.300 μs   │ 0.149 ms     │
+│ FIX rate (fixed)  │ 22831 msg/s │ 43.800 μs    │ 0.044 ms     │
+└───────────────────┴─────────────┴──────────────┴──────────────┘
+```
+
 Message format
 --------------
 
