@@ -3,7 +3,9 @@ import './../build/FIXParser.js';
 console.log('Running performance tests...');
 
 let Table = require('cli-table'),
-    fixParser = new FIXParser(), i, length = 10000, startDate, dateDiff, rate, relativeRate, messages = [
+    fixParser = new FIXParser(),
+    iterations = 25000,
+    i, startDate, dateDiff, rate, relativeRate, messages = [
         {'description':'New Order Single', 'detail': 'BUY 100 CVS MKT DAY', 'fix':'8=FIX.4.2^A 9=145^A 35=D^A 34=4^A 49=ABC_DEFG01^A 52=20090323-15:40:29^A 56=CCG^A 115=XYZ^A 11=NF 0542/03232009^A 54=1^A 38=100^A 55=CVS^A 40=1^A 59=0^A 47=A^A 60=20090323-15:40:29^A 21=1^A 207=N^A 10=139^A'},
         {'description':'Order Acknowledgement', 'detail': '', 'fix':'8=FIX.4.2^A 9=226^A 35=8^A 128=XYZ^A 34=4^A 49=CCG^A 56=ABC_DEFG01^A 52=20090323-15:40:35^A 55=CVS^A 37=NF 0542/03232009^A 11=NF 0542/03232009^A 17=0^A 20=0^A 39=0^A 150=0^A 54=1^A 38=100^A 40=1^A 59=0^A 31=0^A 32=0^A 14=0^A 6=0^A 151=100^A 60=20090323-15:40:30^A 58=New order^A 30=N^A 207=N^A 47=A^A 10=149^A'},
         {'description':'Closing Offset (New Order Single)', 'detail': 'SL 1000 RRC LMT @55.36 DAY', 'fix':'8=FIX.4.2^A 9=156^A 35=D^A 34=124^A 49=ABC_DEFG04^A 52=20100208-18:51:42^A 56=CCG^A 115=XYZ^A 11=NF 0015/02082010^A 54=2^A 38=1000^A 55=RRC^A 40=2^A 44=55.36^A 59=0^A 1=ABC123ZYX^A 21=1^A 207=N^A 47=A^A 9487=CO^A 10=050^A'},
@@ -33,54 +35,77 @@ let Table = require('cli-table'),
     },
     table = new Table({
         chars: {'mid': '', 'left-mid': '', 'mid-mid': '', 'right-mid': ''},
-        head: ['Performance test', 'msg/sec', 'Microseconds', 'Milliseconds']
+        head: ['FIX Messages', 'Messages/sec', 'Microseconds', 'Milliseconds']
     }),
-    rateCalculation = function(length, dateDiff) {
-        return (length / dateDiff) * 1000;
+    numberWithCommas = function(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     },
-    rateDisplay = function(rate, unit) {
+    rateCalculation = function(iterations, dateDiff) {
+        return (iterations / dateDiff) * 1000;
+    },
+    rateDisplayMessages = function(rate) {
+        return numberWithCommas(rate.toFixed()) + ' msg/s';
+    },
+    rateDisplayTime = function(rate, unit) {
         return ((1/rate)*unit.unit).toFixed(3) + ' ' + unit.title;
+    },
+    runOnceFixed = function() {
+        i = 0;
+        startDate = new Date();
+        for (i; i < iterations; i++) {
+            fixParser.parse('8=FIX.4.2|9=154|35=6|49=BRKR|56=INVMGR|34=238|52=19980604-07:59:56|23=115686|28=N|55=FIA.MI|54=2|27=250000|44=7900.000000|25=H|10=231|');
+        }
+        dateDiff = new Date() - startDate;
+        rate = rateCalculation(iterations, dateDiff);
+        table.push([
+            numberWithCommas(iterations) + ' iterations (same msg)',
+            rateDisplayMessages(rate),
+            rateDisplayTime(rate, units.time.microseconds),
+            rateDisplayTime(rate, units.time.milliseconds)
+        ]);
+    },
+    runOnceRandom = function() {
+        i = 0;
+        startDate = new Date();
+        for (i; i < iterations; i++) {
+            fixParser.parse(messages[Math.floor(Math.random()*messages.length)].fix);
+        }
+        dateDiff = new Date() - startDate;
+        rate = rateCalculation(iterations, dateDiff);
+        table.push([
+            numberWithCommas(iterations) + ' iterations (random msg)',
+            rateDisplayMessages(rate),
+            rateDisplayTime(rate, units.time.microseconds),
+            rateDisplayTime(rate, units.time.milliseconds)
+        ]);
     };
 
 // 1st allocation
 fixParser.parse('allocate');
 
-i = 0;
-startDate = new Date();
-for (i; i < length; i++) {
-    fixParser.parse('8=FIX.4.2|9=154|35=6|49=BRKR|56=INVMGR|34=238|52=19980604-07:59:56|23=115686|28=N|55=FIA.MI|54=2|27=250000|44=7900.000000|25=H|10=231|');
-}
-dateDiff = new Date() - startDate;
-rate = rateCalculation(length, dateDiff);
-table.push(['FIX rate (fixed)', rate.toFixed() + ' msg/s', rateDisplay(rate, units.time.microseconds), rateDisplay(rate, units.time.milliseconds)]);
+process.stdout.write('0%...');
+runOnceFixed();
+process.stdout.write('10%...');
+runOnceFixed();
+process.stdout.write('20%...');
+runOnceRandom();
+process.stdout.write('30%...');
+runOnceFixed();
+process.stdout.write('40%...');
+runOnceRandom();
+process.stdout.write('50%...');
+runOnceFixed();
+process.stdout.write('60%...');
+runOnceRandom();
+process.stdout.write('70%...');
+runOnceFixed();
+process.stdout.write('80%...');
+runOnceFixed();
+process.stdout.write('90%...');
+runOnceFixed();
+process.stdout.write('100%');
 
-i = 0;
-startDate = new Date();
-for (i; i < length; i++) {
-    fixParser.parse('8=FIX.4.2|9=154|35=6|49=BRKR|56=INVMGR|34=238|52=19980604-07:59:56|23=115686|28=N|55=FIA.MI|54=2|27=250000|44=7900.000000|25=H|10=231|');
-}
-dateDiff = new Date() - startDate;
-rate = rateCalculation(length, dateDiff);
-table.push(['FIX rate (fixed)', rate.toFixed() + ' msg/s', rateDisplay(rate, units.time.microseconds), rateDisplay(rate, units.time.milliseconds)]);
-
-i = 0;
-startDate = new Date();
-for (i; i < length; i++) {
-    fixParser.parse(messages[Math.floor(Math.random()*messages.length)].fix);
-}
-dateDiff = new Date() - startDate;
-rate = rateCalculation(length, dateDiff);
-table.push(['FIX rate (random)', rate.toFixed() + ' msg/s', rateDisplay(rate, units.time.microseconds), rateDisplay(rate, units.time.milliseconds)]);
-
-i = 0;
-startDate = new Date();
-for (i; i < length; i++) {
-    fixParser.parse('8=FIX.4.2|9=154|35=6|49=BRKR|56=INVMGR|34=238|52=19980604-07:59:56|23=115686|28=N|55=FIA.MI|54=2|27=250000|44=7900.000000|25=H|10=231|');
-}
-dateDiff = new Date() - startDate;
-rate = rateCalculation(length, dateDiff);
-table.push(['FIX rate (fixed)', rate.toFixed() + ' msg/s', rateDisplay(rate, units.time.microseconds), rateDisplay(rate, units.time.milliseconds)]);
-
+console.log('');
 console.log(table.toString());
 console.log('Performance tests ran successfully.');
 console.log('');
