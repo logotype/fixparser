@@ -10,7 +10,7 @@ The Financial Information eXchange (FIX) protocol is an electronic communication
 Quick start
 -----------
 
-Clone the repo, `git clone git://github.com/logotype/fixparser.git`.
+Install with `npm install fixparser`.
 
 Create an instance of the `FIXParser` class:
 
@@ -25,7 +25,7 @@ Features
 --------
 + Modern, written in ES6/ES2015
 + Clean, lightweight and documented code
-+ Supports both browser and node.js/iojs
++ Supports both node.js/iojs and browser
 
 Performance
 -----------
