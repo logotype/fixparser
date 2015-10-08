@@ -7,72 +7,56 @@ export class DataTypes {
         this.dataTypes.map(item => {
             this.cacheMap.set(item.Name, item);
         });
-    }
+        this.cacheTypeMap = new Map();
+        this.cacheTypeMap.set('int', parseInt);
+        this.cacheTypeMap.set('Length', parseInt);
+        this.cacheTypeMap.set('TagNum', parseInt);
+        this.cacheTypeMap.set('SeqNum', parseInt);
+        this.cacheTypeMap.set('NumInGroup', parseInt);
+        this.cacheTypeMap.set('DayOfMonth', parseInt);
 
-    find(dataType) {
-        let returnValue = null;
-        if(this.cacheMap.has(String(dataType))) {
-            returnValue = this.cacheMap.get(String(dataType));
-        }
-        return returnValue;
+        this.cacheTypeMap.set('float', parseFloat);
+        this.cacheTypeMap.set('Qty', parseFloat);
+        this.cacheTypeMap.set('Price', parseFloat);
+        this.cacheTypeMap.set('PriceOffset', parseFloat);
+        this.cacheTypeMap.set('Amt', parseFloat);
+        this.cacheTypeMap.set('Percentage', parseFloat);
+
+        this.cacheTypeMap.set('char', String);
+        this.cacheTypeMap.set('Boolean', String);
+
+        this.cacheTypeMap.set('String', String);
+        this.cacheTypeMap.set('MultipleCharValue', String);
+        this.cacheTypeMap.set('MultipleStringValue', String);
+        this.cacheTypeMap.set('Country', String);
+        this.cacheTypeMap.set('Currency', String);
+        this.cacheTypeMap.set('Exchange', String);
+        this.cacheTypeMap.set('MonthYear', String);
+        this.cacheTypeMap.set('UTCTimestamp', String);
+        this.cacheTypeMap.set('UTCTimeOnly', String);
+        this.cacheTypeMap.set('UTCDateOnly', String);
+        this.cacheTypeMap.set('LocalMktDate', String);
+        this.cacheTypeMap.set('TZTimeOnly', String);
+        this.cacheTypeMap.set('TZTimestamp', String);
+        this.cacheTypeMap.set('data', String);
+        this.cacheTypeMap.set('XMLData', String);
+        this.cacheTypeMap.set('Language', String);
+
+        this.cacheTypeMap.set('Pattern', String);
+        this.cacheTypeMap.set('Tenor', String);
+        this.cacheTypeMap.set('Reserved100Plus', String);
+        this.cacheTypeMap.set('Reserved1000Plus', String);
+        this.cacheTypeMap.set('Reserved4000Plus', String);
     }
 
     process(item, type, value) {
 
-        let dataType = this.find(type);
+        let dataType = this.cacheMap.get(String(type));
         if(dataType) {
             item.type = dataType;
-        }
-
-        switch(type) {
-            case 'int':
-            case 'Length':
-            case 'TagNum':
-            case 'SeqNum':
-            case 'NumInGroup':
-            case 'DayOfMonth':
-                item.value = parseInt(value);
-                break;
-            case 'float':
-            case 'Qty':
-            case 'Price':
-            case 'PriceOffset':
-            case 'Amt':
-            case 'Percentage':
-                item.value = parseFloat(value);
-                break;
-            case 'char':
-            case 'Boolean':
-                item.value = String(value);
-                break;
-            case 'String':
-            case 'MultipleCharValue':
-            case 'MultipleStringValue':
-            case 'Country':
-            case 'Currency':
-            case 'Exchange':
-            case 'MonthYear':
-            case 'UTCTimestamp':
-            case 'UTCTimeOnly':
-            case 'UTCDateOnly':
-            case 'LocalMktDate':
-            case 'TZTimeOnly':
-            case 'TZTimestamp':
-            case 'data':
-            case 'XMLData':
-            case 'Language':
-                item.value = String(value);
-                break;
-            case 'Pattern':
-            case 'Tenor':
-            case 'Reserved100Plus':
-            case 'Reserved1000Plus':
-            case 'Reserved4000Plus':
-                item.value = String(value);
-                break;
-            default:
-                item.value = String(value);
-                break;
+            item.value = this.cacheTypeMap.get(type)(value);
+        } else {
+            item.value = String(value);
         }
     }
 }

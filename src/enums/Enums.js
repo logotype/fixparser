@@ -9,16 +9,8 @@ export class Enums {
         });
     }
 
-    find(tag, value) {
-        let returnValue = null;
-        if(this.cacheMap.has(String(tag) + '|' + value)) {
-            returnValue = this.cacheMap.get(String(tag) + '|' + value);
-        }
-        return returnValue;
-    }
-
     process(item, tag, value) {
-        let enumType = this.find(tag, value);
+        let enumType = this.cacheMap.get(String(tag) + '|' + value);
         if(enumType) {
             item.enumeration = enumType;
         }

@@ -15,16 +15,8 @@ export class Fields {
         this.dataTypes = new DataTypes();
     }
 
-    find(tag) {
-        let returnValue = null;
-        if(this.cacheMap.has(String(tag))) {
-            returnValue = this.cacheMap.get(String(tag));
-        }
-        return returnValue;
-    }
-
     process(message, item, tag, value) {
-        let data = this.find(tag);
+        let data = this.cacheMap.get(String(tag));
         if(data) {
 
             if(tag === 35) {

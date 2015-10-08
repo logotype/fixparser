@@ -30,19 +30,19 @@ Features
 Performance
 -----------
 ```bash
-┌─────────────────────────────────────┬──────────────┬──────────────┬──────────────┐
-│ FIX Messages                        │ Messages/sec │ Microseconds │ Milliseconds │
-│ 100,000,000 iterations (same msg)   │ 73,837 msg/s │ 13.5434 μs   │ 0.0135 ms    │
-│ 100,000,000 iterations (same msg)   │ 73,558 msg/s │ 13.5948 μs   │ 0.0136 ms    │
-│ 100,000,000 iterations (random msg) │ 45,952 msg/s │ 21.7618 μs   │ 0.0218 ms    │
-│ 100,000,000 iterations (same msg)   │ 70,751 msg/s │ 14.1340 μs   │ 0.0141 ms    │
-│ 100,000,000 iterations (random msg) │ 46,220 msg/s │ 21.6356 μs   │ 0.0216 ms    │
-│ 100,000,000 iterations (same msg)   │ 70,615 msg/s │ 14.1612 μs   │ 0.0142 ms    │
-│ 100,000,000 iterations (random msg) │ 46,483 msg/s │ 21.5132 μs   │ 0.0215 ms    │
-│ 100,000,000 iterations (same msg)   │ 71,652 msg/s │ 13.9563 μs   │ 0.0140 ms    │
-│ 100,000,000 iterations (same msg)   │ 71,434 msg/s │ 13.9989 μs   │ 0.0140 ms    │
-│ 100,000,000 iterations (same msg)   │ 71,507 msg/s │ 13.9846 μs   │ 0.0140 ms    │
-└─────────────────────────────────────┴──────────────┴──────────────┴──────────────┘
+┌────────────────────────────────┬──────────────┬──────────────┬──────────────┐
+│ FIX Messages                   │ Messages/sec │ Microseconds │ Milliseconds │
+│ 50,000 iterations (same msg)   │ 79,114 msg/s │ 12.6400 μs   │ 0.0126 ms    │
+│ 50,000 iterations (same msg)   │ 83,612 msg/s │ 11.9600 μs   │ 0.0120 ms    │
+│ 50,000 iterations (random msg) │ 52,632 msg/s │ 19.0000 μs   │ 0.0190 ms    │
+│ 50,000 iterations (same msg)   │ 78,864 msg/s │ 12.6800 μs   │ 0.0127 ms    │
+│ 50,000 iterations (random msg) │ 53,419 msg/s │ 18.7200 μs   │ 0.0187 ms    │
+│ 50,000 iterations (same msg)   │ 79,239 msg/s │ 12.6200 μs   │ 0.0126 ms    │
+│ 50,000 iterations (random msg) │ 53,079 msg/s │ 18.8400 μs   │ 0.0188 ms    │
+│ 50,000 iterations (same msg)   │ 81,169 msg/s │ 12.3200 μs   │ 0.0123 ms    │
+│ 50,000 iterations (same msg)   │ 79,239 msg/s │ 12.6200 μs   │ 0.0126 ms    │
+│ 50,000 iterations (same msg)   │ 81,833 msg/s │ 12.2200 μs   │ 0.0122 ms    │
+└────────────────────────────────┴──────────────┴──────────────┴──────────────┘
 ```
 This performance was achieved on a 2013 MacBook Air, run with `npm run perf`.
 
