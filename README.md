@@ -1,6 +1,6 @@
 # fixparser
 
-This is the ECMAScript framework for working FIX protocol messages. Compliant with FIX 5.0 SP2.
+This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.
 
 The Financial Information eXchange (FIX) protocol is an electronic communications protocol initiated in 1992 for international real-time exchange of information related to the securities transactions and markets.
 
@@ -16,7 +16,7 @@ Create an instance of the `FIXParser` class:
 
 ```javascript
 import {FIXParser} from '../src/FIXParser.js';
-var fixParser = new FIXParser(),
+let fixParser = new FIXParser(),
     parsedMessage = fixParser.parse('8=FIX.4.2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=249|');
 console.log(parsedMessage);
 ```
@@ -44,7 +44,7 @@ Performance
 │ 50,000 iterations (same msg)   │ 81,833 msg/s │ 12.2200 μs   │ 0.0122 ms    │
 └────────────────────────────────┴──────────────┴──────────────┴──────────────┘
 ```
-This performance was achieved on a 2013 MacBook Air, run with `npm run perf`.
+1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.
 
 Message format
 --------------
@@ -69,7 +69,7 @@ Authors
 
 **Victor Norgren**
 
-+ http://twitter.com/logotype
++ https://twitter.com/logotype
 + https://github.com/logotype
 + https://logotype.se
 
