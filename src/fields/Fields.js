@@ -15,7 +15,7 @@ export class Fields {
         this.dataTypes = new DataTypes();
     }
 
-    process(message, item, tag, value) {
+    processField(message, item, tag, value) {
         let data = this.cacheMap.get(String(tag));
         if(data) {
 
@@ -26,7 +26,7 @@ export class Fields {
             item.name = data.Name;
             item.description = data.Description;
 
-            if(data.hasOwnProperty('BaseCategory')) {
+            if(data.BaseCategory) {
                 this.categories.process(item, data.BaseCategory);
             }
 

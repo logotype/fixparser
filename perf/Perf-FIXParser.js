@@ -4,7 +4,7 @@ console.log('Running performance tests...');
 
 let Table = require('cli-table'),
     fixParser = new FIXParser(),
-    iterations = 50000,
+    iterations = 200000,
     i, startDate, dateDiff, rate, relativeRate, messages = [
         {'description':'New Order Single', 'detail': 'BUY 100 CVS MKT DAY', 'fix':'8=FIX.4.2^A 9=145^A 35=D^A 34=4^A 49=ABC_DEFG01^A 52=20090323-15:40:29^A 56=CCG^A 115=XYZ^A 11=NF 0542/03232009^A 54=1^A 38=100^A 55=CVS^A 40=1^A 59=0^A 47=A^A 60=20090323-15:40:29^A 21=1^A 207=N^A 10=139^A'},
         {'description':'Order Acknowledgement', 'detail': '', 'fix':'8=FIX.4.2^A 9=226^A 35=8^A 128=XYZ^A 34=4^A 49=CCG^A 56=ABC_DEFG01^A 52=20090323-15:40:35^A 55=CVS^A 37=NF 0542/03232009^A 11=NF 0542/03232009^A 17=0^A 20=0^A 39=0^A 150=0^A 54=1^A 38=100^A 40=1^A 59=0^A 31=0^A 32=0^A 14=0^A 6=0^A 151=100^A 60=20090323-15:40:30^A 58=New order^A 30=N^A 207=N^A 47=A^A 10=149^A'},

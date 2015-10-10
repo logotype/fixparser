@@ -9,7 +9,7 @@ export class Enums {
         });
     }
 
-    process(item, tag, value) {
+    processEnum(item, tag, value) {
         let enumType = this.cacheMap.get(String(tag) + '|' + value);
         if(enumType) {
             item.enumeration = enumType;

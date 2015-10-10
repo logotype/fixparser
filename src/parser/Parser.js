@@ -12,33 +12,21 @@ import {Message} from './../message/Message';
 export class Parser {
 
     constructor() {
-        this.EQ = '=';
         this.processedData = '';
         this.message = new Message();
         this.fields = new Fields();
         this.enums = new Enums();
     }
 
-    // Replace multiple-byte SOH to single-byte (e.g. NySE)
-    static replaceStartOfHeader(data) {
-        let SOH = '\x01';
-        return data
-                    .replace(/\^A /g, SOH)
-                    .replace(/\^A/g, SOH)
-                    .replace(/\^/g, SOH)
-                    .replace(/\|/g, SOH);
-    }
-
     preProcess(data) {
-        this.processedData = data;
         this.message.reset();
-        this.processedData = Parser.replaceStartOfHeader(this.processedData);
+        this.processedData = data.replace(/\^A |\^|\|/g, '\x01');
         this.message.string = this.processedData;
     }
 
     parse(data) {
 
-        let startOfHeader, tag, value, array, dataLength, lastByte, i = 0, equalsOperator, item;
+        let value, array, i = 0, equalsOperator, item;
 
         if(!data) {
             throw new Error('No message specified!');
@@ -46,33 +34,25 @@ export class Parser {
 
         this.preProcess(data);
 
-        startOfHeader = this.processedData.charAt(9);
-        array = this.processedData.split(startOfHeader);
+        array = this.processedData.split('\x01');
 
-        lastByte = this.processedData.charAt(this.processedData.length - 1) === startOfHeader ? 1 : 0;
-        dataLength = array.length - lastByte;
-
-        for (i; i < dataLength; i++) {
+        for (i; i < array.length - 1; i++) {
 
             item = {};
 
-            equalsOperator = array[i].indexOf(this.EQ);
+            equalsOperator = array[i].indexOf('=');
 
-            tag = parseInt(array[i].substring(0, equalsOperator));
+            item.tag = parseInt(array[i].substring(0, equalsOperator));
             value = array[i].substring(equalsOperator + 1);
 
-            this.fields.process(this.message, item, tag, value);
-            this.enums.process(item, tag, value);
+            this.fields.processField(this.message, item, item.tag, value);
+            this.enums.processEnum(item, item.tag, value);
 
-            if(tag === 9) {
+            if(item.tag === 9) {
                 this.message.validateBodyLength(value);
-            }
-
-            if(tag === 10) {
+            } else if(item.tag === 10) {
                 this.message.validateChecksum(value);
             }
-
-            item.tag = tag;
 
             this.message.data[i] = item;
         }
