@@ -9,7 +9,7 @@ export class Categories {
         });
     }
 
-    process(item, baseCategory) {
+    processCategory(item, baseCategory) {
         let categoryData = this.cacheMap.get(String(baseCategory));
         if(categoryData) {
             item.category = categoryData;

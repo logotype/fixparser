@@ -8,6 +8,7 @@ export class DataTypes {
             this.cacheMap.set(item.Name, item);
         });
         this.cacheTypeMap = new Map();
+
         this.cacheTypeMap.set('int', parseInt);
         this.cacheTypeMap.set('Length', parseInt);
         this.cacheTypeMap.set('TagNum', parseInt);
@@ -49,14 +50,27 @@ export class DataTypes {
         this.cacheTypeMap.set('Reserved4000Plus', String);
     }
 
-    process(item, type, value) {
-
-        let dataType = this.cacheMap.get(String(type));
+    processDatatype(item, type, value) {
+        let dataType = this.cacheMap.get(type);
         if(dataType) {
             item.type = dataType;
-            item.value = this.cacheTypeMap.get(type)(value);
-        } else {
-            item.value = String(value);
+            if(type === 'int' ||
+                type === 'Length' ||
+                type === 'TagNum' ||
+                type === 'SeqNum' ||
+                type === 'NumInGroup' ||
+                type === 'DayOfMonth') {
+                item.value = parseInt(value);
+            } else if(type === 'float' ||
+                type === 'Qty' ||
+                type === 'Price' ||
+                type === 'PriceOffset' ||
+                type === 'Amt' ||
+                type === 'Percentage') {
+                item.value = parseFloat(value);
+            } else {
+                item.value = value;
+            }
         }
     }
 }

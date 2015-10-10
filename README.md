@@ -30,19 +30,19 @@ Features
 Performance
 -----------
 ```bash
-┌─────────────────────────────────┬──────────────┬──────────────┬──────────────┐
-│ FIX Messages                    │ Messages/sec │ Microseconds │ Milliseconds │
-│ 200,000 iterations (same msg)   │ 94,563 msg/s │ 10.5750 μs   │ 0.0106 ms    │
-│ 200,000 iterations (same msg)   │ 95,147 msg/s │ 10.5100 μs   │ 0.0105 ms    │
-│ 200,000 iterations (random msg) │ 57,061 msg/s │ 17.5250 μs   │ 0.0175 ms    │
-│ 200,000 iterations (same msg)   │ 88,106 msg/s │ 11.3500 μs   │ 0.0113 ms    │
-│ 200,000 iterations (random msg) │ 55,913 msg/s │ 17.8850 μs   │ 0.0179 ms    │
-│ 200,000 iterations (same msg)   │ 91,575 msg/s │ 10.9200 μs   │ 0.0109 ms    │
-│ 200,000 iterations (random msg) │ 58,599 msg/s │ 17.0650 μs   │ 0.0171 ms    │
-│ 200,000 iterations (same msg)   │ 91,827 msg/s │ 10.8900 μs   │ 0.0109 ms    │
-│ 200,000 iterations (same msg)   │ 92,336 msg/s │ 10.8300 μs   │ 0.0108 ms    │
-│ 200,000 iterations (same msg)   │ 91,033 msg/s │ 10.9850 μs   │ 0.0110 ms    │
-└─────────────────────────────────┴──────────────┴──────────────┴──────────────┘
+┌─────────────────────────────────┬───────────────┬──────────────┬──────────────┐
+│ FIX Messages                    │ Messages/sec  │ Microseconds │ Milliseconds │
+│ 200,000 iterations (same msg)   │ 96,759 msg/s  │ 10.3350 μs   │ 0.0103 ms    │
+│ 200,000 iterations (same msg)   │ 101,317 msg/s │ 9.8700 μs    │ 0.0099 ms    │
+│ 200,000 iterations (random msg) │ 61,614 msg/s  │ 16.2300 μs   │ 0.0162 ms    │
+│ 200,000 iterations (same msg)   │ 96,200 msg/s  │ 10.3950 μs   │ 0.0104 ms    │
+│ 200,000 iterations (random msg) │ 61,824 msg/s  │ 16.1750 μs   │ 0.0162 ms    │
+│ 200,000 iterations (same msg)   │ 95,057 msg/s  │ 10.5200 μs   │ 0.0105 ms    │
+│ 200,000 iterations (random msg) │ 60,753 msg/s  │ 16.4600 μs   │ 0.0165 ms    │
+│ 200,000 iterations (same msg)   │ 95,511 msg/s  │ 10.4700 μs   │ 0.0105 ms    │
+│ 200,000 iterations (same msg)   │ 94,787 msg/s  │ 10.5500 μs   │ 0.0105 ms    │
+│ 200,000 iterations (same msg)   │ 95,012 msg/s  │ 10.5250 μs   │ 0.0105 ms    │
+└─────────────────────────────────┴───────────────┴──────────────┴──────────────┘
 ```
 1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.
 

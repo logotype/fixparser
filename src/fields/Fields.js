@@ -8,7 +8,7 @@ export class Fields {
         this.fields = fields;
         this.cacheMap = new Map();
         this.fields.map(item => {
-            this.cacheMap.set(item.Tag, item);
+            this.cacheMap.set(parseInt(item.Tag), item);
         });
         this.messages = new Messages();
         this.categories = new Categories();
@@ -16,21 +16,21 @@ export class Fields {
     }
 
     processField(message, item, tag, value) {
-        let data = this.cacheMap.get(String(tag));
+        let data = this.cacheMap.get(tag);
         if(data) {
 
             if(tag === 35) {
-                this.messages.process(message, item, tag, value);
+                this.messages.processMessage(message, item, value);
             }
 
             item.name = data.Name;
             item.description = data.Description;
 
             if(data.BaseCategory) {
-                this.categories.process(item, data.BaseCategory);
+                this.categories.processCategory(item, data.BaseCategory);
             }
 
-            this.dataTypes.process(item, data.Type, value);
+            this.dataTypes.processDatatype(item, data.Type, value);
         } else {
             item.type = '';
             item.value = String(value);

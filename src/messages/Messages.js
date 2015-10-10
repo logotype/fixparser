@@ -9,8 +9,8 @@ export class Messages {
         });
     }
 
-    process(message, item, tag, value) {
-        let messageType = this.cacheMap.get(String(value));
+    processMessage(message, item, value) {
+        let messageType = this.cacheMap.get(value);
         if(messageType) {
             message.description = messageType.Name;
             item.message = messageType;
