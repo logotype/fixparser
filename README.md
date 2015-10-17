@@ -35,16 +35,16 @@ Performance
 ```bash
 ┌─────────────────────────────────┬───────────────┬──────────────┬──────────────┐
 │ FIX Messages                    │ Messages/sec  │ Microseconds │ Milliseconds │
-│ 200,000 iterations (same msg)   │ 103,466 msg/s │ 9.6650 μs    │ 0.0097 ms    │
-│ 200,000 iterations (same msg)   │ 105,319 msg/s │ 9.4950 μs    │ 0.0095 ms    │
-│ 200,000 iterations (random msg) │ 61,444 msg/s  │ 16.2750 μs   │ 0.0163 ms    │
-│ 200,000 iterations (same msg)   │ 106,838 msg/s │ 9.3600 μs    │ 0.0094 ms    │
-│ 200,000 iterations (random msg) │ 63,191 msg/s  │ 15.8250 μs   │ 0.0158 ms    │
-│ 200,000 iterations (same msg)   │ 101,781 msg/s │ 9.8250 μs    │ 0.0098 ms    │
-│ 200,000 iterations (random msg) │ 62,267 msg/s  │ 16.0600 μs   │ 0.0161 ms    │
-│ 200,000 iterations (same msg)   │ 103,466 msg/s │ 9.6650 μs    │ 0.0097 ms    │
-│ 200,000 iterations (same msg)   │ 104,439 msg/s │ 9.5750 μs    │ 0.0096 ms    │
-│ 200,000 iterations (same msg)   │ 105,708 msg/s │ 9.4600 μs    │ 0.0095 ms    │
+│ 200,000 iterations (same msg)   │ 107,066 msg/s │ 9.3400 μs    │ 0.0093 ms    │
+│ 200,000 iterations (same msg)   │ 111,421 msg/s │ 8.9750 μs    │ 0.0090 ms    │
+│ 200,000 iterations (random msg) │ 64,914 msg/s  │ 15.4050 μs   │ 0.0154 ms    │
+│ 200,000 iterations (same msg)   │ 110,988 msg/s │ 9.0100 μs    │ 0.0090 ms    │
+│ 200,000 iterations (random msg) │ 64,082 msg/s  │ 15.6050 μs   │ 0.0156 ms    │
+│ 200,000 iterations (same msg)   │ 111,421 msg/s │ 8.9750 μs    │ 0.0090 ms    │
+│ 200,000 iterations (random msg) │ 65,210 msg/s  │ 15.3350 μs   │ 0.0153 ms    │
+│ 200,000 iterations (same msg)   │ 110,254 msg/s │ 9.0700 μs    │ 0.0091 ms    │
+│ 200,000 iterations (same msg)   │ 110,436 msg/s │ 9.0550 μs    │ 0.0091 ms    │
+│ 200,000 iterations (same msg)   │ 111,669 msg/s │ 8.9550 μs    │ 0.0090 ms    │
 └─────────────────────────────────┴───────────────┴──────────────┴──────────────┘
 ```
 1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.
