@@ -6,18 +6,61 @@
  * Released under the MIT license
  */
 import 'babel/polyfill';
-import {Parser} from './parser/Parser';
+import {Fields} from './fields/Fields';
+import {Enums} from './enums/Enums';
+import {Message} from './message/Message';
 import {EventEmitter} from 'events';
 
 export class FIXParser extends EventEmitter {
 
     constructor() {
         super();
-        this.parser = new Parser();
+        this.processedData = '';
+        this.message = new Message();
+        this.fields = new Fields();
+        this.enums = new Enums();
     }
 
-    parse(message) {
-        return this.parser.parse(message);
+    preProcess(data) {
+        this.message.reset();
+        this.processedData = data.replace(/\^A |\^|\|/g, '\x01');
+        this.message.string = this.processedData;
+    }
+
+    parse(data) {
+
+        let value, array, i = 0, equalsOperator, item;
+
+        if(!data) {
+            throw new Error('No message specified!');
+        }
+
+        this.preProcess(data);
+
+        array = this.processedData.split('\x01');
+
+        for (i; i < array.length - 1; i++) {
+
+            item = {};
+
+            equalsOperator = array[i].indexOf('=');
+
+            item.tag = parseInt(array[i].substring(0, equalsOperator));
+            value = array[i].substring(equalsOperator + 1);
+
+            this.fields.processField(this.message, item, item.tag, value);
+            this.enums.processEnum(item, item.tag, value);
+
+            if(item.tag === 9) {
+                this.message.validateBodyLength(value);
+            } else if(item.tag === 10) {
+                this.message.validateChecksum(value);
+            }
+
+            this.message.data[i] = item;
+        }
+
+        return this.message;
     }
 }
 
