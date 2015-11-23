@@ -25,7 +25,7 @@ export class Message {
     }
 
     validateBodyLength(value) {
-        let startLength = this.string.indexOf('35=') !== -1 ? this.string.indexOf('35=') : 0,
+        const startLength = this.string.indexOf('35=') !== -1 ? this.string.indexOf('35=') : 0,
         endLength = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
         bodyLength = endLength - startLength;
 
@@ -36,15 +36,16 @@ export class Message {
     }
 
     static pad(value, size) {
-        let paddedString = '00' + value;
+        const paddedString = `00${value}`;
         return paddedString.substr(paddedString.length - size);
     }
 
     validateChecksum(value) {
-        let length = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
-            data = this.string.substr(0, length),
-            integerValues = 0,
-            paddedValue;
+        const length = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
+            data = this.string.substr(0, length);
+
+        let integerValues = 0,
+            paddedValue = '';
 
         for(let i = 0; i < data.length; i++) {
             integerValues += data.charCodeAt(i);

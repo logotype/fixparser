@@ -5,7 +5,7 @@
  * Copyright 2015 Victor Norgren
  * Released under the MIT license
  */
-import 'babel/polyfill';
+import 'babel-polyfill';
 import {Fields} from './fields/Fields';
 import {Enums} from './enums/Enums';
 import {Message} from './message/Message';
@@ -29,7 +29,7 @@ export class FIXParser extends EventEmitter {
 
     parse(data) {
 
-        let value, array, i = 0, equalsOperator, item;
+        let value = null, array = [], i = 0, equalsOperator = '', item = {};
 
         if(!data) {
             throw new Error('No message specified!');

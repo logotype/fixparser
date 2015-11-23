@@ -4,7 +4,7 @@ export class DataTypes {
     constructor() {
         this.dataTypes = datatypes;
         this.cacheMap = new Map();
-        this.dataTypes.map(item => {
+        this.dataTypes.map((item) => {
             this.cacheMap.set(item.Name, item);
         });
         this.cacheTypeMap = new Map();
@@ -51,7 +51,7 @@ export class DataTypes {
     }
 
     processDatatype(item, type, value) {
-        let dataType = this.cacheMap.get(type);
+        const dataType = this.cacheMap.get(type);
         if(dataType) {
             item.type = dataType;
             if(type === 'int' ||

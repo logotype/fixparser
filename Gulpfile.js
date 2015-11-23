@@ -16,7 +16,7 @@ gulp.task('eslint', function () {
     return gulp.src(['./src/**/*.js'])
         .pipe($.eslint())
         .pipe($.eslint.format())
-        .pipe($.eslint.failOnError());
+        .pipe($.eslint.failAfterError());
 });
 
 gulp.task('clean', ['eslint'], function(done) {

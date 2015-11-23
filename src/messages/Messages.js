@@ -4,13 +4,13 @@ export class Messages {
     constructor() {
         this.messages = messages;
         this.cacheMap = new Map();
-        this.messages.map(item => {
+        this.messages.map((item) => {
             this.cacheMap.set(item.MsgType, item);
         });
     }
 
     processMessage(message, item, value) {
-        let messageType = this.cacheMap.get(value);
+        const messageType = this.cacheMap.get(value);
         if(messageType) {
             message.description = messageType.Name;
             item.message = messageType;

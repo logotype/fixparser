@@ -7,7 +7,7 @@ export class Fields {
     constructor() {
         this.fields = fields;
         this.cacheMap = new Map();
-        this.fields.map(item => {
+        this.fields.map((item) => {
             this.cacheMap.set(parseInt(item.Tag), item);
         });
         this.messages = new Messages();
@@ -16,7 +16,7 @@ export class Fields {
     }
 
     processField(message, item, tag, value) {
-        let data = this.cacheMap.get(tag);
+        const data = this.cacheMap.get(tag);
         if(data) {
 
             if(tag === 35) {

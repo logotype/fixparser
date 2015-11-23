@@ -4,7 +4,7 @@ export class Components {
     constructor() {
         this.components = components;
         this.cacheMap = new Map();
-        this.components.map(item => {
+        this.components.map((item) => {
             this.cacheMap.set(item.Name, item);
         });
     }
