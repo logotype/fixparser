@@ -5,7 +5,6 @@
  * Copyright 2015 Victor Norgren
  * Released under the MIT license
  */
-import 'babel-polyfill';
 import {Fields} from './fields/Fields';
 import {Enums} from './enums/Enums';
 import {Message} from './message/Message';
