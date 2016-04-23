@@ -1,5 +1,6 @@
-import './../build/FIXParser.js';
+'use strict';
 
+require('./../build/FIXParser');
 console.log('Running performance tests...');
 
 let i = null, startDate = null, dateDiff = null, rate = null;

@@ -1,8 +1,8 @@
-import {messages} from './../spec/SpecMessages';
+import {MESSAGES} from './../spec/SpecMessages';
 
 export class Messages {
     constructor() {
-        this.messages = messages;
+        this.messages = MESSAGES;
         this.cacheMap = new Map();
         this.messages.map((item) => {
             this.cacheMap.set(item.MsgType, item);

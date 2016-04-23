@@ -1,8 +1,8 @@
-import {categories} from './../../spec/SpecCategories';
+import {CATEGORIES} from './../../spec/SpecCategories';
 
 export class Categories {
     constructor() {
-        this.categories = categories;
+        this.categories = CATEGORIES;
         this.cacheMap = new Map();
         this.categories.map((item) => {
             this.cacheMap.set(item.CategoryID, item);

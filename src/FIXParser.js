@@ -2,7 +2,7 @@
  * fixparser
  * https://github.com/logotype/fixparser.git
  *
- * Copyright 2015 Victor Norgren
+ * Copyright 2016 Victor Norgren
  * Released under the MIT license
  */
 import {Fields} from './fields/Fields';

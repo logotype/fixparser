@@ -1,11 +1,11 @@
-import {fields} from './../spec/SpecFields';
+import {FIELDS} from './../spec/SpecFields';
 import {Messages} from './../messages/Messages';
 import {Categories} from './categories/Categories';
 import {DataTypes} from './datatypes/Datatypes';
 
 export class Fields {
     constructor() {
-        this.fields = fields;
+        this.fields = FIELDS;
         this.cacheMap = new Map();
         this.fields.map((item) => {
             this.cacheMap.set(parseInt(item.Tag), item);

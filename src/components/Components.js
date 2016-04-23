@@ -1,8 +1,8 @@
-import {components} from './../../spec/SpecCategories';
+import {COMPONENTS} from './../../spec/SpecComponents';
 
 export class Components {
     constructor() {
-        this.components = components;
+        this.components = COMPONENTS;
         this.cacheMap = new Map();
         this.components.map((item) => {
             this.cacheMap.set(item.Name, item);

@@ -1,8 +1,8 @@
-import {datatypes} from './../../spec/SpecDatatypes';
+import {DATATYPES} from './../../spec/SpecDatatypes';
 
 export class DataTypes {
     constructor() {
-        this.dataTypes = datatypes;
+        this.dataTypes = DATATYPES;
         this.cacheMap = new Map();
         this.dataTypes.map((item) => {
             this.cacheMap.set(item.Name, item);

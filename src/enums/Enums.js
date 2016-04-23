@@ -1,8 +1,8 @@
-import {enums} from './../spec/SpecEnums';
+import {ENUMS} from './../spec/SpecEnums';
 
 export class Enums {
     constructor() {
-        this.enums = enums;
+        this.enums = ENUMS;
         this.cacheMap = new Map();
         this.enums.map((item) => {
             this.cacheMap.set( `${item.Tag}|${item.Value}`, item);
