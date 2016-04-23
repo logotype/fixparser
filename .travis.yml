@@ -7,7 +7,7 @@ addons:
 script:
   - npm run lint
   - npm run build
-  - npm run perf
   - npm test
+  - npm run perf
 after_script:
   - ./node_modules/codeclimate-test-reporter/./bin/codeclimate.js < coverage/lcov.info
