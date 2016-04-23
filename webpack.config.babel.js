@@ -6,12 +6,12 @@ const nodeEnv = optimizeMinimize ? 'production' : 'development';
 
 export default {
     entry: {
-        'FixParser': './src/FIXParser.js'
+        'FIXParser': './src/FIXParser.js'
     },
     output: {
         path: './build',
         filename: '[name].js',
-        library: 'FixParser',
+        library: 'FIXParser',
         libraryTarget: 'umd'
     },
     module: {
