@@ -10,7 +10,7 @@ import {Enums} from './enums/Enums';
 import {Message} from './message/Message';
 import {EventEmitter} from 'events';
 
-export class FIXParser extends EventEmitter {
+export default class FIXParser extends EventEmitter {
 
     constructor() {
         super();
@@ -63,11 +63,7 @@ export class FIXParser extends EventEmitter {
     }
 }
 
-export default FIXParser;
-
 /**
- * Browserify exports global to the window object.
+ * Export global to the window object.
  */
-/*eslint-disable */
 global.FIXParser = FIXParser;
-/*eslint-enable */
