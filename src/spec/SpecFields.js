@@ -13998,7 +13998,7 @@ export const FIELDS = [
   {
     'Tag': '2300',
     'Name': 'AllocGrossTradeAmt',
-    'Type': 'float',
+    'Type': 'Amt',
     'AbbrName': 'GrossTrdAmt',
     'NotReqXML': '0',
     'Description': 'Total amount traded for this account (i.e. quantity * price) expressed in units of currency.',
