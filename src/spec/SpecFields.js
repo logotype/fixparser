@@ -13994,5 +13994,15 @@ export const FIELDS = [
     'Description': 'See TransactTime(60)',
     'Added': 'FIX.5.0SP1',
     'AddedEP': '94'
+  },
+  {
+    'Tag': '2300',
+    'Name': 'AllocGrossTradeAmt',
+    'Type': 'Amt',
+    'AbbrName': 'GrossTrdAmt',
+    'NotReqXML': '0',
+    'Description': 'Total amount traded for this account (i.e. quantity * price) expressed in units of currency.',
+    'Added': 'FIX.5.0SP2',
+    'AddedEP': '170'
   }
 ];
