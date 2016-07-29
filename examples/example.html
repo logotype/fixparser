@@ -42,11 +42,11 @@ Secure login:<br>
     <button id="parseButton">Parse</button>
 </form>
 <div id="output"></div>
-Copyright © 2015 Victor Norgren <a href="https://www.logotype.se">www.logotype.se</a><br>
+Copyright © 2016 Victor Norgren <a href="https://www.logotype.se">www.logotype.se</a><br>
 <a href="https://github.com/logotype/fixparser">GitHub repository</a>
 <script src="./../build/FIXParser.js"></script>
 <script>
-    var fixParser = new FIXParser();
+    var fixParser = new FIXParser.default();
     var FIX = {
         renderItem: function (metaData, data, item) {
             "use strict";

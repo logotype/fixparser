@@ -1,6 +1,7 @@
-const assert = require('chai').assert,
-    testMessages = require('./test-messages.js'),
-    FIXParser = require('./../src/FIXParser').FIXParser;
+import { assert } from 'chai';
+
+import { testMessages } from './test-messages';
+import FIXParser from './../src/FIXParser';
 
 describe('FIXParser', () => {
     describe('#parse: constructor validation', () => {
