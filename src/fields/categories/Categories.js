@@ -4,7 +4,7 @@ export class Categories {
     constructor() {
         this.categories = CATEGORIES;
         this.cacheMap = new Map();
-        this.categories.map((item) => {
+        this.categories.forEach((item) => {
             this.cacheMap.set(item.CategoryID, item);
         });
     }

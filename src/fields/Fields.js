@@ -7,8 +7,8 @@ export class Fields {
     constructor() {
         this.fields = FIELDS;
         this.cacheMap = new Map();
-        this.fields.map((item) => {
-            this.cacheMap.set(parseInt(item.Tag), item);
+        this.fields.forEach((item) => {
+            this.cacheMap.set(parseInt(item.Tag, 10), item);
         });
         this.messages = new Messages();
         this.categories = new Categories();

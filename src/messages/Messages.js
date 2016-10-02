@@ -4,7 +4,7 @@ export class Messages {
     constructor() {
         this.messages = MESSAGES;
         this.cacheMap = new Map();
-        this.messages.map((item) => {
+        this.messages.forEach((item) => {
             this.cacheMap.set(item.MsgType, item);
         });
     }

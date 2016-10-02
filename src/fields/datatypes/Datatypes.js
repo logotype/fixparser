@@ -4,7 +4,7 @@ export class DataTypes {
     constructor() {
         this.dataTypes = DATATYPES;
         this.cacheMap = new Map();
-        this.dataTypes.map((item) => {
+        this.dataTypes.forEach((item) => {
             this.cacheMap.set(item.Name, item);
         });
         this.cacheTypeMap = new Map();
@@ -60,7 +60,7 @@ export class DataTypes {
                 type === 'SeqNum' ||
                 type === 'NumInGroup' ||
                 type === 'DayOfMonth') {
-                item.value = parseInt(value);
+                item.value = parseInt(value, 10);
             } else if(type === 'float' ||
                 type === 'Qty' ||
                 type === 'Price' ||

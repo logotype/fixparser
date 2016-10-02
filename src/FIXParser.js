@@ -5,10 +5,11 @@
  * Copyright 2016 Victor Norgren
  * Released under the MIT license
  */
+import {EventEmitter} from 'events';
+
 import {Fields} from './fields/Fields';
 import {Enums} from './enums/Enums';
 import {Message} from './message/Message';
-import {EventEmitter} from 'events';
 
 export default class FIXParser extends EventEmitter {
 
@@ -44,7 +45,7 @@ export default class FIXParser extends EventEmitter {
 
             equalsOperator = array[i].indexOf('=');
 
-            item.tag = parseInt(array[i].substring(0, equalsOperator));
+            item.tag = parseInt(array[i].substring(0, equalsOperator), 10);
             value = array[i].substring(equalsOperator + 1);
 
             this.fields.processField(this.message, item, item.tag, value);

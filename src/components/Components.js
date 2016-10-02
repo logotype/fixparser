@@ -1,10 +1,10 @@
-import {COMPONENTS} from './../../spec/SpecComponents';
+import {COMPONENTS} from './../spec/SpecComponents';
 
 export class Components {
     constructor() {
         this.components = COMPONENTS;
         this.cacheMap = new Map();
-        this.components.map((item) => {
+        this.components.forEach((item) => {
             this.cacheMap.set(item.Name, item);
         });
     }

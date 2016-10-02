@@ -25,13 +25,13 @@ export class Message {
     }
 
     validateBodyLength(value) {
-        const startLength = this.string.indexOf('35=') !== -1 ? this.string.indexOf('35=') : 0,
-        endLength = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
+        const startLength = this.string.indexOf('35=') === -1 ? 0 : this.string.indexOf('35='),
+        endLength = this.string.indexOf('10=') === -1 ? this.string.length : this.string.indexOf('10='),
         bodyLength = endLength - startLength;
 
-        this.bodyLengthValue = parseInt(value);
+        this.bodyLengthValue = parseInt(value, 10);
         this.bodyLengthExpected = bodyLength;
-        this.bodyLengthValid = parseInt(value) === bodyLength;
+        this.bodyLengthValid = parseInt(value, 10) === bodyLength;
         return this.bodyLengthValid;
     }
 
@@ -41,7 +41,7 @@ export class Message {
     }
 
     validateChecksum(value) {
-        const length = this.string.indexOf('10=') !== -1 ? this.string.indexOf('10=') : this.string.length,
+        const length = this.string.indexOf('10=') === -1 ? this.string.length : this.string.indexOf('10='),
             data = this.string.substr(0, length);
 
         let integerValues = 0,
