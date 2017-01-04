@@ -33,5 +33,6 @@ export const testMessages = [
     {'description':'ExecutionReport', 'detail': '', 'fix':'8=FIX.4.29=14935=834=2849=TARGET52=20140228-05:45:28.37556=SENDER6=011=139356632838114=017=1020=037=139356632838138=12539=054=255=EXAM150=0151=12510=253', checksumValid: true, bodyLengthValid: true},
     {'description':'Heartbeat', 'detail': '', 'fix':'8=FIX.4.29=5635=034=2949=TARGET52=20140228-05:47:28.55456=SENDER10=162', checksumValid: true, bodyLengthValid: true},
     {'description':'TestRequest', 'detail': '', 'fix':'8=FIX.4.29=6535=134=3049=TARGET52=20140228-05:48:28.55356=SENDER112=TEST10=173', checksumValid: true, bodyLengthValid: true},
-    {'description':'Heartbeat', 'detail': '', 'fix':'8=FIX.4.29=6535=034=2149=SENDER52=20140228-05:48:28.55456=TARGET112=TEST10=173', checksumValid: true, bodyLengthValid: true}
+    {'description':'Heartbeat', 'detail': '', 'fix':'8=FIX.4.29=6535=034=2149=SENDER52=20140228-05:48:28.55456=TARGET112=TEST10=173', checksumValid: true, bodyLengthValid: true},
+    {'description':'NewOrderSingle', 'detail': '', 'fix':'8=FIX.4.2|9=153|35=D|49=BLP|56=SCHB|34=1|50=30737|97=Y|52=20000809-20:20:50|11=90001008|1=10030003|21=2|55=TESTA|54=1|38=4000|40=2|59=0|44=30|47=I|60=20000809-18:20:32|10=061|', checksumValid: false, bodyLengthValid: false}
 ];
