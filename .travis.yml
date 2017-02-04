@@ -5,7 +5,7 @@ addons:
   code_climate:
     repo_token: a5f704812498d453bfe412f94e6774361b5a84af281e654b24d72c7e18e16796
 script:
-  - npm run lint
+  - npm run eslint
   - npm run build
   - npm run perf
   - npm test

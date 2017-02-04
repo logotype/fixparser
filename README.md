@@ -24,7 +24,7 @@ console.log(parsedMessage);
 Features
 --------
 + Fast, single-digit microsecond performance
-+ Modern, written in ES6/ES2015
++ Modern, written in ES6/ES2015/ES2016/ES2017
 + Validation (checksum and message length), includes FIX specification in parsed message
 + Supports various separators/start of headers (e.g. 0x01, ^ and |)
 + Clean and lightweight code

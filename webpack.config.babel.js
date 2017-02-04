@@ -1,4 +1,4 @@
-import webpack from 'webpack'; // eslint-disable-line no-unused-vars
+import webpack from 'webpack';
 import yargs from 'yargs';
 
 const { optimizeMinimize } = yargs.alias('p', 'optimize-minimize').argv;
@@ -16,7 +16,7 @@ export default {
     },
     module: {
         loaders: [
-            { test: /\.js$/, loader: 'babel', exclude: /node_modules/ }
+            { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },
     externals: [],
@@ -25,5 +25,5 @@ export default {
             'process.env': { 'NODE_ENV': JSON.stringify(nodeEnv) }
         })
     ],
-    devtool: optimizeMinimize ? 'source-map' : null
+    devtool: optimizeMinimize ? 'source-map' : false
 };

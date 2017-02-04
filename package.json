@@ -1,28 +1,37 @@
 {
   "name": "fixparser",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./build/FIXParser.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/logotype/fixparser.git"
   },
+  "scripts": {
+    "eslint": "eslint *.babel.js src test",
+    "build": "rimraf build && webpack -p",
+    "checksum": "babel-node examples/example_checksum.js",
+    "es5": "node examples/example_es5.js",
+    "es6": "babel-node examples/example_es6.js",
+    "perf": "node perf/Perf-FIXParser.js ",
+    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
-    "babel-preset-es2015": "^6.18.0",
-    "babel-preset-stage-0": "^6.16.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "^6.22.0",
     "chai": "^3.5.0",
     "codeclimate-test-reporter": "^0.4.0",
-    "eslint": "^3.12.2",
-    "eslint-plugin-babel": "^4.0.0",
+    "eslint": "^3.15.0",
+    "eslint-plugin-babel": "^4.0.1",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
     "rimraf": "^2.5.4",
-    "webpack": "^1.14.0",
+    "webpack": "^2.2.1",
     "yargs": "^6.6.0"
   },
   "keywords": [
@@ -33,15 +42,6 @@
     "FIX",
     "ES6"
   ],
-  "scripts": {
-    "build": "rimraf build && webpack -p",
-    "checksum": "babel-node examples/example_checksum.js",
-    "es5": "node examples/example_es5.js",
-    "es6": "babel-node examples/example_es6.js",
-    "lint": "eslint *.babel.js src test",
-    "perf": "node perf/Perf-FIXParser.js ",
-    "test": "./node_modules/.bin/mocha --compilers js:babel-core/register"
-  },
   "author": "Victor Norgren",
   "license": "MIT",
   "dependencies": {
