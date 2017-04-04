@@ -1,3 +1,5 @@
+import path from 'path';
+
 import webpack from 'webpack';
 import yargs from 'yargs';
 
@@ -9,7 +11,7 @@ export default {
         'FIXParser': './src/FIXParser.js'
     },
     output: {
-        path: './build',
+        path: path.join(__dirname, '/build'),
         filename: '[name].js',
         library: 'FIXParser',
         libraryTarget: 'umd'
