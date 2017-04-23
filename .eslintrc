@@ -1,7 +1,7 @@
 {
   "parser": "babel-eslint",
   "env": {
-    "mocha": true,
+    "jest": true,
     "browser": true,
     "node": true,
     "es6": true
