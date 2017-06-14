@@ -462,6 +462,48 @@ describe('FIXParser', () => {
 
     });
 
+    describe('#parse: ExecutionReport', () => {
+        let fixParser = new FIXParser(),
+            parsed = fixParser.parse('8=FIX.4.4\x019=1753\x0135=8\x01523=S|E|B Auto-pricing\x01'),
+            index = 0;
+
+        afterAll(() => {
+            fixParser = null;
+            parsed = null;
+            index = 0;
+        });
+
+        it('should have parsed the FIX message', () => {
+            expect(parsed).toBeTruthy();
+        });
+
+        it('should have BeginString value FIX.4.4', () => {
+            expect(parsed.data[index].tag).toBe(8);
+            expect(parsed.data[index].value).toBe('FIX.4.4');
+            index++;
+        });
+
+        it('should have BodyLength value 1753 (validated)', () => {
+            expect(parsed.data[index].tag).toBe(9);
+            expect(parsed.data[index].value).toBe(1753);
+            expect(parsed.bodyLengthValid).toBeFalsy();
+            index++;
+        });
+
+        it('should have MsgType value 8', () => {
+            expect(parsed.data[index].tag).toBe(35);
+            expect(parsed.data[index].value).toBe('8');
+            index++;
+        });
+
+        it('should have PartySubID value 8', () => {
+            expect(parsed.data[index].tag).toBe(523);
+            expect(parsed.data[index].value).toBe('S|E|B Auto-pricing');
+            index++;
+        });
+
+    });
+
     function processTest(message) {
         describe(`#parse: ${message.description}`, () => {
             let fixParser = new FIXParser(),

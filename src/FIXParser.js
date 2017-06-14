@@ -23,13 +23,29 @@ export default class FIXParser extends EventEmitter {
 
     preProcess(data) {
         this.message.reset();
-        this.processedData = data.replace(/\^A |\^|\|/g, '\x01');
+
+        let separator = '';
+
+        if(data.charCodeAt(9) === 1) {
+            // SOH separator
+            this.processedData = this.message.string = data;
+            return;
+        } else if(data.substr(9, 3) === '^A ') {
+            // Multi-character separator
+            separator = /\^A |\^A/g;
+        } else {
+            // Determine separator
+            const escapedSeparatorCharacter = String.fromCharCode(data.charCodeAt(9)).replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g, '\\$&'); // eslint-disable-line no-useless-escape
+            separator = new RegExp(escapedSeparatorCharacter, 'g');
+        }
+
+        this.processedData = data.replace(separator, '\x01');
         this.message.string = this.processedData;
     }
 
     parse(data) {
 
-        let value = null, array = [], i = 0, equalsOperator = '', item = {};
+        let value = null, i = 0, equalsOperator = '', item = {};
 
         if(!data) {
             throw new Error('No message specified!');
@@ -37,7 +53,7 @@ export default class FIXParser extends EventEmitter {
 
         this.preProcess(data);
 
-        array = this.processedData.split('\x01');
+        const array = this.processedData.split('\x01');
 
         for (i; i < array.length - 1; i++) {
 
