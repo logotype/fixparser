@@ -31,18 +31,18 @@ export default class FIXParser extends EventEmitter {
     preProcess(data) {
         this.message.reset();
 
-        const firstSeparator = data.charCodeAt(9);
+        const firstSeparator = data.match(/^8=FIXT?\.\d\.\d([^\d]+)\d.*/)[1];
         let separator = null;
 
-        if(firstSeparator === 124) {
+        if(firstSeparator === '|') {
             // | separator
             separator = RE_PIPE;
-        } else if(firstSeparator === 1) {
+        } else if(firstSeparator === SOH) {
             // SOH separator
             this.message.string = data;
             this.processedData = data.split(SOH);
             return;
-        } else if(data.substring(9, 12) === STRING_A) {
+        } else if(firstSeparator === STRING_A) {
             // Multi-character separator
             separator = RE_A;
         } else {
