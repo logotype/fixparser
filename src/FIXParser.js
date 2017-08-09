@@ -31,7 +31,8 @@ export default class FIXParser extends EventEmitter {
     preProcess(data) {
         this.message.reset();
 
-        const firstSeparator = data.match(/^8=FIXT?\.\d\.\d([^\d]+)\d.*/)[1];
+        const match = data.match(/^8=FIXT?\.\d\.\d([^\d]+)\d.*/);
+        const firstSeparator = match && match.length > 0 ? match[1] : data.charCodeAt(9);
         let separator = null;
 
         if(firstSeparator === '|') {
