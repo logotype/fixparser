@@ -31,8 +31,9 @@ export default class FIXParser extends EventEmitter {
     preProcess(data) {
         this.message.reset();
 
-        const match = data.match(/^8=FIXT?\.\d\.\d([^\d]+)\d.*/);
-        const firstSeparator = match && match.length > 0 ? match[1] : data.charCodeAt(9);
+        // should not throw an error if attempting to parse invalid FIX
+        const match = new RegExp('^8=FIXT?\\.\\d\.\\d([^\\d]+)\\d.*', 'i').exec(data);
+        const firstSeparator = match && match.length === 2 ? match[1] : SOH;
         let separator = null;
 
         if(firstSeparator === '|') {
