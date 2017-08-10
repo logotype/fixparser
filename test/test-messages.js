@@ -35,5 +35,6 @@ export const testMessages = [
     {'description':'TestRequest', 'detail': '', 'fix':'8=FIX.4.29=6535=134=3049=TARGET52=20140228-05:48:28.55356=SENDER112=TEST10=173', checksumValid: true, bodyLengthValid: true},
     {'description':'Heartbeat', 'detail': '', 'fix':'8=FIX.4.29=6535=034=2149=SENDER52=20140228-05:48:28.55456=TARGET112=TEST10=173', checksumValid: true, bodyLengthValid: true},
     {'description':'NewOrderSingle', 'detail': '', 'fix':'8=FIX.4.2|9=153|35=D|49=BLP|56=SCHB|34=1|50=30737|97=Y|52=20000809-20:20:50|11=90001008|1=10030003|21=2|55=TESTA|54=1|38=4000|40=2|59=0|44=30|47=I|60=20000809-18:20:32|10=061|', checksumValid: false, bodyLengthValid: false},
-    {'description':'ExecutionReport', 'detail': '', 'fix':'8=FIX.4.4\x019=1753\x0135=8\x01523=S|E|B Auto-pricing\x01', checksumValid: false, bodyLengthValid: false}
+    {'description':'ExecutionReport', 'detail': '', 'fix':'8=FIX.4.4\x019=1753\x0135=8\x01523=S|E|B Auto-pricing\x01', checksumValid: false, bodyLengthValid: false},
+    {'description':'XMLnonFIX', 'detail': 'FIX 5', 'fix':'8=FIXT.1.19=996935=n34=35249=SOURCE52=20170808-12:08:08.06056=TARGET212=9885213=<foo/>10=211', checksumValid: false, bodyLengthValid: false}
 ];
