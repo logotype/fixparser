@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "1.6.8",
+  "version": "1.6.9",
   "description": "FIX 5.0SP2 Parser",
   "main": "./build/FIXParser.js",
   "repository": {
@@ -29,7 +29,7 @@
     "eslint-plugin-import": "^2.7.0",
     "jest": "^20.0.4",
     "rimraf": "^2.5.4",
-    "webpack": "^3.5.2",
+    "webpack": "^3.5.3",
     "yargs": "^8.0.2"
   },
   "keywords": [
