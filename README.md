@@ -119,7 +119,7 @@ Authors
 Copyright and license
 ---------------------
 
-Copyright © 2017 logotype
+Copyright © 2018 logotype
 
 Author: Victor Norgren
 
