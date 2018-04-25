@@ -16,8 +16,9 @@ export default {
         library: 'FIXParser',
         libraryTarget: 'umd'
     },
+    target: 'node',
     module: {
-        loaders: [
+        rules: [
             { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },

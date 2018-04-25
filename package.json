@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./build/FIXParser.js",
   "repository": {
@@ -11,26 +11,28 @@
     "eslint": "eslint *.babel.js src test",
     "build": "rimraf build && webpack -p",
     "checksum": "babel-node examples/example_checksum.js",
-    "es5": "node examples/example_es5.js",
-    "es6": "babel-node examples/example_es6.js",
+    "executor_es5": "node examples/example_executor_es5.js",
+    "executor": "babel-node examples/example_executor_es6.js",
+    "example_es5": "node examples/example_es5.js",
+    "example": "babel-node examples/example_es6.js",
     "perf": "node perf/Perf-FIXParser.js",
     "test": "jest"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.1",
-    "babel-loader": "^7.1.2",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
     "codeclimate-test-reporter": "^0.5.0",
-    "eslint": "^4.8.0",
+    "eslint": "^4.18.2",
     "eslint-plugin-babel": "^4.1.2",
-    "eslint-plugin-import": "^2.7.0",
-    "jest": "^21.2.1",
+    "eslint-plugin-import": "^2.9.0",
+    "jest": "^22.4.2",
     "rimraf": "^2.6.2",
-    "webpack": "^3.6.0",
-    "yargs": "^9.0.1"
+    "rollup": "^0.56.5",
+    "webpack": "4.1.1",
+    "webpack-cli": "^2.0.10",
+    "yargs": "11.0.0"
   },
   "keywords": [
     "FIX Protocol",

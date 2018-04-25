@@ -9,10 +9,10 @@ export class Enums {
         });
     }
 
-    processEnum(item, tag, value) {
-        const enumType = this.cacheMap.get(`${tag}|${value}`);
+    processEnum(item) {
+        const enumType = this.cacheMap.get(`${item.tag}|${item.value}`);
         if(enumType) {
-            item.enumeration = enumType;
+            item.setEnumeration(enumType);
         }
     }
 }

@@ -9,10 +9,11 @@ export class Messages {
         });
     }
 
-    processMessage(message, item, value) {
-        const messageType = this.cacheMap.get(value);
+    processMessage(message, item) {
+        const messageType = this.cacheMap.get(item.value);
         if(messageType) {
             message.description = messageType.Name;
+            message.messageType = messageType.MsgType;
             item.message = messageType;
         }
     }

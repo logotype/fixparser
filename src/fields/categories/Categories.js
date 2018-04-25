@@ -12,7 +12,7 @@ export class Categories {
     processCategory(item, baseCategory) {
         const categoryData = this.cacheMap.get(String(baseCategory));
         if(categoryData) {
-            item.category = categoryData;
+            item.setCategory(categoryData);
         }
     }
 }

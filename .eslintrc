@@ -21,7 +21,7 @@
     "no-cond-assign": "warn",
     "no-console": "off",
     "no-constant-condition": "warn",
-    "no-control-regex": "warn",
+    "no-control-regex": "off",
     "no-debugger": "warn",
     "no-dupe-args": "warn",
     "no-dupe-keys": "warn",

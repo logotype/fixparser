@@ -12,17 +12,56 @@ Quick start
 
 Install with `npm install fixparser`.
 
-Create an instance of the `FIXParser` class:
+Parse a FIX message:
 
 ```javascript
 import FIXParser from 'fixparser';
-let fixParser = new FIXParser(),
+const fixParser = new FIXParser(),
     parsedMessage = fixParser.parse('8=FIX.4.2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=249|');
 console.log(parsedMessage);
 ```
 
+Create a FIX message:
+
+```javascript
+import FIXParser, { Field } from 'fixparser';
+const fixParser = new FIXParser();
+const logon = fixParser.createMessage(
+    new Field(Field.MsgType, 'A'),
+    new Field(Field.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+    new Field(Field.SenderCompID, 'BANZAI'),
+    new Field(Field.SendingTime, fixParser.getTimestamp()),
+    new Field(Field.TargetCompID, 'EXEC'),
+    new Field(Field.ResetSeqNumFlag, 'Y'),
+    new Field(Field.EncryptMethod, 0),
+    new Field(Field.HeartBtInt, 10),
+);
+console.log(logon.encode('|'));
+// 8=FIX.4.2|9=71|35=A|34=1|49=BANZAI|52=20180425-13:16:38.031|56=EXEC|141=Y|98=0|108=10|10=207|
+```
+
+Connect over TCP socket:
+
+```javascript
+import FIXParser, { Field } from 'fixparser';
+const fixParser = new FIXParser();
+fixParser.connect('localhost', 9878, 'BANZAI', 'EXEC');
+fixParser.on('open', () => {
+    // Connection is open... 
+});
+fixParser.on('message', (message) => {
+    // Received FIX message
+});
+fixParser.on('close', () => {
+    // Disconnected...
+});
+
+```
+
 Features
 --------
++ Parse and create FIX messages
++ Connect over TCP socket
 + Fast, single-digit microsecond performance
 + Modern, written in ES6/ES2015/ES2016/ES2017
 + Validation (checksum and message length), includes FIX specification in parsed message

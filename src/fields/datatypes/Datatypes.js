@@ -50,26 +50,24 @@ export class DataTypes {
         this.cacheTypeMap.set('Reserved4000Plus', String);
     }
 
-    processDatatype(item, type, value) {
+    processDatatype(item, type) {
         const dataType = this.cacheMap.get(type);
         if(dataType) {
-            item.type = dataType;
+            item.setType(dataType);
             if(type === 'int' ||
                 type === 'Length' ||
                 type === 'TagNum' ||
                 type === 'SeqNum' ||
                 type === 'NumInGroup' ||
                 type === 'DayOfMonth') {
-                item.value = parseInt(value, 10);
+                item.setValue(parseInt(item.value, 10));
             } else if(type === 'float' ||
                 type === 'Qty' ||
                 type === 'Price' ||
                 type === 'PriceOffset' ||
                 type === 'Amt' ||
                 type === 'Percentage') {
-                item.value = parseFloat(value);
-            } else {
-                item.value = value;
+                item.setValue(parseFloat(item.value));
             }
         }
     }
