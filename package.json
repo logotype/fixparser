@@ -1,8 +1,10 @@
 {
   "name": "fixparser",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
+  "module": "./src/FIXParser.js",
+  "browser": "./browser.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/logotype/fixparser.git"
