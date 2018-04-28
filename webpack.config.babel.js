@@ -6,17 +6,7 @@ import yargs from 'yargs';
 const { optimizeMinimize } = yargs.alias('p', 'optimize-minimize').argv;
 const nodeEnv = optimizeMinimize ? 'production' : 'development';
 
-export default {
-    entry: {
-        'FIXParser': './src/FIXParser.js'
-    },
-    output: {
-        path: path.join(__dirname, '/build'),
-        filename: '[name].js',
-        library: 'FIXParser',
-        libraryTarget: 'umd'
-    },
-    target: 'node',
+const commonConfig = {
     module: {
         rules: [
             { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
@@ -30,3 +20,31 @@ export default {
     ],
     devtool: optimizeMinimize ? 'source-map' : false
 };
+
+const nodeConfig = Object.assign({}, commonConfig, {
+    entry: {
+        'FIXParser': './src/FIXParser.js'
+    },
+    output: {
+        path: path.join(__dirname),
+        filename: 'fixparser.js',
+        library: 'FIXParser',
+        libraryTarget: 'umd'
+    },
+    target: 'node'
+});
+
+const browserConfig = Object.assign({}, commonConfig, {
+    entry: {
+        'FIXParser': './src/FIXParserBrowser.js'
+    },
+    output: {
+        path: path.join(__dirname),
+        filename: 'browser.js',
+        library: 'FIXParser',
+        libraryTarget: 'umd'
+    },
+    target: 'web'
+});
+
+export default [ nodeConfig, browserConfig ];

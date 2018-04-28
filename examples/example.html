@@ -44,16 +44,17 @@ Secure login:<br>
 <div id="output"></div>
 Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.se</a><br>
 <a href="https://github.com/logotype/fixparser">GitHub repository</a>
-<script src="./../build/FIXParser.js"></script>
+<script src="./../browser.js"></script>
 <script>
-    var fixParser = new FIXParser.default();
-    var FIX = {
-        renderItem: function (metaData, data, item) {
+    const fixParser = new FIXParser.default();
+    const FIX = {
+        renderItem: (metaData, data, item) => {
             "use strict";
 
-            var returnString = "",
-                tag = data.tag,
+            const tag = data.tag,
                 value = data.value;
+            
+            let returnString = '';
 
             // Set start-end colors
             if(tag === 8 || tag === 10) {
@@ -78,8 +79,8 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             if(data.type) {
 
                 // Header
-                var enumType = data.enumeration ? " = " + data.enumeration.Description : "";
-                var checksumValid;
+                const enumType = data.enumeration ? " = " + data.enumeration.Description : "";
+                let checksumValid;
 
                 if(tag === 10) {
                     checksumValid = metaData.checksumValid ? " VALID" : " INVALID";
@@ -110,18 +111,17 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
 
             return returnString;
         },
-        parseButtonHandler: function (event) {
+        parseButtonHandler: (event) => {
             "use strict";
 
-            var i, input, output, parsedMessage, item;
+            const input = document.getElementById("message"),
+                output = document.getElementById("output"),
+                parsedMessage = fixParser.parse(input.value);
+            
+            let i, item;
 
-            output = document.getElementById("output");
             output.innerHTML = "";
-
             event.preventDefault();
-
-            input = document.getElementById("message");
-            parsedMessage = fixParser.parse(input.value);
 
             for(i = 0; i < parsedMessage.data.length; i++) {
                 item = document.createElement("div");
@@ -131,9 +131,8 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             }
 
         },
-        init: function () {
-            "use strict";
-            var parseButton = document.getElementById("parseButton");
+        init: () => {
+            const parseButton = document.getElementById("parseButton");
             parseButton.addEventListener("click", FIX.parseButtonHandler, false);
         }
     };

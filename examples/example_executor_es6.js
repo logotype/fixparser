@@ -1,17 +1,17 @@
-import FIXParser, { Field } from './../src/FIXParser.js';
+import FIXParser, * as Fields from './../src/FIXParser'; // from 'fixparser';
 
 const fixParser = new FIXParser();
 
 function sendLogon() {
     const logon = fixParser.createMessage(
-        new Field(Field.MsgType, 'A'),
-        new Field(Field.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-        new Field(Field.SenderCompID, 'BANZAI'),
-        new Field(Field.SendingTime, fixParser.getTimestamp()),
-        new Field(Field.TargetCompID, 'EXEC'),
-        new Field(Field.ResetSeqNumFlag, 'Y'),
-        new Field(Field.EncryptMethod, 0),
-        new Field(Field.HeartBtInt, 10),
+        new Fields.Field(Fields.MsgType, 'A'),
+        new Fields.Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+        new Fields.Field(Fields.SenderCompID, 'BANZAI'),
+        new Fields.Field(Fields.SendingTime, fixParser.getTimestamp()),
+        new Fields.Field(Fields.TargetCompID, 'EXEC'),
+        new Fields.Field(Fields.ResetSeqNumFlag, 'Y'),
+        new Fields.Field(Fields.EncryptMethod, 0),
+        new Fields.Field(Fields.HeartBtInt, 10)
     );
     const parsed = fixParser.parse(logon.encode());
     console.log('sending message', parsed.description, parsed.string);
@@ -27,19 +27,19 @@ fixParser.on('open', () => {
 
     setInterval(() => {
         const order = fixParser.createMessage(
-            new Field(Field.MsgType, 'D'),
-            new Field(Field.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-            new Field(Field.SenderCompID, 'BANZAI'),
-            new Field(Field.SendingTime, fixParser.getTimestamp()),
-            new Field(Field.TargetCompID, 'EXEC'),
-            new Field(Field.ClOrdID, '11223344'),
-            new Field(Field.HandlInst, '1'),
-            new Field(Field.OrderQty, '123'),
-            new Field(Field.TransactTime, fixParser.getTimestamp()),
-            new Field(Field.OrdType, '1'),
-            new Field(Field.Side, '1'),
-            new Field(Field.Symbol, '700.HK'),
-            new Field(Field.TimeInForce, '0'),
+            new Fields.Field(Fields.MsgType, 'D'),
+            new Fields.Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+            new Fields.Field(Fields.SenderCompID, 'BANZAI'),
+            new Fields.Field(Fields.SendingTime, fixParser.getTimestamp()),
+            new Fields.Field(Fields.TargetCompID, 'EXEC'),
+            new Fields.Field(Fields.ClOrdID, '11223344'),
+            new Fields.Field(Fields.HandlInst, '1'),
+            new Fields.Field(Fields.OrderQty, '123'),
+            new Fields.Field(Fields.TransactTime, fixParser.getTimestamp()),
+            new Fields.Field(Fields.OrdType, '1'),
+            new Fields.Field(Fields.Side, '1'),
+            new Fields.Field(Fields.Symbol, '700.HK'),
+            new Fields.Field(Fields.TimeInForce, '0')
         );
         const parsed = fixParser.parse(order.encode());
         console.log('sending message', parsed.description, parsed.string);

@@ -3,11 +3,9 @@ import FIXParser from './../src/FIXParser';
 
 describe('FIXParser', () => {
     describe('#parse: constructor validation', () => {
-        it('should throw an error when having no arguments', () => {
+        it('should return null when having no arguments', () => {
             const fixParser = new FIXParser();
-            expect(() => {
-                fixParser.parse();
-            }).toThrowError('No message specified!');
+            expect(fixParser.parse()).toBeNull();
         });
     });
 

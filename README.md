@@ -67,23 +67,23 @@ Features
 + Validation (checksum and message length), includes FIX specification in parsed message
 + Supports various separators/start of headers (e.g. 0x01, ^ and |)
 + Clean and lightweight code
-+ Supports both node.js and browser environments
++ Supports both node.js and browser environments (`import 'fixparser' from 'fixparser/browser';`)
 
 Performance
 -----------
 ```bash
 ┌─────────────────────────────────┬───────────────┬──────────────┬──────────────┐
 │ FIX Messages                    │ Messages/sec  │ Microseconds │ Milliseconds │
-│ 200,000 iterations (same msg)   │ 119,190 msg/s │ 8.3900 μs    │ 0.0084 ms    │
-│ 200,000 iterations (same msg)   │ 121,729 msg/s │ 8.2150 μs    │ 0.0082 ms    │
-│ 200,000 iterations (random msg) │ 67,705 msg/s  │ 14.7700 μs   │ 0.0148 ms    │
-│ 200,000 iterations (same msg)   │ 124,611 msg/s │ 8.0250 μs    │ 0.0080 ms    │
-│ 200,000 iterations (random msg) │ 69,832 msg/s  │ 14.3200 μs   │ 0.0143 ms    │
-│ 200,000 iterations (same msg)   │ 127,065 msg/s │ 7.8700 μs    │ 0.0079 ms    │
-│ 200,000 iterations (random msg) │ 71,174 msg/s  │ 14.0500 μs   │ 0.0141 ms    │
-│ 200,000 iterations (same msg)   │ 125,865 msg/s │ 7.9450 μs    │ 0.0079 ms    │
-│ 200,000 iterations (same msg)   │ 126,743 msg/s │ 7.8900 μs    │ 0.0079 ms    │
-│ 200,000 iterations (same msg)   │ 127,632 msg/s │ 7.8350 μs    │ 0.0078 ms    │
+│ 200,000 iterations (same msg)   │ 152,091 msg/s │ 6.5750 μs    │ 0.0066 ms    │
+│ 200,000 iterations (same msg)   │ 161,551 msg/s │ 6.1900 μs    │ 0.0062 ms    │
+│ 200,000 iterations (random msg) │ 92,721 msg/s  │ 10.7850 μs   │ 0.0108 ms    │
+│ 200,000 iterations (same msg)   │ 160,256 msg/s │ 6.2400 μs    │ 0.0062 ms    │
+│ 200,000 iterations (random msg) │ 92,980 msg/s  │ 10.7550 μs   │ 0.0108 ms    │
+│ 200,000 iterations (same msg)   │ 158,983 msg/s │ 6.2900 μs    │ 0.0063 ms    │
+│ 200,000 iterations (random msg) │ 93,721 msg/s  │ 10.6700 μs   │ 0.0107 ms    │
+│ 200,000 iterations (same msg)   │ 162,338 msg/s │ 6.1600 μs    │ 0.0062 ms    │
+│ 200,000 iterations (same msg)   │ 162,206 msg/s │ 6.1650 μs    │ 0.0062 ms    │
+│ 200,000 iterations (same msg)   │ 162,470 msg/s │ 6.1550 μs    │ 0.0062 ms    │
 └─────────────────────────────────┴───────────────┴──────────────┴──────────────┘
 ```
 1.7 GHz Intel Core i7 (8 GB 1600 MHz DDR3), run with `npm run perf`.

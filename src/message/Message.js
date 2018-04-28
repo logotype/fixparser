@@ -1,4 +1,8 @@
-import { Field } from './../FIXParser';
+import Field, {
+    BeginString,
+    BodyLength,
+    CheckSum
+} from './../fields/Field';
 
 const TAG_CHECKSUM = '10=';
 const TAG_MSGTYPE = '35=';
@@ -85,8 +89,8 @@ export class Message {
 
         // Add header
         this.encodedArray = [
-            new Field(Field.BeginString, 'FIX.4.2').toString(),
-            new Field(Field.BodyLength, MARKER_BODYLENGTH).toString()
+            new Field(BeginString, 'FIX.4.2').toString(),
+            new Field(BodyLength, MARKER_BODYLENGTH).toString()
         ];
 
         // Add other tags
@@ -95,7 +99,7 @@ export class Message {
         });
 
         // Add trailer
-        this.encodedArray.push(new Field(Field.CheckSum, MARKER_CHECKSUM).toString());
+        this.encodedArray.push(new Field(CheckSum, MARKER_CHECKSUM).toString());
 
         let fixMessage = `${this.encodedArray.join(separator)}${separator}`;
         fixMessage = fixMessage.replace(MARKER_BODYLENGTH, calculateBodyLength(fixMessage));
