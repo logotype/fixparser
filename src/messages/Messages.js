@@ -1,4 +1,4 @@
-import {MESSAGES} from './../spec/SpecMessages';
+import { MESSAGES } from './../spec/SpecMessages';
 
 export class Messages {
     constructor() {
@@ -12,9 +12,8 @@ export class Messages {
     processMessage(message, item) {
         const messageType = this.cacheMap.get(item.value);
         if(messageType) {
-            message.description = messageType.Name;
-            message.messageType = messageType.MsgType;
-            item.message = messageType;
+            message.setDescription(messageType.Name);
+            message.setMessageType(messageType.MsgType);
         }
     }
 }

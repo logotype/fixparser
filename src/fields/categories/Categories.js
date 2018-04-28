@@ -1,4 +1,4 @@
-import {CATEGORIES} from './../../spec/SpecCategories';
+import { CATEGORIES } from './../../spec/SpecCategories';
 
 export class Categories {
     constructor() {

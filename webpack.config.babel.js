@@ -34,6 +34,19 @@ const nodeConfig = Object.assign({}, commonConfig, {
     target: 'node'
 });
 
+const serverConfig = Object.assign({}, commonConfig, {
+    entry: {
+        'FIXParser': './src/FIXServer.js'
+    },
+    output: {
+        path: path.join(__dirname),
+        filename: 'server.js',
+        library: 'FIXParser',
+        libraryTarget: 'umd'
+    },
+    target: 'node'
+});
+
 const browserConfig = Object.assign({}, commonConfig, {
     entry: {
         'FIXParser': './src/FIXParserBrowser.js'
@@ -47,4 +60,4 @@ const browserConfig = Object.assign({}, commonConfig, {
     target: 'web'
 });
 
-export default [ nodeConfig, browserConfig ];
+export default [ nodeConfig, serverConfig, browserConfig ];

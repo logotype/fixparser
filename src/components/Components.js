@@ -1,4 +1,4 @@
-import {COMPONENTS} from './../spec/SpecComponents';
+import { COMPONENTS } from './../spec/SpecComponents';
 
 export class Components {
     constructor() {

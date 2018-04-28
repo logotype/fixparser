@@ -1,4 +1,4 @@
-import {ENUMS} from './../spec/SpecEnums';
+import { ENUMS } from './../spec/SpecEnums';
 
 export class Enums {
     constructor() {

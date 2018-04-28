@@ -40,7 +40,7 @@ console.log(logon.encode('|'));
 // 8=FIX.4.2|9=71|35=A|34=1|49=BANZAI|52=20180425-13:16:38.031|56=EXEC|141=Y|98=0|108=10|10=207|
 ```
 
-Connect over TCP socket:
+Connect over TCP socket (as client):
 
 ```javascript
 import FIXParser, { Field } from 'fixparser';
@@ -58,10 +58,28 @@ fixParser.on('close', () => {
 
 ```
 
+FIX Server:
+
+```javascript
+import FIXServer from 'fixparser/server';
+const fixServer = new FIXServer();
+fixServer.createServer('localhost', 9878);
+fixServer.on('message', (message) => {
+    console.log('server received message', message.description, message.string);
+});
+
+```
+
+FIXParser demo
+--------
+
+[FIXParser demo page](http://logotype.github.io/fixparser/example.html)
+
+
 Features
 --------
 + Parse and create FIX messages
-+ Connect over TCP socket
++ Connect over TCP socket as client or server
 + Fast, single-digit microsecond performance
 + Modern, written in ES6/ES2015/ES2016/ES2017
 + Validation (checksum and message length), includes FIX specification in parsed message

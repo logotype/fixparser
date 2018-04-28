@@ -38,7 +38,6 @@ export class Message {
 
         // Add other tags
         fields.forEach((field) => {
-            // dont push toString, push enum or whatever instead
             this.data.push(field);
         });
     }
@@ -47,14 +46,28 @@ export class Message {
         this.data.push(field);
     }
 
+    getField(tag) {
+        return this.data.find((field) => field.tag === tag);
+    }
+
     setString(fixString) {
         this.string = fixString;
+    }
+
+    setDescription(description) {
+        this.description = description;
+    }
+
+    setMessageType(messageType) {
+        this.messageType = messageType;
     }
 
     reset() {
         this.encodedArray = [];
         this.data = [];
         this.string = '';
+        this.description = '';
+        this.messageType = '';
         this.bodyLengthValid = false;
         this.checksumValid = false;
         this.checksumValue = null;
@@ -93,7 +106,7 @@ export class Message {
             new Field(BodyLength, MARKER_BODYLENGTH).toString()
         ];
 
-        // Add other tags
+        // Add other fields
         this.data.forEach((field) => {
             this.encodedArray.push(field.toString());
         });

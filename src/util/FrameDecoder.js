@@ -1,6 +1,6 @@
 import { Transform } from 'stream';
 
-export default class FIXFrameDecoder extends Transform {
+export default class FrameDecoder extends Transform {
     constructor(opts) {
         super(opts);
         this.data = '';
