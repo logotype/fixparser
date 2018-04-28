@@ -1,6 +1,6 @@
 'use strict';
 
-require('./../build/FIXParser');
+require('./../fixparser');
 console.log('Running performance tests...');
 
 let i = null, startDate = null, dateDiff = null, rate = null;
