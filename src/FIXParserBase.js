@@ -53,7 +53,7 @@ export default class FIXParserBase {
     }
 
     parse(data) {
-        let tag = null, value = null, i = 0, equalsOperator = '', item = {};
+        let tag = null, value = null, i = 0, equalsOperator = '', field = null;
 
         if(!data) {
             console.error('No message specified!');
@@ -69,18 +69,18 @@ export default class FIXParserBase {
             tag = parseInt(this.processedData[i].substring(0, equalsOperator), 10);
             value = this.processedData[i].substring(equalsOperator + 1);
 
-            item = new Field(tag, value);
+            field = new Field(tag, value);
 
-            this.fields.processField(this.message, item);
-            this.enums.processEnum(item);
+            this.fields.processField(this.message, field);
+            this.enums.processEnum(field);
 
-            if(item.tag === 9) {
+            if(field.tag === 9) {
                 this.message.validateBodyLength(value);
-            } else if(item.tag === 10) {
+            } else if(field.tag === 10) {
                 this.message.validateChecksum(value);
             }
 
-            this.message.addField(item);
+            this.message.addField(field);
         }
 
         return this.message;

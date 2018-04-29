@@ -4,12 +4,12 @@ export class Components {
     constructor() {
         this.components = COMPONENTS;
         this.cacheMap = new Map();
-        this.components.forEach((item) => {
-            this.cacheMap.set(item.Name, item);
+        this.components.forEach((component) => {
+            this.cacheMap.set(component.ComponentID, component);
         });
     }
 
-    find(componentName) {
-        return this.cacheMap.get(String(componentName));
+    find(componentId) {
+        return this.cacheMap.get(String(componentId));
     }
 }

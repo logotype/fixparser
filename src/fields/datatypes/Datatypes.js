@@ -1,4 +1,5 @@
 import { DATATYPES } from './../../spec/SpecDatatypes';
+import { FieldType } from './FieldType';
 
 export class DataTypes {
     constructor() {
@@ -48,26 +49,30 @@ export class DataTypes {
         this.cacheTypeMap.set('Reserved100Plus', String);
         this.cacheTypeMap.set('Reserved1000Plus', String);
         this.cacheTypeMap.set('Reserved4000Plus', String);
+
+        this.fieldType = new FieldType();
     }
 
-    processDatatype(item, type) {
+    processDatatype(field, type) {
+        this.fieldType.reset();
         const dataType = this.cacheMap.get(type);
         if(dataType) {
-            item.setType(dataType);
+            this.fieldType.setType(dataType);
+            field.setType(this.fieldType);
             if(type === 'int' ||
                 type === 'Length' ||
                 type === 'TagNum' ||
                 type === 'SeqNum' ||
                 type === 'NumInGroup' ||
                 type === 'DayOfMonth') {
-                item.setValue(parseInt(item.value, 10));
+                field.setValue(parseInt(field.value, 10));
             } else if(type === 'float' ||
                 type === 'Qty' ||
                 type === 'Price' ||
                 type === 'PriceOffset' ||
                 type === 'Amt' ||
                 type === 'Percentage') {
-                item.setValue(parseFloat(item.value));
+                field.setValue(parseFloat(field.value));
             }
         }
     }

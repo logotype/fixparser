@@ -6,6 +6,7 @@ export default class Field {
         this.description = null;
         this.type = null;
         this.category = null;
+        this.section = null;
         this.enumeration = null;
     }
 
@@ -31,6 +32,10 @@ export default class Field {
 
     setCategory(category) {
         this.category = category;
+    }
+
+    setSection(section) {
+        this.section = section;
     }
 
     setEnumeration(enumeration) {

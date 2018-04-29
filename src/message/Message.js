@@ -62,12 +62,17 @@ export class Message {
         this.messageType = messageType;
     }
 
+    setMessageContent(messageContent) {
+        this.messageContent = messageContent;
+    }
+
     reset() {
         this.encodedArray = [];
         this.data = [];
         this.string = '';
         this.description = '';
         this.messageType = '';
+        this.messageContent = [];
         this.bodyLengthValid = false;
         this.checksumValid = false;
         this.checksumValue = null;

@@ -34,7 +34,7 @@ Large message:<br>
 Secure login:<br>
 <textarea class="example">8=FIX.4.19=69035=A49=INVMGR56=BRKR98=590=62591=-----BEGIN PGP MESSAGE----- Version: 2.7.1  hIwDDrony+hQ+FEBA/9qd5Vcdw2w2DSKx3+XbqOhWz9xZ07RYRyhKDG/qE5EQbYu 6srrDowCzscPb9+krWcxH4xL3B/1DEwL3QpQsxCSGY1JnbjDCTyJ21nuZ6NHY6YA AAECr4mTIlZgM5hmSmrlunDoeOQWwPkca9OCWh0n3VXfGkA7e99DCq0P3MZ48Jlr GNF141hwWLIpN2RfqYvfzPD0w7I54wf3z/sYefGj+a0QTt1JOLEFxzsPykIyMPEI kGfdjuzOL8/94plkeeWSJHx7K6IemVRsT6HwLJtFaW/JIJr+hxYr1Z8BBjyXoQCz argut9niFOcnSqwvZolAYqjMPrkWuaeJn+bJ4kCEuLGdrQJDHvlzOS6r3By80IUc 2L4W7yJL7Am82wTWD4s5ANBQz8FCwLtLMivUTvqsg/Zp8v7vSQ1FfEIsg30XXtBL 6QBYtnYnAAAwCEOrv6DavDTfhWl72D6VfiOLrHIHtEQf3iwb5JFHGRaMpX88VlSU W7qy163o78rIEL3WEak4pwmnf28P =v9gz -----END PGP MESSAGE----- 93=1689=................10=161</textarea>
 <br>
-<a href="http://www.nyse.com/pdfs/NYSE_CCG_FIX_Sample_Messagesv4.2.pdf">Click here for more sample messages (NySE)</a>
+<a href="https://www.nyse.com/publicdocs/nyse/markets/nyse/NYSE_CCG_FIX_Sample_Messages.pdf">Click here for more sample messages (NySE)</a>
 <br>
 <br>
 <form action="" method="post">
@@ -79,7 +79,7 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
             if(data.type) {
 
                 // Header
-                const enumType = data.enumeration ? " = " + data.enumeration.Description : "";
+                const enumType = data.enumeration ? " = " + data.enumeration.description : "";
                 let checksumValid;
 
                 if(tag === 10) {
@@ -88,25 +88,37 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
                     checksumValid = "";
                 }
 
-                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.Name + "&gt; " + enumType + checksumValid + "</strong></h3><br>";
+                returnString += "<h3><strong>" + data.name + "(" + value + ") &lt;" + data.type.name + "&gt; " + enumType + checksumValid + "</strong></h3><br>";
+
+                if(data.enumeration && data.enumeration.elaboration) {
+                    returnString += "<strong>Elaboration: </strong>" + data.enumeration.elaboration + "<br>";
+                }
 
                 returnString += "<strong>Description: </strong>" + data.description + "<br>";
 
-                returnString += "<strong>Type: </strong> &lt;" + data.type.Name + "&gt; " + data.type.Description + "<br>";
+                returnString += "<strong>Type: </strong> &lt;" + data.type.name + "&gt; " + data.type.description + "<br>";
 
-                if(data.enumeration) {
-                    returnString += "<blockquote>";
-                    returnString += "<h3><strong>" + data.enumeration.Description + "(" + value + ") &lt;Sort " + data.enumeration.Sort + ", Group '" + data.enumeration.Group + "'&gt;</strong></h3><br>";
-
-                    if(data.enumeration.Elaboration) {
-                        returnString += "<strong>Elaboration: </strong>" + data.enumeration.Elaboration + "<br>";
-                    }
-                    returnString += "</blockquote>";
+                if(data.category) {
+                    returnString += "<strong>Category: </strong>" + data.category.categoryID + "<br>";
+                    returnString += "<strong>Component: </strong>" + data.category.componentType + "<br>";
                 }
 
+                if(data.section) {
+                    returnString += "<strong>Section: </strong>" + data.section.name + "<br>";
+                    returnString += "<strong>Section description: </strong>" + data.section.description + "<br>";
+                }
+                
             } else {
-                item.className = "item unsupported";
-                returnString += "<pre>Unsupported and/or custom tag</pre>";
+                if(!data.enumeration) {
+                    item.className = "item unsupported";
+                    returnString += "<pre>Unsupported and/or custom tag</pre>";
+                }
+            }
+
+            if(data.enumeration) {
+                returnString += "<blockquote>";
+                returnString += "<h3><strong>" + data.enumeration.description + "(" + value + ") &lt;Sort " + data.enumeration.sort + ", Group '" + data.enumeration.group + "'&gt;</strong></h3><br>";
+                returnString += "</blockquote>";
             }
 
             return returnString;
