@@ -8,6 +8,11 @@ export const RE_ESCAPE = /([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g; // e
 export const RE_PIPE = /\|/g;
 export const RE_FIXT = new RegExp('^8=FIXT?.\\d.\\d([^\\d]+)\\d.*', 'i');
 
+export const groupBy = (xs, key) => xs.reduce((rv, x) => {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+}, {});
+
 export const adjustForTimezone = (date) => {
     const timeOffsetInMS = date.getTimezoneOffset() * 60000;
     date.setTime(date.getTime() + timeOffsetInMS);

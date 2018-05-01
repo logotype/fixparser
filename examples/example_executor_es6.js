@@ -1,14 +1,16 @@
 import FIXParser, * as Fields from './../src/FIXParser'; // from 'fixparser';
 
 const fixParser = new FIXParser();
+const SENDER = 'BANZAI';
+const TARGET = 'EXEC';
 
 function sendLogon() {
     const logon = fixParser.createMessage(
         new Fields.Field(Fields.MsgType, 'A'),
         new Fields.Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-        new Fields.Field(Fields.SenderCompID, 'BANZAI'),
+        new Fields.Field(Fields.SenderCompID, SENDER),
         new Fields.Field(Fields.SendingTime, fixParser.getTimestamp()),
-        new Fields.Field(Fields.TargetCompID, 'EXEC'),
+        new Fields.Field(Fields.TargetCompID, TARGET),
         new Fields.Field(Fields.ResetSeqNumFlag, 'Y'),
         new Fields.Field(Fields.EncryptMethod, 0),
         new Fields.Field(Fields.HeartBtInt, 10)
@@ -18,7 +20,7 @@ function sendLogon() {
     fixParser.send(logon);
 }
 
-fixParser.connect('localhost', 9878, 'BANZAI', 'EXEC');
+fixParser.connect('localhost', 9878, SENDER, TARGET);
 
 fixParser.on('open', () => {
     console.log('Open');
@@ -29,9 +31,9 @@ fixParser.on('open', () => {
         const order = fixParser.createMessage(
             new Fields.Field(Fields.MsgType, 'D'),
             new Fields.Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-            new Fields.Field(Fields.SenderCompID, 'BANZAI'),
+            new Fields.Field(Fields.SenderCompID, SENDER),
             new Fields.Field(Fields.SendingTime, fixParser.getTimestamp()),
-            new Fields.Field(Fields.TargetCompID, 'EXEC'),
+            new Fields.Field(Fields.TargetCompID, TARGET),
             new Fields.Field(Fields.ClOrdID, '11223344'),
             new Fields.Field(Fields.HandlInst, '1'),
             new Fields.Field(Fields.OrderQty, '123'),
@@ -44,7 +46,7 @@ fixParser.on('open', () => {
         const parsed = fixParser.parse(order.encode());
         console.log('sending message', parsed.description, parsed.string);
         fixParser.send(order);
-    }, 200);
+    }, 5000);
 
 });
 fixParser.on('message', (message) => {

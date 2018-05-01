@@ -16,25 +16,22 @@ export * from './../src/fields/Field';
 export default class FIXParserBase {
 
     constructor() {
-        this.message = new Message();
+        this.message = null;
+        this.messageTags = [];
+        this.messageString = '';
+        this.reBeginString = new RegExp(/(?=8=FIX)/g);
         this.re = RE_FIXT;
-        this.processedData = '';
         this.fields = new FieldsCache();
         this.enums = new EnumsCache();
     }
 
-    preProcess(data) {
-        this.message.reset();
-
-        const match = this.re.exec(data);
+    processMessage() {
+        const match = this.re.exec(this.messageString);
         const firstSeparator = match && match.length === 2 ? match[1] : SOH;
         let separator = null;
 
         if(firstSeparator === SOH) {
             // SOH separator
-            this.message.setString(data);
-            this.processedData = data.split(SOH);
-            return;
         } else if(firstSeparator === '|') {
             // | separator
             separator = RE_PIPE;
@@ -47,27 +44,20 @@ export default class FIXParserBase {
             separator = new RegExp(escapedSeparatorCharacter, 'g');
         }
 
-        const stringData = data.replace(separator, SOH);
+        const stringData = this.messageString.replace(separator, SOH);
         this.message.setString(stringData);
-        this.processedData = stringData.split(SOH);
+        this.messageTags = stringData.split(SOH);
     }
 
-    parse(data) {
+    processFields() {
         let tag = null, value = null, i = 0, equalsOperator = '', field = null;
 
-        if(!data) {
-            console.error('No message specified!');
-            return null;
-        }
+        for (i; i < this.messageTags.length - 1; i++) {
 
-        this.preProcess(data);
+            equalsOperator = this.messageTags[i].indexOf(STRING_EQUALS);
 
-        for (i; i < this.processedData.length - 1; i++) {
-
-            equalsOperator = this.processedData[i].indexOf(STRING_EQUALS);
-
-            tag = parseInt(this.processedData[i].substring(0, equalsOperator), 10);
-            value = this.processedData[i].substring(equalsOperator + 1);
+            tag = this.messageTags[i].substring(0, equalsOperator);
+            value = this.messageTags[i].substring(equalsOperator + 1);
 
             field = new Field(tag, value);
 
@@ -82,7 +72,22 @@ export default class FIXParserBase {
 
             this.message.addField(field);
         }
+    }
 
-        return this.message;
+    parse(data) {
+        let i = 0;
+
+        const messageStrings = data ? data.split(this.reBeginString) : [];
+        const messages = [];
+
+        for(i; i < messageStrings.length; i++) {
+            this.message = new Message();
+            this.messageString = messageStrings[i];
+            this.processMessage();
+            this.processFields();
+            messages.push(this.message);
+        }
+
+        return messages;
     }
 }

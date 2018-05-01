@@ -1,6 +1,6 @@
 export default class Field {
     constructor(tag, value) {
-        this.tag = tag;
+        this.tag = tag >> 0;
         this.value = value;
         this.name = null;
         this.description = null;
@@ -11,7 +11,7 @@ export default class Field {
     }
 
     setTag(tag) {
-        this.tag = tag;
+        this.tag = tag >> 0;
     }
 
     setValue(value) {

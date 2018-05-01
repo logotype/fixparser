@@ -9,7 +9,7 @@ export class Fields {
         this.fields = FIELDS;
         this.cacheMap = new Map();
         this.fields.forEach((item) => {
-            this.cacheMap.set(parseInt(item.Tag, 10), item);
+            this.cacheMap.set(item.Tag >> 0, item);
         });
         this.messages = new Messages();
         this.categories = new Categories();

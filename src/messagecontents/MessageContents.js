@@ -1,25 +1,20 @@
 import { MESSAGE_CONTENTS } from './../spec/SpecMessageContents';
+import { groupBy } from './../util/util';
 
 export class MessageContents {
     constructor() {
         this.messageContents = MESSAGE_CONTENTS;
         this.cacheMap = new Map();
+        this.messageContentsById = groupBy(this.messageContents, 'ComponentID');
         this.messageContents.forEach((messageContent) => {
-            this.cacheMap.set(messageContent.ComponentID, messageContent);
+            this.cacheMap.set(messageContent.ComponentID, this.messageContentsById[messageContent.ComponentID]);
         });
     }
 
-    findAll(componentId) {
-        return this.messageContents
-            .filter((content) => content.ComponentID === componentId)
-            .map((content) => ({
-                componentID: content.ComponentID,
-                tagText: content.TagText,
-                indent: content.Indent,
-                position: content.Position,
-                reqd: content.Reqd,
-                description: content.Description,
-                added: content.Added
-            }));
+    processMessageContents(message, componentId) {
+        const messageContents = this.cacheMap.get(componentId);
+        if(messageContents) {
+            message.setMessageContents(messageContents);
+        }
     }
 }

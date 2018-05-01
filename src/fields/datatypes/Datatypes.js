@@ -65,7 +65,7 @@ export class DataTypes {
                 type === 'SeqNum' ||
                 type === 'NumInGroup' ||
                 type === 'DayOfMonth') {
-                field.setValue(parseInt(field.value, 10));
+                field.setValue(field.value >> 0);
             } else if(type === 'float' ||
                 type === 'Qty' ||
                 type === 'Price' ||
