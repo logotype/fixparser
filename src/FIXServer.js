@@ -10,10 +10,15 @@ import { EventEmitter } from 'events';
 
 import FIXParser from './FIXParser';
 import FrameDecoder from './util/FrameDecoder';
-import { Message } from './message/Message';
+import Message from './message/Message';
 import Field from './../src/fields/Field';
-
-export * from './../src/fields/Field';
+import * as Messages from './../src/constants/ConstantsMessage';
+import * as Fields from './../src/constants/ConstantsField';
+import * as Side from './../src/constants/ConstantsSide';
+import * as OrderTypes from './../src/constants/ConstantsOrderTypes';
+import * as HandlInst from './../src/constants/ConstantsHandlInst';
+import * as TimeInForce from './../src/constants/ConstantsTimeInForce';
+import * as EncryptMethod from './../src/constants/ConstantsEncryptMethod';
 
 export default class FIXServer extends EventEmitter {
 
@@ -39,7 +44,7 @@ export default class FIXServer extends EventEmitter {
             this.socket
                 .pipe(new FrameDecoder())
                 .on('data', (data) => {
-                    const message = this.fixParser.parse(data.toString());
+                    const message = this.fixParser.parse(data.toString())[0];
                     this.processMessage(message);
                     this.emit('message', message);
                 });
@@ -54,11 +59,18 @@ export default class FIXServer extends EventEmitter {
         });
 
         this.server.listen(this.port, this.host);
-        console.log(`FIXServer started at ${this.host}:${this.port}`);
+        console.log(`[${Date.now()}] FIXServer started at ${this.host}:${this.port}`);
     }
 
     processMessage(message) {
-        console.log(`FIXServer received message [${Date.now()}]: ${message.description}`);
+        if(message.messageType === Messages.SequenceReset) {
+            const newSeqNo = (this.getField(Fields.NewSeqNo) || {}).value;
+            if(newSeqNo) {
+                console.log(`[${Date.now()}] FIXServer new sequence number ${newSeqNo}`);
+                this.setNextTargetMsgSeqNum(newSeqNo);
+            }
+        }
+        console.log(`[${Date.now()}] FIXServer received message ${message.description}`);
     }
 
     getNextTargetMsgSeqNum() {
@@ -66,7 +78,7 @@ export default class FIXServer extends EventEmitter {
     }
 
     setNextTargetMsgSeqNum(nextMsgSeqNum) {
-        this.messageSequence = nextMsgSeqNum;
+        this.messageSequence = parseInt(nextMsgSeqNum, 10);
         return this.messageSequence;
     }
 
@@ -76,12 +88,20 @@ export default class FIXServer extends EventEmitter {
                 this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
                 this.socket.write(message.encode());
             } else {
-                console.error('FIXServer: could not send message, message of wrong type');
+                console.error(`[${Date.now()}] FIXServer: could not send message: message of wrong type`);
             }
         } else {
-            console.error('FIXServer: could not send message, socket not open', message);
+            console.error(`[${Date.now()}] FIXServer: could not send message, socket not open`);
         }
     }
 }
 
 export { Field };
+export { Fields };
+export { Message };
+export { Messages };
+export { Side };
+export { OrderTypes };
+export { HandlInst };
+export { TimeInForce };
+export { EncryptMethod };

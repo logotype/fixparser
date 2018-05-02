@@ -8,10 +8,8 @@
 import Field from './fields/Field';
 import { Fields as FieldsCache } from './fields/Fields';
 import { Enums as EnumsCache } from './enums/Enums';
-import { Message } from './message/Message';
+import Message from './message/Message';
 import { SOH, RE_PIPE, STRING_A, RE_A, RE_ESCAPE, RE_FIXT, STRING_EQUALS } from './util/util';
-
-export * from './../src/fields/Field';
 
 export default class FIXParserBase {
 

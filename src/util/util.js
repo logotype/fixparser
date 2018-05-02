@@ -1,4 +1,4 @@
-import { Message } from './../message/Message';
+import Message from './../message/Message';
 
 export const SOH = '\x01';
 export const STRING_A = '^A ';

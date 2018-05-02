@@ -8,13 +8,18 @@
 import { Socket } from 'net';
 import { EventEmitter } from 'events';
 
+import { timestamp } from './util/util';
 import FIXParserBase from './FIXParserBase';
 import FrameDecoder from './util/FrameDecoder';
-import { Message } from './message/Message';
-import Field, * as Fields from './../src/fields/Field';
-import { timestamp } from './util/util';
-
-export * from './../src/fields/Field';
+import Field from './../src/fields/Field';
+import Message from './message/Message';
+import * as Messages from './../src/constants/ConstantsMessage';
+import * as Fields from './../src/constants/ConstantsField';
+import * as Side from './../src/constants/ConstantsSide';
+import * as OrderTypes from './../src/constants/ConstantsOrderTypes';
+import * as HandlInst from './../src/constants/ConstantsHandlInst';
+import * as TimeInForce from './../src/constants/ConstantsTimeInForce';
+import * as EncryptMethod from './../src/constants/ConstantsEncryptMethod';
 
 export default class FIXParser extends EventEmitter {
 
@@ -62,8 +67,8 @@ export default class FIXParser extends EventEmitter {
         this.socket
             .pipe(new FrameDecoder())
             .on('data', (data) => {
-                const message = this.parse(data.toString());
-                this.emit('message', message);
+                const messages = this.parse(data.toString());
+                this.emit('message', messages[0]);
             });
 
         this.socket.on('close', () => {
@@ -116,6 +121,14 @@ export default class FIXParser extends EventEmitter {
 }
 
 export { Field };
+export { Fields };
+export { Message };
+export { Messages };
+export { Side };
+export { OrderTypes };
+export { HandlInst };
+export { TimeInForce };
+export { EncryptMethod };
 
 /**
  * Export global to the window object.

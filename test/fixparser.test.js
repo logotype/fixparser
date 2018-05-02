@@ -1,6 +1,6 @@
 import { testMessages } from './test-messages';
 import FIXParser from './../src/FIXParser';
-import { ContraTradeTime, MsgSeqNum } from './../src/fields/Field';
+import { ContraTradeTime, MsgSeqNum } from './../src/constants/ConstantsField';
 
 describe('FIXParser', () => {
     describe('#parse: constructor validation', () => {

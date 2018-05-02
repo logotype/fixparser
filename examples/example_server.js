@@ -1,4 +1,4 @@
-import FIXServer from './../src/FIXServer';
+import FIXServer from './../src/FIXServer'; // from 'fixparser/server';
 
 const fixServer = new FIXServer();
 fixServer.createServer('localhost', 9878);

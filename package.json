@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -12,11 +12,8 @@
   "scripts": {
     "eslint": "eslint *.babel.js src test",
     "build": "webpack -p",
-    "checksum": "babel-node examples/example_checksum.js",
-    "executor_es5": "node examples/example_executor_es5.js",
-    "executor": "babel-node examples/example_executor_es6.js",
-    "example_es5": "node examples/example_es5.js",
-    "example": "babel-node examples/example_es6.js",
+    "executor": "babel-node examples/example_executor.js",
+    "example": "babel-node examples/example.js",
     "server": "babel-node examples/example_server.js",
     "perf": "node perf/Perf-FIXParser.js",
     "test": "jest"

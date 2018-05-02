@@ -11,6 +11,10 @@ export class Enums {
         this.enumType = null;
     }
 
+    getEnum(tag, value) {
+        return this.cacheMap.get(`${tag}|${value}`).SymbolicName;
+    }
+
     processEnum(field) {
         this.enumType = new EnumType();
         const enumType = this.cacheMap.get(`${field.tag}|${field.value}`);

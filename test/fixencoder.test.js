@@ -1,5 +1,6 @@
 import FIXParser from './../src/FIXParser';
-import Field, {
+import Field from './../src/fields/Field';
+import {
     MsgType,
     MsgSeqNum,
     SenderCompID,
@@ -9,7 +10,7 @@ import Field, {
     RawData,
     EncryptMethod,
     HeartBtInt
-} from '../src/fields/Field';
+} from './../src/constants/ConstantsField';
 
 describe('FIXEncoder', () => {
     describe('#encode: Heartbeat', () => {

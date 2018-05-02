@@ -16,34 +16,46 @@ Parse a FIX message:
 
 ```javascript
 import FIXParser from 'fixparser';
-const fixParser = new FIXParser(),
-    parsedMessage = fixParser.parse('8=FIX.4.2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=249|');
-console.log(parsedMessage);
+const fixParser = new FIXParser();
+console.log(fixParser.parse('8=FIX.4.2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=249|'));
 ```
 
 Create a FIX message:
 
 ```javascript
-import FIXParser, { Field } from 'fixparser';
+import FIXParser, {
+    Field,
+    Fields,
+    Messages,
+    Side,
+    OrderTypes,
+    HandlInst,
+    TimeInForce,
+    EncryptMethod
+} from 'fixarser';
 const fixParser = new FIXParser();
-const logon = fixParser.createMessage(
-    new Field(Field.MsgType, 'A'),
-    new Field(Field.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
-    new Field(Field.SenderCompID, 'BANZAI'),
-    new Field(Field.SendingTime, fixParser.getTimestamp()),
-    new Field(Field.TargetCompID, 'EXEC'),
-    new Field(Field.ResetSeqNumFlag, 'Y'),
-    new Field(Field.EncryptMethod, 0),
-    new Field(Field.HeartBtInt, 10),
+const order = fixParser.createMessage(
+    new Field(Fields.MsgType, Messages.NewOrderSingle),
+    new Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
+    new Field(Fields.SenderCompID, 'SENDER'),
+    new Field(Fields.SendingTime, fixParser.getTimestamp()),
+    new Field(Fields.TargetCompID, 'TARGET'),
+    new Field(Fields.ClOrdID, '11223344'),
+    new Field(Fields.HandlInst, HandlInst.AutomatedExecutionNoIntervention),
+    new Field(Fields.OrderQty, '123'),
+    new Field(Fields.TransactTime, fixParser.getTimestamp()),
+    new Field(Fields.OrdType, OrderTypes.Market),
+    new Field(Fields.Side, Side.Buy),
+    new Field(Fields.Symbol, '123.HK'),
+    new Field(Fields.TimeInForce, TimeInForce.Day)
 );
-console.log(logon.encode('|'));
-// 8=FIX.4.2|9=71|35=A|34=1|49=BANZAI|52=20180425-13:16:38.031|56=EXEC|141=Y|98=0|108=10|10=207|
+console.log(order.encode('|'));
 ```
 
 Connect over TCP socket (as client):
 
 ```javascript
-import FIXParser, { Field } from 'fixparser';
+import FIXParser from 'fixparser';
 const fixParser = new FIXParser();
 fixParser.connect('localhost', 9878, 'BANZAI', 'EXEC');
 fixParser.on('open', () => {
@@ -55,7 +67,6 @@ fixParser.on('message', (message) => {
 fixParser.on('close', () => {
     // Disconnected...
 });
-
 ```
 
 FIX Server:
@@ -67,7 +78,6 @@ fixServer.createServer('localhost', 9878);
 fixServer.on('message', (message) => {
     console.log('server received message', message.description, message.string);
 });
-
 ```
 
 FIXParser demo

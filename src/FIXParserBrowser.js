@@ -7,12 +7,17 @@
  */
 import { EventEmitter } from 'events';
 
-import FIXParserBase from './FIXParserBase';
-import { Message } from './message/Message';
-import Field from './../src/fields/Field';
 import { timestamp } from './util/util';
-
-export * from './../src/fields/Field';
+import FIXParserBase from './FIXParserBase';
+import Message from './message/Message';
+import Field from './../src/fields/Field';
+import * as Messages from './../src/constants/ConstantsMessage';
+import * as Fields from './../src/constants/ConstantsField';
+import * as Side from './../src/constants/ConstantsSide';
+import * as OrderTypes from './../src/constants/ConstantsOrderTypes';
+import * as HandlInst from './../src/constants/ConstantsHandlInst';
+import * as TimeInForce from './../src/constants/ConstantsTimeInForce';
+import * as EncryptMethod from './../src/constants/ConstantsEncryptMethod';
 
 export default class FIXParserBrowser extends EventEmitter {
 
@@ -53,6 +58,14 @@ export default class FIXParserBrowser extends EventEmitter {
 }
 
 export { Field };
+export { Fields };
+export { Message };
+export { Messages };
+export { Side };
+export { OrderTypes };
+export { HandlInst };
+export { TimeInForce };
+export { EncryptMethod };
 
 /**
  * Export global to the window object.

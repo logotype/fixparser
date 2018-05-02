@@ -140,6 +140,11 @@ Copyright © 2018 Victor Norgren <a href="https://www.logotype.se">www.logotype.
                 outerItem = document.createElement("div");
                 outerItem.className = "outer-item";
                 
+                const fixString = document.createElement("span");
+                const fixStringText = document.createTextNode(parsedMessage[i].string.replace('\x01', '|'));
+                fixString.appendChild(fixStringText);
+                outerItem.appendChild(fixString);
+                
                 const briefDescription = document.createElement("h1");
                 const briefDescriptionText = document.createTextNode(parsedMessage[i].getBriefDescription());
                 briefDescription.appendChild(briefDescriptionText);

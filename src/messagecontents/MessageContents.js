@@ -7,7 +7,18 @@ export class MessageContents {
         this.cacheMap = new Map();
         this.messageContentsById = groupBy(this.messageContents, 'ComponentID');
         this.messageContents.forEach((messageContent) => {
-            this.cacheMap.set(messageContent.ComponentID, this.messageContentsById[messageContent.ComponentID]);
+            const componentsById = this.messageContentsById[messageContent.ComponentID];
+            this.cacheMap.set(messageContent.ComponentID, componentsById.map((component) => ({
+                componentID: component.ComponentID,
+                tagText: component.TagText,
+                indent: component.Indent,
+                position: component.Position,
+                reqd: component.Reqd,
+                description: component.Description,
+                added: component.Added,
+                addedEP: component.AddedEP,
+                deprecated: component.Deprecated
+            })));
         });
     }
 

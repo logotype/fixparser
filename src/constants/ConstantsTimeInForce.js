@@ -1,0 +1,10 @@
+export const Day = '0';
+export const GoodTillCancel = '1';
+export const AtTheOpening = '2';
+export const ImmediateOrCancel = '3';
+export const FillOrKill = '4';
+export const GoodTillCrossing = '5';
+export const GoodTillDate = '6';
+export const AtTheClose = '7';
+export const GoodThroughCrossing = '8';
+export const AtCrossing = '9';

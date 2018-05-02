@@ -1,4 +1,6 @@
-import Field, {
+import { Enums } from './../enums/Enums';
+import Field from './../fields/Field';
+import {
     BeginString,
     BodyLength,
     CheckSum,
@@ -12,7 +14,7 @@ import Field, {
     Side,
     Symbol,
     TimeInForce
-} from './../fields/Field';
+} from './../constants/ConstantsField';
 
 const TAG_CHECKSUM = '10=';
 const TAG_MSGTYPE = '35=';
@@ -47,7 +49,7 @@ export function calculateChecksum(value) {
     return Message.pad(integerValues & 255, 3); // eslint-disable-line no-use-before-define
 }
 
-export class Message {
+export default class Message {
 
     static pad(value, size) {
         const paddedString = `00${value}`;
@@ -92,13 +94,7 @@ export class Message {
         let side = ((this.getField(Side) || {}).enumeration || {}).symbolicName;
         side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
 
-        if(this.getField(MsgType).value === 'A') {
-            returnValue = 'Logon';
-        } else if(this.getField(MsgType).value === '0') {
-            returnValue = 'Heartbeat';
-        } else if(this.getField(MsgType).value === '3') {
-            returnValue = 'Reject';
-        } else if(this.getField(LeavesQty)) {
+        if(this.getField(LeavesQty)) {
             let quantity = null;
 
             if(this.getField(ContraTradeQty)) {
@@ -110,7 +106,7 @@ export class Message {
             const lastPrice = (this.getField(LastPx) || {}).value;
             returnValue = nonEmpty `${quantity} @${lastPrice || String(lastPrice) === '0' ? lastPrice.toFixed(2) : null} ${this.getField(LeavesQty).name.replace('LeavesQty', 'LvsQty')} ${leavesQuantity}`;
 
-        } else {
+        } else if(this.getField(OrderQty)) {
             const orderQuantity = (this.getField(OrderQty) || {}).value;
             const symbol = (this.getField(Symbol) || {}).value;
             const orderType = ((this.getField(OrdType) || {}).enumeration || {}).symbolicName;
@@ -127,6 +123,9 @@ export class Message {
             } else {
                 returnValue = nonEmpty `${side} ${orderQuantity} ${symbol ? symbol.toUpperCase() : null} ${orderType ? orderType.replace('Market', 'MKT').replace('Limit', 'LMT').toUpperCase() : null} ${timeInForce ? timeInForce.toUpperCase() : null}`;
             }
+        } else {
+            const enums = new Enums();
+            return enums.getEnum(this.getField(MsgType).tag, this.getField(MsgType).value);
         }
 
         return returnValue.trim();
@@ -194,4 +193,3 @@ export class Message {
         return fixMessage;
     }
 }
-
