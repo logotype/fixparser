@@ -83,7 +83,7 @@ fixServer.on('message', (message) => {
 FIXParser demo
 --------
 
-[FIXParser demo page](http://logotype.github.io/fixparser/example.html)
+[FIXParser demo page](http://fixparser.sendercompid.com)
 
 
 Features
