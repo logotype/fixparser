@@ -137,7 +137,12 @@ export default class Message {
                 returnValue = nonEmpty `${side} ${orderQuantity} ${symbol ? symbol.toUpperCase() : null} ${orderType ? orderType.replace('Market', 'MKT').replace('Limit', 'LMT').toUpperCase() : null} ${timeInForce ? timeInForce.toUpperCase() : null}`;
             }
         } else {
-            return (this.getEnum(this.getField(MsgType).tag, this.getField(MsgType).value) || {}).SymbolicName;
+            const messageType = this.getField(MsgType);
+            if(messageType && messageType.tag && messageType.value) {
+                return (this.getEnum(messageType.tag, messageType.value) || {}).SymbolicName;
+            } else {
+                return null;
+            }
         }
 
         return returnValue.trim();
