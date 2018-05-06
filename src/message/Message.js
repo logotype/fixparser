@@ -88,6 +88,19 @@ export default class Message {
     setMessageContents(messageContents) {
         this.messageContents = messageContents;
     }
+    
+    getEnum(tag, value) {
+        if(!this.getField(MsgType) || !this.getField(MsgType).tag) {
+            return null;
+        }
+        
+        if(!this.getField(MsgType) || !this.getField(MsgType).value) {
+            return null;
+        }
+        
+        const enums = new Enums();
+        return enums.getEnum(tag, value);
+    }
 
     getBriefDescription() { // eslint-disable-line complexity
         let returnValue = '';
@@ -124,8 +137,7 @@ export default class Message {
                 returnValue = nonEmpty `${side} ${orderQuantity} ${symbol ? symbol.toUpperCase() : null} ${orderType ? orderType.replace('Market', 'MKT').replace('Limit', 'LMT').toUpperCase() : null} ${timeInForce ? timeInForce.toUpperCase() : null}`;
             }
         } else {
-            const enums = new Enums();
-            return enums.getEnum(this.getField(MsgType).tag, this.getField(MsgType).value);
+            return (this.getEnum(this.getField(MsgType).tag, this.getField(MsgType).value) || {}).SymbolicName;
         }
 
         return returnValue.trim();

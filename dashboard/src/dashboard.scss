@@ -1,0 +1,64 @@
+@import 'uikit/src/scss/variables.scss';
+@import 'uikit/src/scss/variables-theme.scss';
+@import 'uikit/src/scss/mixins.scss';
+@import 'uikit/src/scss/mixins-theme.scss';
+@import 'uikit/src/scss/uikit.scss';
+@import 'uikit/src/scss/uikit-theme.scss';
+
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('../fonts/ProximaNova-Light-webfont.woff2') format('woff2'), url('../fonts/ProximaNova-Light-webfont.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('../fonts/ProximaNova-Reg-webfont.woff2') format('woff2'), url('../fonts/ProximaNova-Reg-webfont.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('../fonts/ProximaNova-Sbold-webfont.woff2') format('woff2'), url('../fonts/ProximaNova-Sbold-webfont.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+$defaultFontSize: 12px;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: ProximaNova !important;
+}
+
+.buy {
+  background-color: #1dcc92;
+}
+
+.sell {
+  background-color: #ff433d;
+}
+
+.small-fonts {
+  font-size: $defaultFontSize !important;
+  
+  .uk-badge {
+    font-size: $defaultFontSize !important;
+  }
+}
+
+h3 {
+  font-weight: 300;
+}
+
+.th, th {
+  font-size: $defaultFontSize !important;
+  font-weight: 400 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}

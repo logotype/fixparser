@@ -2,6 +2,7 @@ import Message from './../message/Message';
 
 export const SOH = '\x01';
 export const STRING_A = '^A ';
+export const STRING_PIPE = '|';
 export const STRING_EQUALS = '=';
 export const RE_A = /\^A\s|\^A/g;
 export const RE_ESCAPE = /([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g; // eslint-disable-line no-useless-escape

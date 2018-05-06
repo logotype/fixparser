@@ -12,7 +12,7 @@ export class Enums {
     }
 
     getEnum(tag, value) {
-        return this.cacheMap.get(`${tag}|${value}`).SymbolicName;
+        return this.cacheMap.get(`${tag}|${value}`);
     }
 
     processEnum(field) {
