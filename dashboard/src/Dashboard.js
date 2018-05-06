@@ -55,7 +55,7 @@ export default class Dashboard extends Component {
                 <div className="uk-section uk-section-default small-fonts">
                     <div className="uk-container">
                         <div className="uk-grid-large uk-child-width-expand@s" uk-grid="true">
-                            <MessageList messages={this.state.messages} onSelectMessage={this.selectMessage} />
+                            <MessageList messages={this.state.messages} selectedMessage={this.state.selectedMessage} onSelectMessage={this.selectMessage} />
                             <MessageDetailList message={this.state.selectedMessage} />
                         </div>
                     </div>

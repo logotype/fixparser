@@ -11,9 +11,11 @@ import { MsgType } from './../../../src/constants/ConstantsField';
 export default class MessageListItem extends Component {
     static propTypes = {
         message: PropTypes.object,
-        onSelectMessage: PropTypes.func.isRequired
+        onSelectMessage: PropTypes.func.isRequired,
+        selected: PropTypes.bool.isRequired
     };
     static defaultProps = {
+        selected: false,
         message: null
     };
     
@@ -23,7 +25,6 @@ export default class MessageListItem extends Component {
     }
 
     onClickListItem() {
-        console.log('click');
         this.props.onSelectMessage(this.props.message);
     }
     
@@ -53,7 +54,7 @@ export default class MessageListItem extends Component {
             cursor: 'pointer'
         };
         return (
-            <tr onClick={this.onClickListItem} style={styleObject}>
+            <tr onClick={this.onClickListItem} style={styleObject} className={classNames({ 'selected-row': this.props.selected })}>
                 <td>{moment(getValue(this.props.message.getField(Fields.SendingTime)), 'YYYYMMDD-HH:mm:ss').format('HH:mm:ss')}</td>
                 <td>{getValue(this.props.message.getField(Fields.SenderCompID))}</td>
                 <td>{getValue(this.props.message.getField(Fields.TargetCompID))}</td>
