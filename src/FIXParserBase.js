@@ -9,7 +9,7 @@ import Field from './fields/Field';
 import { Fields as FieldsCache } from './fields/Fields';
 import { Enums as EnumsCache } from './enums/Enums';
 import Message from './message/Message';
-import { SOH, RE_PIPE, STRING_A, STRING_PIPE, RE_A, RE_ESCAPE, RE_FIXT, STRING_EQUALS } from './util/util';
+import { SOH, RE_PIPE, STRING_A1, STRING_A2, STRING_PIPE, RE_A, RE_FIND, RE_ESCAPE, RE_FIXT, STRING_EQUALS } from './util/util';
 
 export default class FIXParserBase {
 
@@ -26,25 +26,33 @@ export default class FIXParserBase {
     processMessage() {
         const match = this.re.exec(this.messageString);
         const firstSeparator = match && match.length === 2 ? match[1] : null;
-        let separator = null;
 
         if(firstSeparator === SOH) {
             // SOH separator
+            this.message.setString(this.messageString);
+            this.messageTags = this.messageString.split(SOH);
         } else if(firstSeparator === STRING_PIPE) {
             // | separator
-            separator = RE_PIPE;
-        } else if(firstSeparator === STRING_A) {
+            const stringData = this.messageString.replace(RE_PIPE, SOH);
+            this.message.setString(stringData);
+            this.messageTags = stringData.split(SOH);
+        } else if(firstSeparator === STRING_A1 || firstSeparator === STRING_A2) {
             // Multi-character separator
-            separator = RE_A;
+            const stringData = this.messageString.replace(RE_A, SOH);
+            this.message.setString(stringData);
+            this.messageTags = stringData.split(SOH);
         } else {
-            this.message = null;
-            this.messageTags = [];
-            return;
+            // Try to determine single-byte separator (slowest)
+            const matches = RE_FIND.exec(this.messageString);
+            if(matches && matches.length === 2) {
+                const stringData = this.messageString.replace(new RegExp(matches[1].replace(RE_ESCAPE, '\\$&'), 'g'), SOH);
+                this.message.setString(stringData);
+                this.messageTags = stringData.split(SOH);
+            } else {
+                this.message = null;
+                this.messageTags = [];
+            }
         }
-
-        const stringData = this.messageString.replace(separator, SOH);
-        this.message.setString(stringData);
-        this.messageTags = stringData.split(SOH);
     }
 
     processFields() {
@@ -85,7 +93,7 @@ export default class FIXParserBase {
             if(this.message) {
                 this.processFields();
                 messages.push(this.message);
-            } 
+            }
         }
 
         return messages;

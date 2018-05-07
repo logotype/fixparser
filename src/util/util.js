@@ -1,13 +1,15 @@
 import Message from './../message/Message';
 
 export const SOH = '\x01';
-export const STRING_A = '^A ';
+export const STRING_A1 = '^A';
+export const STRING_A2 = '^A ';
 export const STRING_PIPE = '|';
 export const STRING_EQUALS = '=';
 export const RE_A = /\^A\s|\^A/g;
-export const RE_ESCAPE = /([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g; // eslint-disable-line no-useless-escape
+export const RE_ESCAPE = /[.*+?^${}()|[\]\\]/g; // eslint-disable-line no-useless-escape
 export const RE_PIPE = /\|/g;
 export const RE_FIXT = new RegExp('^8=FIXT?.\\d.\\d([^\\d]+)\\d.*', 'i');
+export const RE_FIND = /(?:8=FIX\....|8=FIXT\....)(.)(?:9=)/g;
 
 export const groupBy = (xs, key) => xs.reduce((rv, x) => {
     (rv[x[key]] = rv[x[key]] || []).push(x);

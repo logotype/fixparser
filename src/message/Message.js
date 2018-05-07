@@ -88,16 +88,16 @@ export default class Message {
     setMessageContents(messageContents) {
         this.messageContents = messageContents;
     }
-    
+
     getEnum(tag, value) {
         if(!this.getField(MsgType) || !this.getField(MsgType).tag) {
             return null;
         }
-        
+
         if(!this.getField(MsgType) || !this.getField(MsgType).value) {
             return null;
         }
-        
+
         const enums = new Enums();
         return enums.getEnum(tag, value);
     }

@@ -10,8 +10,15 @@ describe('FIXParser', () => {
         });
     });
 
+    describe('#parse: unknown SOH "/"', () => {
+        it('should parse the message, SOH "/"', () => {
+            const fixParser = new FIXParser();
+            expect(fixParser.parse('8=FIX.4.2/9=106/35=A/34=1/49=U1par/50=U1fix/52=20090206-21:13:36.887/56=FixServer/98=0/108=30/141=Y/553=U1fix/554=hotspot/10=061/')[0].data.length).toEqual(14);
+        });
+    });
+
     describe('#parse: invalid message', () => {
-        fit('should return null when having incorrect message', () => {
+        it('should return null when having incorrect message', () => {
             const fixParser = new FIXParser();
             expect(fixParser.parse('aabbccddeeffgghhii').length).toEqual(0);
         });
@@ -679,6 +686,15 @@ describe('FIXParser', () => {
 
     testMessages.forEach((messages) => {
         processTest(messages);
+    });
+
+    describe('#parse: unknown SOH', () => {
+        it('should parse the message, SOH " "', () => {
+            const fixParser = new FIXParser();
+            expect(
+                fixParser.parse('8=FIX.4.2 9=106 35=A 34=1 49=U1par 50=U1fix 52=20090206-21:13:36.887 56=FixServer 98=0 108=30 141=Y 553=U1fix 554=hotspot 10=061 ')[0].data.length
+            ).toEqual(14);
+        });
     });
 
 });
