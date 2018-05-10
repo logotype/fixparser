@@ -186,7 +186,7 @@ export default class Message {
 
     encode(separator = '\x01') {
         const data = [];
-        let beginString = new Field(BeginString, 'FIX.5.0SP1').toString();
+        let beginString = new Field(BeginString, 'FIX.5.0SP2').toString();
         let bodyLength = new Field(BodyLength, MARKER_BODYLENGTH).toString();
         let checksum = new Field(CheckSum, MARKER_CHECKSUM).toString();
         let index = this.data.findIndex((field) => field.tag === BeginString);

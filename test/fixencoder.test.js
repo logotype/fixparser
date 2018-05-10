@@ -17,7 +17,7 @@ import {
 
 describe('FIXEncoder', () => {
     describe('#encode: Heartbeat', () => {
-        const fixString = '8=FIX.5.0SP1|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=204|';
+        const fixString = '8=FIX.5.0SP2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=205|';
         const fixParser = new FIXParser();
 
         it('should have encoded the FIX message', () => {
@@ -32,7 +32,7 @@ describe('FIXEncoder', () => {
         });
     });
     describe('#encode: Logon', () => {
-        const fixString = '8=FIX.5.0SP1|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=089|';
+        const fixString = '8=FIX.5.0SP2|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=090|';
         const fixParser = new FIXParser();
 
         it('should have encoded the FIX message', () => {
@@ -72,7 +72,7 @@ describe('FIXEncoder', () => {
         });
 
         it('should have encoded the FIX message with custom BodyLength', () => {
-            fixString = '8=FIX.5.0SP1|9=123456|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=033|';
+            fixString = '8=FIX.5.0SP2|9=123456|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=034|';
             const message = fixParser.createMessage(
                 new Field(MsgType, 'A'),
                 new Field(MsgSeqNum, fixParser.setNextTargetMsgSeqNum(702)),
@@ -89,7 +89,7 @@ describe('FIXEncoder', () => {
         });
 
         it('should have encoded the FIX message with custom CheckSum', () => {
-            fixString = '8=FIX.5.0SP1|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=999|';
+            fixString = '8=FIX.5.0SP2|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=999|';
             const message = fixParser.createMessage(
                 new Field(CheckSum, 999),
                 new Field(MsgType, 'A'),

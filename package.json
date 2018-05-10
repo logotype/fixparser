@@ -1,6 +1,6 @@
 {
   "name": "fixparser",
-  "version": "2.3.5",
+  "version": "2.3.6",
   "description": "FIX 5.0SP2 Parser",
   "main": "./fixparser.js",
   "module": "./src/FIXParser.js",
@@ -24,6 +24,7 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "codeclimate-test-reporter": "^0.5.0",
+    "cli-table": "^0.3.1",
     "eslint": "^4.18.2",
     "eslint-plugin-babel": "5.1.0",
     "eslint-plugin-import": "^2.9.0",
@@ -44,9 +45,7 @@
   ],
   "author": "Victor Norgren",
   "license": "MIT",
-  "dependencies": {
-    "cli-table": "^0.3.1"
-  },
+  "dependencies": {},
   "jest": {
     "collectCoverage": false,
     "collectCoverageFrom": [
