@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import FIXParser from './../../src/FIXParserBrowser';
 import MessageList from './messages/MessageList';
 import MessageDetailList from './messages/MessageDetailList';
+import { testMessages } from './../../test/test-messages';
 
 export const getValue = (obj, field = 'value') => obj && obj[field] ? obj[field] : null;
 
@@ -19,6 +20,7 @@ export default class Dashboard extends Component {
         this.fixParser = new FIXParser();
         this.selectMessage = this.selectMessage.bind(this);
         this.handleTextareaChange = this.handleTextareaChange.bind(this);
+        this.handleSelectChange = this.handleSelectChange.bind(this);
     }
 
     componentDidMount() {
@@ -38,18 +40,38 @@ export default class Dashboard extends Component {
         this.setState({
             value: event.target.value,
             messages: messages,
-            selectedMessage: messages[0]
+            selectedMessage: messages[0],
+            selectedValue: null
         });
+    }
+
+    handleSelectChange(event) {
+        const messages = this.fixParser.parse(event.target.value);
+        this.setState({
+            value: event.target.value,
+            messages: messages,
+            selectedMessage: messages[0],
+            selectedValue: event.target.value
+        });
+    }
+
+    exampleMessages() {
+        return testMessages
+            .map((message) => <option value={message.fix}>{message.description} {message.detail}</option>);
     }
 
     render() {
         return (
             <div>
-                <div className="uk-section uk-section-primary uk-section-small uk-light">
+                <div className="uk-section  uk-section-primary uk-section-small uk-light">
                     <div className="uk-container">
-                        <h3>FIXParser</h3>
-                        <p>This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.</p>
-                        <textarea className="uk-textarea" rows={5} value={this.state.value} onChange={this.handleTextareaChange}></textarea>
+                        <h3 className="uk-margin-remove">FIXParser</h3>
+                        <p className="uk-margin-remove">This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.</p>
+                        <select className="uk-select uk-margin-top uk-margin-bottom" onChange={this.handleSelectChange} value={this.state.selectedValue}>
+                            <option value="">Select example FIX message</option>
+                            {this.exampleMessages()}
+                        </select>
+                        <textarea className="uk-textarea" rows={3} onChange={this.handleTextareaChange} value={this.state.value}></textarea>
                     </div>
                 </div>
                 <div className="uk-section uk-section-default small-fonts">

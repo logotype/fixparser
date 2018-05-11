@@ -16,6 +16,7 @@ import {
     TimeInForce
 } from './../constants/ConstantsField';
 
+const DEFAULT_FIX_VERSION = 'FIX.5.0SP2';
 const TAG_CHECKSUM = '10=';
 const TAG_MSGTYPE = '35=';
 const MARKER_BODYLENGTH = '\x02';
@@ -185,37 +186,39 @@ export default class Message {
     }
 
     encode(separator = '\x01') {
+        const fields = this.data.map((field) => new Field(field.tag, field.value));
         const data = [];
-        let beginString = new Field(BeginString, 'FIX.5.0SP2').toString();
+
+        let beginString = new Field(BeginString, DEFAULT_FIX_VERSION).toString();
         let bodyLength = new Field(BodyLength, MARKER_BODYLENGTH).toString();
         let checksum = new Field(CheckSum, MARKER_CHECKSUM).toString();
-        let index = this.data.findIndex((field) => field.tag === BeginString);
+        let index = fields.findIndex((field) => field.tag === BeginString);
 
         // Check for header
         if(index > -1) {
-            beginString = this.data[index].toString();
-            this.data.splice(index, 1);
+            beginString = fields[index].toString();
+            fields.splice(index, 1);
         }
 
         // Check for body length
-        index = this.data.findIndex((field) => field.tag === BodyLength);
+        index = fields.findIndex((field) => field.tag === BodyLength);
         if(index > -1) {
-            bodyLength = this.data[index].toString();
-            this.data.splice(index, 1);
+            bodyLength = fields[index].toString();
+            fields.splice(index, 1);
         }
 
         // Check for trailer
-        index = this.data.findIndex((field) => field.tag === CheckSum);
+        index = fields.findIndex((field) => field.tag === CheckSum);
         if(index > -1) {
-            checksum = this.data[index].toString();
-            this.data.splice(index, 1);
+            checksum = fields[index].toString();
+            fields.splice(index, 1);
         }
 
         data.push(beginString);
         data.push(bodyLength);
 
         // Add other fields
-        this.data
+        fields
             .forEach((field) => {
                 data.push(field.toString());
             });

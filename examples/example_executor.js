@@ -15,6 +15,7 @@ const TARGET = 'EXEC';
 
 function sendLogon() {
     const logon = fixParser.createMessage(
+        new Field(Fields.BeginString, 'FIX.4.2'),
         new Field(Fields.MsgType, Messages.Logon),
         new Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
         new Field(Fields.SenderCompID, SENDER),
@@ -38,6 +39,7 @@ fixParser.on('open', () => {
 
     setInterval(() => {
         const order = fixParser.createMessage(
+            new Field(Fields.BeginString, 'FIX.4.2'),
             new Field(Fields.MsgType, Messages.NewOrderSingle),
             new Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
             new Field(Fields.SenderCompID, SENDER),
@@ -53,7 +55,7 @@ fixParser.on('open', () => {
             new Field(Fields.TimeInForce, TimeInForce.Day)
         );
         const messages = fixParser.parse(order.encode());
-        console.log('sending message', messages[0].description, messages[0].string);
+        console.log('sending message', messages[0].description, messages[0].string.replace(/\x01/g, '|'));
         fixParser.send(order);
     }, 5000);
 
