@@ -24,12 +24,14 @@ export default class MessageList extends Component {
 
     render() {
         return (
-            <table className="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle uk-background-muted uk-padding">
+            <table className="uk-table uk-table-small uk-table-divider uk-table-hover uk-table-middle uk-background-muted">
                 <thead>
                 <tr>
-                    <td colSpan="6">
-                        <h3>Timeline</h3>
-                        Click on a list item below to see FIX message details.
+                    <td colSpan="5" className="no-padding">
+                        <div className="uk-alert-muted" uk-alert="true">
+                            <h3>Timeline</h3>
+                            Click on a list item below to see FIX message details.
+                        </div>
                     </td>
                 </tr>
                 </thead>

@@ -36,7 +36,7 @@ export default class MessageDetailList extends Component {
             <table className="uk-table uk-table-small uk-table-divider uk-table-middle">
                 <thead>
                 <tr>
-                    <td colSpan="5" className="no-padding">
+                    <td colSpan={4} className="no-padding">
                         <div className="uk-alert-primary" uk-alert="true">
                             <h3>{messageDescription}</h3>
                             <p>{messageElaboration}</p>
@@ -49,8 +49,7 @@ export default class MessageDetailList extends Component {
                     <th>Tag</th>
                     <th>Name</th>
                     <th>Value</th>
-                    <th>Description</th>
-                    <th>Elaboration</th>
+                    <th>Enumeration</th>
                 </tr>
                 </thead>
                 <tbody>
