@@ -65,7 +65,7 @@ export default class Dashboard extends Component {
             <div>
                 <div className="uk-section  uk-section-primary uk-section-small uk-light">
                     <div className="uk-container">
-                        <h3 className="uk-margin-remove">FIXParser</h3>
+                        <h3>FIXParser is <a href="https://github.com/logotype/fixparser" className="uk-link-muted">open-source</a> at Github</h3>
                         <p className="uk-margin-remove">This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.</p>
                         <select className="uk-select uk-margin-top uk-margin-bottom" onChange={this.handleSelectChange} value={this.state.selectedValue}>
                             <option value="">Select example FIX message</option>
@@ -80,6 +80,11 @@ export default class Dashboard extends Component {
                             <MessageList messages={this.state.messages} selectedMessage={this.state.selectedMessage} onSelectMessage={this.selectMessage} />
                             <MessageDetailList message={this.state.selectedMessage} />
                         </div>
+                    </div>
+                    <div className="uk-container">
+                        <h3 className="uk-margin-remove">Serialized parsed data</h3>
+                        <p className="uk-margin-remove">This is the raw output from the parse() function.</p>
+                        <pre className="uk-height-medium uk-overflow-auto">{JSON.stringify(this.state.selectedMessage, null, 2)}</pre>
                     </div>
                 </div>
                 <div className="uk-section uk-section-secondary uk-light">

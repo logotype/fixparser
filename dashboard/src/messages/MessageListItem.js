@@ -56,9 +56,9 @@ export default class MessageListItem extends Component {
         return (
             <tr onClick={this.onClickListItem} style={styleObject} className={classNames({ 'selected-row': this.props.selected })}>
                 <td>{moment(getValue(this.props.message.getField(Fields.SendingTime)), 'YYYYMMDD-HH:mm:ss').format('HH:mm:ss')}</td>
-                <td>{getValue(this.props.message.getField(Fields.SenderCompID))}</td>
-                <td>{getValue(this.props.message.getField(Fields.TargetCompID))}</td>
-                <td>{getValue(this.props.message.getField(Fields.ClOrdID))}</td>
+                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.SenderCompID))}</td>
+                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.TargetCompID))}</td>
+                <td className="uk-text-truncate">{getValue(this.props.message.getField(Fields.ClOrdID))}</td>
                 <td>{messageDescription}</td>
                 {this.renderDetail()}
             </tr>
