@@ -189,12 +189,19 @@ export default class Message {
         const fields = this.data.map((field) => new Field(field.tag, field.value));
         const data = [];
 
-        const beginString = new Field(BeginString, this.fixVersion).toString();
+        let beginString = new Field(BeginString, this.fixVersion).toString();
         let bodyLength = new Field(BodyLength, MARKER_BODYLENGTH).toString();
         let checksum = new Field(CheckSum, MARKER_CHECKSUM).toString();
+        let index = fields.findIndex((field) => field.tag === BeginString);
+
+        // Check for header
+        if (index > -1) {
+            beginString = fields[index].toString();
+            fields.splice(index, 1);
+        }
 
         // Check for body length
-       let index = fields.findIndex((field) => field.tag === BodyLength);
+       index = fields.findIndex((field) => field.tag === BodyLength);
         if(index > -1) {
             bodyLength = fields[index].toString();
             fields.splice(index, 1);
