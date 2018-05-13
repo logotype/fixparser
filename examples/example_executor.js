@@ -15,7 +15,6 @@ const TARGET = 'EXEC';
 
 function sendLogon() {
     const logon = fixParser.createMessage(
-        new Field(Fields.BeginString, 'FIX.4.2'),
         new Field(Fields.MsgType, Messages.Logon),
         new Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
         new Field(Fields.SenderCompID, SENDER),
@@ -30,7 +29,7 @@ function sendLogon() {
     fixParser.send(logon);
 }
 
-fixParser.connect('localhost', 9878, SENDER, TARGET);
+fixParser.connect({ host: 'localhost', port: 9878, sender: SENDER, target: TARGET, fixVersion: 'FIX.4.4' });
 
 fixParser.on('open', () => {
     console.log('Open');
@@ -39,7 +38,6 @@ fixParser.on('open', () => {
 
     setInterval(() => {
         const order = fixParser.createMessage(
-            new Field(Fields.BeginString, 'FIX.4.2'),
             new Field(Fields.MsgType, Messages.NewOrderSingle),
             new Field(Fields.MsgSeqNum, fixParser.getNextTargetMsgSeqNum()),
             new Field(Fields.SenderCompID, SENDER),
