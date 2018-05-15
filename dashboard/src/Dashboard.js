@@ -67,7 +67,7 @@ export default class Dashboard extends Component {
                     <div className="uk-container">
                         <h3>FIXParser is <a href="https://github.com/logotype/fixparser" className="uk-link-muted">open-source</a> at Github</h3>
                         <p className="uk-margin-remove">This is the ECMAScript framework for working with FIX protocol messages. Compliant with FIX 5.0 SP2.</p>
-                        <select className="uk-select uk-margin-top uk-margin-bottom" onChange={this.handleSelectChange} value={this.state.selectedValue}>
+                        <select className="uk-select uk-margin-top uk-margin-bottom uk-dark" onChange={this.handleSelectChange} value={this.state.selectedValue}>
                             <option value="">Select example FIX message</option>
                             {this.exampleMessages()}
                         </select>

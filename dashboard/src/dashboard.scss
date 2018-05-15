@@ -83,6 +83,12 @@ pre {
   font-size: 8px;
 }
 
+select {
+  option {
+    color: black !important;
+  }
+}
+
 .table-less-margin {
   margin-top: 10px !important;
   
