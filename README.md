@@ -57,7 +57,7 @@ Connect over TCP socket (as client):
 ```javascript
 import FIXParser from 'fixparser';
 const fixParser = new FIXParser();
-fixParser.connect('localhost', 9878, 'BANZAI', 'EXEC');
+fixParser.connect({ host: 'localhost', port: 9878, sender: 'BANZAI', target: 'EXEC', fixVersion: 'FIX.4.4' });
 fixParser.on('open', () => {
     // Connection is open... 
 });

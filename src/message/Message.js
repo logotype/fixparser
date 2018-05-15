@@ -16,7 +16,6 @@ import {
     TimeInForce
 } from './../constants/ConstantsField';
 
-const DEFAULT_FIX_VERSION = 'FIX.5.0SP2';
 const TAG_CHECKSUM = '10=';
 const TAG_MSGTYPE = '35=';
 const MARKER_BODYLENGTH = '\x02';
@@ -57,7 +56,8 @@ export default class Message {
         return paddedString.substr(paddedString.length - size);
     }
 
-    constructor(...fields) {
+    constructor(fixVersion, ...fields) {
+        this.fixVersion = fixVersion;
         this.reset();
 
         // Add other tags
@@ -189,19 +189,19 @@ export default class Message {
         const fields = this.data.map((field) => new Field(field.tag, field.value));
         const data = [];
 
-        let beginString = new Field(BeginString, DEFAULT_FIX_VERSION).toString();
+        let beginString = new Field(BeginString, this.fixVersion).toString();
         let bodyLength = new Field(BodyLength, MARKER_BODYLENGTH).toString();
         let checksum = new Field(CheckSum, MARKER_CHECKSUM).toString();
         let index = fields.findIndex((field) => field.tag === BeginString);
 
         // Check for header
-        if(index > -1) {
+        if (index > -1) {
             beginString = fields[index].toString();
             fields.splice(index, 1);
         }
 
         // Check for body length
-        index = fields.findIndex((field) => field.tag === BodyLength);
+       index = fields.findIndex((field) => field.tag === BodyLength);
         if(index > -1) {
             bodyLength = fields[index].toString();
             fields.splice(index, 1);

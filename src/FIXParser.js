@@ -34,6 +34,7 @@ export default class FIXParser extends EventEmitter {
         this.messageSequence = 1;
         this.heartBeatInterval = null;
         this.heartBeatIntervalId = null;
+        this.fixVersion = 'FIX.5.0SP2';
     }
 
     stopHeartbeat() {
@@ -55,12 +56,13 @@ export default class FIXParser extends EventEmitter {
         }, this.heartBeatInterval);
     }
 
-    connect(host = 'localhost', port = '9878', sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 60000) {
+    connect({ host = 'localhost', port = '9878', sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 60000, fixVersion = this.fixVersion } = {}) {
         this.host = host;
         this.port = port;
         this.sender = sender;
         this.target = target;
         this.heartBeatInterval = heartbeatIntervalMs;
+        this.fixVersion = fixVersion;
         this.socket = new Socket();
         this.socket.setEncoding('ascii');
 
@@ -99,7 +101,7 @@ export default class FIXParser extends EventEmitter {
     }
 
     createMessage(...fields) {
-        return new Message(...fields);
+        return new Message(this.fixVersion, ...fields);
     }
 
     parse(data) {
