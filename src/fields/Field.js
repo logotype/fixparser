@@ -8,6 +8,7 @@ export default class Field {
         this.category = null;
         this.section = null;
         this.enumeration = null;
+        this.validated = false;
     }
 
     setTag(tag) {
@@ -40,6 +41,10 @@ export default class Field {
 
     setEnumeration(enumeration) {
         this.enumeration = enumeration;
+    }
+
+    setValidated(isValid) {
+        this.validated = isValid;
     }
 
     toString() {

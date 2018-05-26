@@ -1,8 +1,10 @@
 import { MESSAGE_CONTENTS } from './../spec/SpecMessageContents';
 import { groupBy } from './../util/util';
+import { Components } from './../components/Components';
 
 export class MessageContents {
     constructor() {
+        this.components = new Components();
         this.messageContents = MESSAGE_CONTENTS;
         this.cacheMap = new Map();
         this.messageContentsById = groupBy(this.messageContents, 'ComponentID');
@@ -17,7 +19,24 @@ export class MessageContents {
                 description: component.Description,
                 added: component.Added,
                 addedEP: component.AddedEP,
-                deprecated: component.Deprecated
+                deprecated: component.Deprecated,
+                validated: false,
+                components: this.components.findByName(component.TagText)
+                    ? this.messageContents
+                        .filter((content) => content.ComponentID === this.components.findByName(component.TagText).ComponentID)
+                        .map((childComponent) => ({
+                            componentID: childComponent.ComponentID,
+                            tagText: childComponent.TagText,
+                            indent: childComponent.Indent,
+                            position: childComponent.Position,
+                            reqd: childComponent.Reqd,
+                            description: childComponent.Description,
+                            added: childComponent.Added,
+                            addedEP: childComponent.AddedEP,
+                            deprecated: childComponent.Deprecated,
+                            validated: false
+                        }))
+                    : []
             })));
         });
     }

@@ -21,14 +21,14 @@ const TAG_MSGTYPE = '35=';
 const MARKER_BODYLENGTH = '\x02';
 const MARKER_CHECKSUM = '\x03';
 
-export function calculateBodyLength(value) {
+export const calculateBodyLength = (value) => {
     const startLength = value.indexOf(TAG_MSGTYPE) === -1 ? 0 : value.indexOf(TAG_MSGTYPE),
         endLength = value.indexOf(TAG_CHECKSUM) === -1 ? value.length : value.indexOf(TAG_CHECKSUM);
 
     return endLength - startLength;
-}
+};
 
-function nonEmpty(parts, ...args) {
+const nonEmpty = (parts, ...args) => {
     let res = parts[0];
     for (let i = 1; i < parts.length; i++) {
         if (args[i - 1] || String(args[i - 1]) === '0') {
@@ -37,9 +37,9 @@ function nonEmpty(parts, ...args) {
         res += parts[i];
     }
     return res;
-}
+};
 
-export function calculateChecksum(value) {
+export const calculateChecksum = (value) => {
     let integerValues = 0;
 
     for (let i = 0; i < value.length; i++) {
@@ -47,7 +47,106 @@ export function calculateChecksum(value) {
     }
 
     return Message.pad(integerValues & 255, 3); // eslint-disable-line no-use-before-define
-}
+};
+
+export const validateMessage = (message) => {
+    let result = [];
+    let subSpecPosition = null;
+
+    const messageDataCloned = JSON.parse(JSON.stringify(message.data));
+    const messageContentsCloned = JSON.parse(JSON.stringify(message.messageContents));
+
+    messageDataCloned.forEach((field, index) => {
+
+        subSpecPosition = null;
+
+        const spec = messageContentsCloned.find((item) => {
+            if(item.components.length > 0) {
+                return item.components.find((subItem) => {
+                    const found = String(subItem.tagText) === String(field.tag);
+                    if(found) {
+                        subItem.validated = true;
+                        subSpecPosition = subItem.position;
+                    }
+                    return found;
+                });
+            } else {
+                return String(item.tagText) === String(field.tag);
+            }
+        });
+
+        if(spec) {
+            const validationResult = {
+                valid: true,
+                hasValue: true,
+                field: field,
+                spec: spec,
+                reqd: spec.reqd,
+                position: parseInt(subSpecPosition || spec.position, 10)
+            };
+
+            result.push(validationResult);
+
+        } else {
+
+            const validationResult = {
+                valid: true,
+                hasValue: true,
+                message: 'Unknown/unexpected field',
+                field: field,
+                spec: null,
+                reqd: '0',
+                position: index
+            };
+
+            result.push(validationResult);
+        }
+
+    });
+
+    messageContentsCloned
+        .filter((item) => !item.validated)
+        .forEach((spec) => {
+            if(spec.components.length > 0) {
+
+                spec.components
+                    .filter((subItem) => !subItem.validated)
+                    .forEach((subSpec) => {
+                        if(!subSpec.validated) {
+                            // Actual position needs to be calculated (e.g. StandardHeader is a block)
+                            const validationResult = {
+                                valid: !(subSpec.reqd === '1'),
+                                hasValue: false,
+                                field: null,
+                                spec: subSpec,
+                                reqd: subSpec.reqd,
+                                tagText: String(subSpec.tagText),
+                                position: parseInt(subSpec.position, 10)
+                            };
+
+                            result.push(validationResult);
+                        }
+                    });
+            } else if(!spec.validated) {
+
+                    const validationResult = {
+                        valid: !(spec.reqd === '1'),
+                        hasValue: false,
+                        field: null,
+                        spec: spec,
+                        reqd: spec.reqd,
+                        tagText: String(spec.tagText),
+                        position: parseInt(spec.position, 10)
+                    };
+
+                    result.push(validationResult);
+            }
+        });
+
+    result = result.sort((a, b) => ((parseInt(a.position, 10) < parseInt(b.position, 10)) ? -1 : 1));
+
+    return result;
+};
 
 export default class Message {
 
@@ -72,6 +171,13 @@ export default class Message {
 
     getField(tag) {
         return this.data.find((field) => field.tag === tag);
+    }
+
+    setField(field) {
+        const index = this.data.findIndex((item) => item.tag === field.tag);
+        if(index > -1) {
+            this.data[index] = field;
+        }
     }
 
     setString(fixString) {
@@ -185,6 +291,10 @@ export default class Message {
         return this.checksumValid;
     }
 
+    validate() {
+        return validateMessage(this);
+    }
+
     encode(separator = '\x01') {
         const fields = this.data.map((field) => new Field(field.tag, field.value));
         const data = [];
@@ -201,7 +311,7 @@ export default class Message {
         }
 
         // Check for body length
-       index = fields.findIndex((field) => field.tag === BodyLength);
+        index = fields.findIndex((field) => field.tag === BodyLength);
         if(index > -1) {
             bodyLength = fields[index].toString();
             fields.splice(index, 1);

@@ -1,41 +1,52 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import { getValue } from './../Dashboard';
 
 export default class MessageDetailListItem extends Component {
     static propTypes = {
         message: PropTypes.object,
+        data: PropTypes.object,
         field: PropTypes.object
     };
     static defaultProps = {
         message: null,
-        field: {}
+        data: {},
+        field: {
+            tag: null,
+            enumeration: {}
+        }
     };
 
-    renderAdditionalData() {
+    renderAdditionalData(field) {
         const data = [];
-        if(getValue(this.props.field.category, 'categoryID')) {
-            data.push(<tr className="table-border">
+        if(!field) {
+            return null;
+        }
+        if(getValue(field.category, 'categoryID')) {
+            data.push(<tr key={`key_2`} className="table-border">
                 <td><strong>Category</strong></td>
-                <td>{getValue(this.props.field.category, 'categoryID')}. {getValue(this.props.field.category, 'description')}</td>
+                <td>{getValue(field.category, 'categoryID')}. {getValue(field.category, 'description')}</td>
             </tr>);
         }
-        if(getValue(this.props.field.section, 'sectionID')) {
-            data.push(<tr className="table-border">
+        if(getValue(field.section, 'sectionID')) {
+            data.push(<tr key={`key_3`} className="table-border">
                 <td><strong>Section</strong></td>
-                <td>{getValue(this.props.field.section, 'sectionID')}. {getValue(this.props.field.section, 'description')}</td>
+                <td>{getValue(field.section, 'sectionID')}. {getValue(field.section, 'description')}</td>
             </tr>);
         }
-        if(getValue(this.props.field.enumeration, 'elaboration')) {
-            data.push(<tr className="table-border">
+        if(getValue(field.enumeration, 'elaboration')) {
+            data.push(<tr key={`key_4`} className="table-border">
                 <td><strong>Enumeration</strong></td>
-                <td>{getValue(this.props.field.enumeration, 'elaboration')}. {getValue(this.props.field.enumeration, 'description')}</td>
+                <td>{getValue(field.enumeration, 'elaboration')}. {getValue(field.enumeration, 'description')}</td>
             </tr>);
         }
 
         return data.length > 0 ? (<table className="uk-table uk-table-small uk-table-divider uk-table-middle table-less-margin">
+            <tbody>
             {data}
+            </tbody>
         </table>) : null;
     }
 
@@ -44,19 +55,30 @@ export default class MessageDetailListItem extends Component {
             return null;
         }
 
-        const description = getValue(this.props.field.enumeration, 'description') ? <span><strong>{getValue(this.props.field.enumeration, 'description')}</strong></span> : null;
+        const field = this.props.field;
+        const description = getValue(field.enumeration, 'description') ? <span><strong>{getValue(field.enumeration, 'description')}</strong></span> : null;
 
         return [
-            <tr>
-                <td>{this.props.field.tag}</td>
-                <td><span className="uk-badge">{this.props.field.name}</span></td>
-                <td>{this.props.field.value}</td>
+            <tr key={`key_0`} className={classNames({
+                'table-border': true,
+                'validation-valid': this.props.data.valid,
+                'validation-invalid': !this.props.data.valid,
+                'validation-not-required': this.props.data.reqd === '0'
+            })}>
+                <td>{getValue(field, 'tag')}</td>
+                <td><span className="uk-badge">{getValue(field, 'name')}</span></td>
+                <td>{getValue(field, 'value')}</td>
                 <td>{description}</td>
             </tr>,
-            <tr className="uk-table-divider-remove">
+            <tr key={`key_1`} className={classNames({
+                'uk-table-divider-remove': true,
+                'validation-valid': this.props.data.valid,
+                'validation-invalid': !this.props.data.valid,
+                'validation-not-required': this.props.data.reqd === '0'
+            })}>
                 <td colSpan={5} className="uk-text-muted">
-                    {this.props.field.description}
-                    {this.renderAdditionalData()}
+                    {getValue(field, 'description')}
+                    {this.renderAdditionalData(field)}
                 </td>
             </tr>
         ];

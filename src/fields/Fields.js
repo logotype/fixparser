@@ -18,6 +18,28 @@ export class Fields {
         this.dataTypes = new DataTypes();
     }
 
+    getField(field) {
+        const data = this.cacheMap.get(field.tag);
+        if(data) {
+
+            field.setName(data.Name);
+            field.setDescription(data.Description);
+
+            if(data.BaseCategory) {
+                this.categories.processCategory(field, data.BaseCategory);
+
+                if(field.category.sectionID) {
+                    this.sections.processSection(field, field.category.sectionID);
+                }
+            }
+
+            this.dataTypes.processDatatype(field, data.Type);
+        } else {
+            field.setType('');
+            field.setValue(String(field.value));
+        }
+    }
+
     processField(message, field) {
         const data = this.cacheMap.get(field.tag);
         if(data) {

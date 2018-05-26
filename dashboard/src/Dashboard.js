@@ -57,7 +57,7 @@ export default class Dashboard extends Component {
 
     exampleMessages() {
         return testMessages
-            .map((message) => <option value={message.fix}>{message.description} {message.detail}</option>);
+            .map((message, key) => <option key={`option_${key}`} value={message.fix}>{message.description} {message.detail}</option>);
     }
 
     render() {
