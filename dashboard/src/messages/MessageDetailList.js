@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Fields } from './../../../src/fields/Fields';
 import { MsgType } from './../../../src/constants/ConstantsField';
 import MessageDetailListItem from './MessageDetailListItem';
 import { getValue } from './../Dashboard';
@@ -9,7 +8,8 @@ import Field from './../../../src/fields/Field';
 
 export default class MessageDetailList extends Component {
     static propTypes = {
-        message: PropTypes.object
+        message: PropTypes.object,
+        parser: PropTypes.object.isRequired
     };
     static defaultProps = {
         message: null
@@ -20,7 +20,6 @@ export default class MessageDetailList extends Component {
         this.state = {
             requiredFieldsOnly: true
         };
-        this.fields = new Fields();
         this._onChangeCheckbox = this._onChangeCheckbox.bind(this);
     }
 
@@ -41,9 +40,9 @@ export default class MessageDetailList extends Component {
                     field = item.field
                 } else {
                     field = new Field(item.tagText, '<MISSING VALUE>');
-                    this.fields.getField(field);
+                    this.props.parser.fixParserBase.fields.getField(field);
                 }
-                return <MessageDetailListItem key={`data_${key}`} data={item} field={field} getField={this.fields.getField} message={this.props.message} />;
+                return <MessageDetailListItem key={`data_${key}`} data={item} field={field} message={this.props.message} />;
             });
     }
 

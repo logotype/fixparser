@@ -49,16 +49,21 @@ export const calculateChecksum = (value) => {
     return Message.pad(integerValues & 255, 3); // eslint-disable-line no-use-before-define
 };
 
+const calculatePosition = (spec, tag) => {
+    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 8) return 0;
+    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 9) return 1;
+    if(spec.tagText === 'StandardHeader' && parseInt(tag, 10) === 35) return 2;
+    if(spec.tagText === 'StandardTrailer') return 999999999;
+    return spec.position + 100;
+};
+
 export const validateMessage = (message) => {
     let result = [];
-    let subSpecPosition = null;
 
     const messageDataCloned = JSON.parse(JSON.stringify(message.data));
     const messageContentsCloned = JSON.parse(JSON.stringify(message.messageContents));
 
     messageDataCloned.forEach((field, index) => {
-
-        subSpecPosition = null;
 
         const spec = messageContentsCloned.find((item) => {
             if(item.components.length > 0) {
@@ -66,80 +71,66 @@ export const validateMessage = (message) => {
                     const found = String(subItem.tagText) === String(field.tag);
                     if(found) {
                         subItem.validated = true;
-                        subSpecPosition = subItem.position;
                     }
                     return found;
                 });
             } else {
+                item.validated = true;
                 return String(item.tagText) === String(field.tag);
             }
         });
 
         if(spec) {
-            const validationResult = {
+            result.push({
                 valid: true,
                 hasValue: true,
                 field: field,
                 spec: spec,
                 reqd: spec.reqd,
-                position: parseInt(subSpecPosition || spec.position, 10)
-            };
-
-            result.push(validationResult);
-
+                position: calculatePosition(spec, field.tag)
+            });
         } else {
-
-            const validationResult = {
+            result.push({
                 valid: true,
                 hasValue: true,
-                message: 'Unknown/unexpected field',
+                message: 'Unknown/unsupported field',
                 field: field,
                 spec: null,
                 reqd: '0',
                 position: index
-            };
-
-            result.push(validationResult);
+            });
         }
-
     });
 
     messageContentsCloned
         .filter((item) => !item.validated)
         .forEach((spec) => {
             if(spec.components.length > 0) {
-
                 spec.components
                     .filter((subItem) => !subItem.validated)
                     .forEach((subSpec) => {
                         if(!subSpec.validated) {
-                            // Actual position needs to be calculated (e.g. StandardHeader is a block)
-                            const validationResult = {
+                            result.push({
                                 valid: !(subSpec.reqd === '1'),
                                 hasValue: false,
                                 field: null,
                                 spec: subSpec,
                                 reqd: subSpec.reqd,
                                 tagText: String(subSpec.tagText),
-                                position: parseInt(subSpec.position, 10)
-                            };
-
-                            result.push(validationResult);
+                                position: calculatePosition(subSpec, subSpec.tagText)
+                            });
                         }
                     });
             } else if(!spec.validated) {
-
-                    const validationResult = {
-                        valid: !(spec.reqd === '1'),
-                        hasValue: false,
-                        field: null,
-                        spec: spec,
-                        reqd: spec.reqd,
-                        tagText: String(spec.tagText),
-                        position: parseInt(spec.position, 10)
-                    };
-
-                    result.push(validationResult);
+                result.push({
+                    valid: !(spec.reqd === '1'),
+                    hasValue: false,
+                    field: null,
+                    spec: spec,
+                    reqd: spec.reqd,
+                    tagText: String(spec.tagText),
+                    position: calculatePosition(spec, spec.tagText)
+                });
             }
         });
 
