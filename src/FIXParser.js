@@ -98,6 +98,12 @@ export default class FIXParser extends EventEmitter {
             this.stopHeartbeat();
         });
 
+        this.socket.on("timeout", () => {
+            this.emit('timeout');
+            this.socket.end();
+            this.stopHeartbeat();
+        });
+
         this.socket.connect(this.port, this.host, () => {
             console.log('Connected', this.socket.readyState);
             if (this.socket.readyState === 'open') {
