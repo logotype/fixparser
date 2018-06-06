@@ -5,10 +5,16 @@
  * Copyright 2018 Victor Norgren
  * Released under the MIT license
  */
-import { Socket } from 'net';
-import { EventEmitter } from 'events';
+import {
+    Socket
+} from 'net';
+import {
+    EventEmitter
+} from 'events';
 
-import { timestamp } from './util/util';
+import {
+    timestamp
+} from './util/util';
 import FIXParserBase from './FIXParserBase';
 import FrameDecoder from './util/FrameDecoder';
 import Field from './../src/fields/Field';
@@ -56,7 +62,14 @@ export default class FIXParser extends EventEmitter {
         }, this.heartBeatInterval);
     }
 
-    connect({ host = 'localhost', port = '9878', sender = 'SENDER', target = 'TARGET', heartbeatIntervalMs = 60000, fixVersion = this.fixVersion } = {}) {
+    connect({
+        host = 'localhost',
+        port = '9878',
+        sender = 'SENDER',
+        target = 'TARGET',
+        heartbeatIntervalMs = 60000,
+        fixVersion = this.fixVersion
+    } = {}) {
         this.host = host;
         this.port = port;
         this.sender = sender;
@@ -70,7 +83,9 @@ export default class FIXParser extends EventEmitter {
             .pipe(new FrameDecoder())
             .on('data', (data) => {
                 const messages = this.parse(data.toString());
-                this.emit('message', messages[0]);
+                for (var i = 0; i < messages.length; i++) {
+                    this.emit('message', messages[i]);
+                }
             });
 
         this.socket.on('close', () => {
@@ -78,9 +93,20 @@ export default class FIXParser extends EventEmitter {
             this.stopHeartbeat();
         });
 
+        this.socket.on("error", (error) => {
+            this.emit('error', error);
+            this.stopHeartbeat();
+        });
+
+        this.socket.on("timeout", () => {
+            this.emit('timeout');
+            this.socket.end();
+            this.stopHeartbeat();
+        });
+
         this.socket.connect(this.port, this.host, () => {
             console.log('Connected', this.socket.readyState);
-            if(this.socket.readyState === 'open') {
+            if (this.socket.readyState === 'open') {
                 this.emit('open');
                 this.startHeartbeat();
             }
@@ -109,8 +135,8 @@ export default class FIXParser extends EventEmitter {
     }
 
     send(message) {
-        if(this.socket.readyState === 'open') {
-            if(message instanceof Message) {
+        if (this.socket.readyState === 'open') {
+            if (message instanceof Message) {
                 this.setNextTargetMsgSeqNum(this.getNextTargetMsgSeqNum() + 1);
                 this.socket.write(message.encode());
             } else {
@@ -122,15 +148,33 @@ export default class FIXParser extends EventEmitter {
     }
 }
 
-export { Field };
-export { Fields };
-export { Message };
-export { Messages };
-export { Side };
-export { OrderTypes };
-export { HandlInst };
-export { TimeInForce };
-export { EncryptMethod };
+export {
+    Field
+};
+export {
+    Fields
+};
+export {
+    Message
+};
+export {
+    Messages
+};
+export {
+    Side
+};
+export {
+    OrderTypes
+};
+export {
+    HandlInst
+};
+export {
+    TimeInForce
+};
+export {
+    EncryptMethod
+};
 
 /**
  * Export global to the window object.
