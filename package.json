@@ -11,6 +11,7 @@
   },
   "scripts": {
     "eslint": "eslint *.babel.js src test",
+    "prebuild": "babel-node prebuild/index.js",
     "build": "webpack -p",
     "executor": "babel-node examples/example_executor.js",
     "example": "babel-node examples/example.js",
