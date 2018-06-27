@@ -16,9 +16,10 @@ import {
 } from './../src/constants/ConstantsField';
 
 describe('FIXEncoder', () => {
+    const fixParser = new FIXParser();
+
     describe('#encode: Heartbeat', () => {
         const fixString = '8=FIX.5.0SP2|9=51|35=0|34=703|49=ABC|52=20100130-10:53:40.830|56=XYZ|10=205|';
-        const fixParser = new FIXParser();
 
         it('should have encoded the FIX message', () => {
             const message = fixParser.createMessage(
@@ -33,7 +34,6 @@ describe('FIXEncoder', () => {
     });
     describe('#encode: Logon', () => {
         const fixString = '8=FIX.5.0SP2|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=090|';
-        const fixParser = new FIXParser();
 
         it('should have encoded the FIX message', () => {
             const message = fixParser.createMessage(
@@ -51,7 +51,6 @@ describe('FIXEncoder', () => {
         });
     });
     describe('#encode: Custom header/trailer', () => {
-        const fixParser = new FIXParser();
         let fixString = null;
 
         it('should have encoded the FIX message with custom FIX version', () => {
@@ -106,7 +105,6 @@ describe('FIXEncoder', () => {
         });
     });
     describe('#encode: Multiple encode', () => {
-        const fixParser = new FIXParser();
         let fixString = '8=FIX.4.3|9=76|35=A|34=702|49=ABC|52=20100130-10:52:40.663|56=XYZ|95=4|96=1234|98=0|108=60|10=135|';
 
         it('should have encoded the FIX message', () => {

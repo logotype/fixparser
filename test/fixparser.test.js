@@ -3,34 +3,31 @@ import FIXParser from './../src/FIXParser';
 import { ContraTradeTime, MsgSeqNum } from './../src/constants/ConstantsField';
 
 describe('FIXParser', () => {
+    const fixParser = new FIXParser();
+
     describe('#parse: constructor validation', () => {
         it('should return null when having no arguments', () => {
-            const fixParser = new FIXParser();
             expect(fixParser.parse()).toEqual([]);
         });
     });
 
     describe('#parse: unknown SOH "/"', () => {
         it('should parse the message, SOH "/"', () => {
-            const fixParser = new FIXParser();
             expect(fixParser.parse('8=FIX.4.2/9=106/35=A/34=1/49=U1par/50=U1fix/52=20090206-21:13:36.887/56=FixServer/98=0/108=30/141=Y/553=U1fix/554=hotspot/10=061/')[0].data.length).toEqual(14);
         });
     });
 
     describe('#parse: invalid message', () => {
         it('should return null when having incorrect message', () => {
-            const fixParser = new FIXParser();
             expect(fixParser.parse('aabbccddeeffgghhii').length).toEqual(0);
         });
     });
 
     describe('#parse: SDBK Price Correction of Previous Execution', () => {
-        let fixParser = new FIXParser(),
-            messages = fixParser.parse('8=FIX.4.2^A 9=440^A 35=8^A 128=LZJ^A 34=549^A 49=CCG^A 56=LEH_LZJ02^A 52=20100302- 22:36:15^A 55=IOC^A 37=NF 0039/03022010^A 11=NF 0039/03022010^A 17=NF 0039/03022010 001001002^A 20=2^A 39=2^A 150=2^A 54=1^A 38=100^A 40=1^A 59=0^A 31=49.3700^A 32=100^A 14=0^A 6=0^A 151=0^A 60=20100302-22:36:16^A 58=Trade correction^A 19=NF 0039/03022010 001001001^A 1=ABC123ZYX^A 30=N^A 207=N^A 47=A^A 9430=NX^A 9483=000010^A 9578=1^A 9425=5^A 9579=0000100002^A 9704=0000100001^A 382=1^A 375=TOD^A 337=0000^A 437=100^A 438=1736^A 29=1^A 63=0^A 9440=001001002^A 10=235^A '),
+        let messages = fixParser.parse('8=FIX.4.2^A 9=440^A 35=8^A 128=LZJ^A 34=549^A 49=CCG^A 56=LEH_LZJ02^A 52=20100302- 22:36:15^A 55=IOC^A 37=NF 0039/03022010^A 11=NF 0039/03022010^A 17=NF 0039/03022010 001001002^A 20=2^A 39=2^A 150=2^A 54=1^A 38=100^A 40=1^A 59=0^A 31=49.3700^A 32=100^A 14=0^A 6=0^A 151=0^A 60=20100302-22:36:16^A 58=Trade correction^A 19=NF 0039/03022010 001001001^A 1=ABC123ZYX^A 30=N^A 207=N^A 47=A^A 9430=NX^A 9483=000010^A 9578=1^A 9425=5^A 9579=0000100002^A 9704=0000100001^A 382=1^A 375=TOD^A 337=0000^A 437=100^A 438=1736^A 29=1^A 63=0^A 9440=001001002^A 10=235^A '),
             index = 0;
 
         afterAll(() => {
-            fixParser = null;
             messages = null;
             index = 0;
         });
@@ -325,12 +322,10 @@ describe('FIXParser', () => {
     });
 
     describe('#parse: New order', () => {
-        let fixParser = new FIXParser(),
-            messages = fixParser.parse('8=FIX.4.2|9=154|35=E|49=INST|56=BROK|52=20050908-15:51:22|34=200|66=14|394=1|68=2|73=2|11=order- 1|67=1|55=IBM|54=2|38=2000|40=1|11=order-2|67=2|55=AOL|54=2|38=1000|40=1|'),
+        let messages = fixParser.parse('8=FIX.4.2|9=154|35=E|49=INST|56=BROK|52=20050908-15:51:22|34=200|66=14|394=1|68=2|73=2|11=order- 1|67=1|55=IBM|54=2|38=2000|40=1|11=order-2|67=2|55=AOL|54=2|38=1000|40=1|'),
             index = 0;
 
         afterAll(() => {
-            fixParser = null;
             messages = null;
             index = 0;
         });
@@ -481,12 +476,10 @@ describe('FIXParser', () => {
     });
 
     describe('#parse: ExecutionReport', () => {
-        let fixParser = new FIXParser(),
-            messages = fixParser.parse('8=FIX.4.4\x019=1753\x0135=8\x01523=S|E|B Auto-pricing\x01'),
+        let messages = fixParser.parse('8=FIX.4.4\x019=1753\x0135=8\x01523=S|E|B Auto-pricing\x01'),
             index = 0;
 
         afterAll(() => {
-            fixParser = null;
             messages = null;
             index = 0;
         });
@@ -524,11 +517,9 @@ describe('FIXParser', () => {
 
     describe('#getBriefDescription', () => {
         describe('should generate a brief description', () => {
-            let fixParser = new FIXParser(),
-                messages = null;
+            let messages = null;
 
             afterAll(() => {
-                fixParser = null;
                 messages = null;
             });
 
@@ -639,11 +630,9 @@ describe('FIXParser', () => {
     });
 
     describe('#getField: ExecutionReport', () => {
-        let fixParser = new FIXParser(),
-            messages = fixParser.parse('8=FIX.4.2|9=266|35=8|49=ABC|56=XYZ|50=AZ12|57=NA|34=833|52=20100130-08:00:51.992|55=GLD|48=PL11YA|167=FUT|207=LIFFE|1=AA1|37=ABC1|17=INDNTHDOG|58=Fill|200=201009|205=13|32=25|151=0|14=25|54=2|40=2|77=O|59=0|150=2|20=0|39=2|442=1|44=99.06|38=25|31=99.06|6=99.06|60=20100130-08:00:52|10=136|');
+        let messages = fixParser.parse('8=FIX.4.2|9=266|35=8|49=ABC|56=XYZ|50=AZ12|57=NA|34=833|52=20100130-08:00:51.992|55=GLD|48=PL11YA|167=FUT|207=LIFFE|1=AA1|37=ABC1|17=INDNTHDOG|58=Fill|200=201009|205=13|32=25|151=0|14=25|54=2|40=2|77=O|59=0|150=2|20=0|39=2|442=1|44=99.06|38=25|31=99.06|6=99.06|60=20100130-08:00:52|10=136|');
 
         afterAll(() => {
-            fixParser = null;
             messages = null;
         });
 
@@ -655,11 +644,9 @@ describe('FIXParser', () => {
 
     function processTest(fixMessage) {
         describe(`#parse: ${fixMessage.description}`, () => {
-            let fixParser = new FIXParser(),
-                messages = fixParser.parse(fixMessage.fix);
+            let messages = fixParser.parse(fixMessage.fix);
 
             afterAll(() => {
-                fixParser = null;
                 messages = null;
             });
 
@@ -690,7 +677,6 @@ describe('FIXParser', () => {
 
     describe('#parse: unknown SOH', () => {
         it('should parse the message, SOH " "', () => {
-            const fixParser = new FIXParser();
             expect(
                 fixParser.parse('8=FIX.4.2 9=106 35=A 34=1 49=U1par 50=U1fix 52=20090206-21:13:36.887 56=FixServer 98=0 108=30 141=Y 553=U1fix 554=hotspot 10=061 ')[0].data.length
             ).toEqual(14);

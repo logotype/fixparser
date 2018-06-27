@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server -d",
-    "build": "webpack -p",
+    "build": "webpack -p --optimize-dedupe --optimize-minimize",
     "test": "jest"
   },
   "author": "",
