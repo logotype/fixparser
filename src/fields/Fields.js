@@ -15,7 +15,6 @@ export class Fields {
         this.categories = new Categories();
         this.sections = new Sections();
         this.dataTypes = new DataTypes();
-        this.dataTypes = new DataTypes();
     }
 
     getField(field) {
