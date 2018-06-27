@@ -1,4 +1,4 @@
-import prebuiltMap from './../../prebuild/built/MessageContents.prebuilt.js';
+import prebuiltMap from './../../prebuild/built/MessageContents.prebuilt';
 
 export class MessageContents {
     constructor() {

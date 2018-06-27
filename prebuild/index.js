@@ -43,7 +43,7 @@ messageContents.forEach((messageContent) => {
 });
 
 const outputPath = 'prebuild/built/';
-const outputFilename = `${outputPath}MessageContents.prebuilt.js`;
+const outputFilename = `${outputPath}MessageContents.prebuilt.json`;
 console.log(`Built message content cache map, writing to ${outputFilename}.`);
 
 let err = null;
@@ -61,12 +61,12 @@ if (fs.existsSync(outputFilename)) {
 
 err = fs.writeFileSync(
     outputFilename,
-    `export default ${JSON.stringify({
+    JSON.stringify({
         messageContents: messageContents,
         components: components,
         mappedComponents: mappedComponents,
         messageContentsById: messageContentsById
-    }, null, 4)};`,
+    }, null, 4),
     'utf8'
 );
 
@@ -75,4 +75,4 @@ if (err) {
     process.exit(2);
 }
 
-console.log('Done');
+console.log('Prebuild step done.');
