@@ -61,12 +61,7 @@ if (fs.existsSync(outputFilename)) {
 
 err = fs.writeFileSync(
     outputFilename,
-    JSON.stringify({
-        messageContents: messageContents,
-        components: components,
-        mappedComponents: mappedComponents,
-        messageContentsById: messageContentsById
-    }, null, 4),
+    JSON.stringify(mappedComponents),
     'utf8'
 );
 
