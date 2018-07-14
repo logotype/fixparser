@@ -10,7 +10,7 @@
     "url": "https://github.com/logotype/fixparser.git"
   },
   "scripts": {
-    "eslint": "eslint *.babel.js src test prebuild dashboard/src",
+    "eslint": "eslint *.babel.js src test prebuild",
     "prebuild": "babel-node --max-old-space-size=4096 prebuild/index.js",
     "build": "webpack -p --optimize-dedupe --optimize-minimize",
     "executor": "babel-node examples/example_executor.js",
