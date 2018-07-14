@@ -14,7 +14,7 @@ export default class MessageList extends Component {
         selectedMessage: null,
         selectedRow: 0
     };
-    
+
     _renderItems() {
         if(this.props.messages.length > 0 && this.props.messages[0].data.length === 0) {
             return null;

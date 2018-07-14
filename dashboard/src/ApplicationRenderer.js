@@ -6,7 +6,6 @@ import Icons from 'uikit/dist/js/uikit-icons';
 import './dashboard.scss';
 import Dashboard from './Dashboard';
 
-// loads the Icon plugin
 UIkit.use(Icons);
 
 const container = document.createElement('application');

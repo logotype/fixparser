@@ -5,8 +5,7 @@ import moment from 'moment';
 
 import { getValue } from './../Dashboard';
 import { Fields } from './../../../src/FIXParserBrowser';
-import { Side } from './../../../src/constants/ConstantsField';
-import { MsgType } from './../../../src/constants/ConstantsField';
+import { Side, MsgType } from './../../../src/constants/ConstantsField';
 
 export default class MessageListItem extends Component {
     static propTypes = {
@@ -18,7 +17,7 @@ export default class MessageListItem extends Component {
         selected: false,
         message: null
     };
-    
+
     constructor(props) {
         super(props);
         this.onClickListItem = this.onClickListItem.bind(this);
@@ -27,7 +26,7 @@ export default class MessageListItem extends Component {
     onClickListItem() {
         this.props.onSelectMessage(this.props.message);
     }
-    
+
     renderDetail() {
         let side = ((this.props.message.getField(Side) || {}).enumeration || {}).symbolicName;
         side = side ? side.replace('Sell', 'SL').toUpperCase() : null;
@@ -44,7 +43,7 @@ export default class MessageListItem extends Component {
         if(!this.props.message) {
             return null;
         }
-        
+
         let messageDescription = null;
         const messageType = this.props.message.getField(MsgType);
         if(messageType && messageType.tag && messageType.value) {

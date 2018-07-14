@@ -37,7 +37,7 @@ export default class MessageDetailList extends Component {
             .map((item, key) => {
                 let field = null;
                 if(item.field) {
-                    field = item.field
+                    field = item.field;
                 } else {
                     field = new Field(item.tagText, '<MISSING VALUE>');
                     this.props.parser.fixParserBase.fields.getField(field);

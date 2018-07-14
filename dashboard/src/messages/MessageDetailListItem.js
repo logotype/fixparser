@@ -25,19 +25,19 @@ export default class MessageDetailListItem extends Component {
             return null;
         }
         if(getValue(field.category, 'categoryID')) {
-            data.push(<tr key={`key_2`} className="table-border">
+            data.push(<tr key={'key_2'} className="table-border">
                 <td><strong>Category</strong></td>
                 <td>{getValue(field.category, 'categoryID')}. {getValue(field.category, 'description')}</td>
             </tr>);
         }
         if(getValue(field.section, 'sectionID')) {
-            data.push(<tr key={`key_3`} className="table-border">
+            data.push(<tr key={'key_3'} className="table-border">
                 <td><strong>Section</strong></td>
                 <td>{getValue(field.section, 'sectionID')}. {getValue(field.section, 'description')}</td>
             </tr>);
         }
         if(getValue(field.enumeration, 'elaboration')) {
-            data.push(<tr key={`key_4`} className="table-border">
+            data.push(<tr key={'key_4'} className="table-border">
                 <td><strong>Enumeration</strong></td>
                 <td>{getValue(field.enumeration, 'elaboration')}. {getValue(field.enumeration, 'description')}</td>
             </tr>);
@@ -59,7 +59,7 @@ export default class MessageDetailListItem extends Component {
         const description = getValue(field.enumeration, 'description') ? <span><strong>{getValue(field.enumeration, 'description')}</strong></span> : null;
 
         return [
-            <tr key={`key_0`} className={classNames({
+            <tr key={'key_0'} className={classNames({
                 'table-border': true,
                 'validation-valid': this.props.data.valid,
                 'validation-invalid': !this.props.data.valid,
@@ -70,7 +70,7 @@ export default class MessageDetailListItem extends Component {
                 <td>{getValue(field, 'value')}</td>
                 <td>{description}</td>
             </tr>,
-            <tr key={`key_1`} className={classNames({
+            <tr key={'key_1'} className={classNames({
                 'uk-table-divider-remove': true,
                 'validation-valid': this.props.data.valid,
                 'validation-invalid': !this.props.data.valid,

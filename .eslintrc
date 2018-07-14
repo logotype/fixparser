@@ -276,7 +276,8 @@
     "import/parser": "babel-eslint"
   },
   "plugins": [
-    "import"
+    "import",
+    "react"
   ],
-  "extends": ["eslint:recommended"]
+  "extends": ["eslint:recommended", "plugin:react/recommended"]
 }
